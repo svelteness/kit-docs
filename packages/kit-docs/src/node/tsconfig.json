@@ -1,0 +1,9 @@
+{
+  "extends": "../../../../tsconfig-build.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "outDir": "../../node",
+    "lib": ["es2019"]
+  },
+  "include": ["**/*.ts"]
+}

@@ -1,0 +1,37 @@
+{
+  "$schema": "https://turborepo.org/schema.json",
+  "baseBranch": "origin/main",
+  "pipeline": {
+    "build": {
+      "dependsOn": ["^build:client", "^build:node", "^build:node:types"]
+    },
+    "build:app": {
+      "dependsOn": ["^build:client", "^build:node", "^build:node:types"],
+      "outputs": [".svelte-kit/**"]
+    },
+    "build:vercel": {
+      "dependsOn": ["^build:client", "^build:node", "^build:node:types"],
+      "outputs": [".svelte-kit/**", ".vercel_build_output/**"]
+    },
+    "build:client": {
+      "outputs": ["client/**"]
+    },
+    "build:node": {
+      "outputs": ["node/**"]
+    },
+    "build:node:types": {
+      "outputs": ["node/**"]
+    },
+    "clean": {
+      "cache": false
+    },
+    "dev": {
+      "cache": false
+    },
+    "lint": {
+      "dependsOn": ["lint:eslint", "lint:prettier"]
+    },
+    "lint:eslint": {},
+    "lint:prettier": {}
+  }
+}

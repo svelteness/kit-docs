@@ -1,0 +1,91 @@
+{
+  "name": "@svelteness/kit-docs",
+  "version": "0.0.0",
+  "description": "Documentation integration for SvelteKit.",
+  "license": "MIT",
+  "type": "module",
+  "engines": {
+    "node": ">=14.19.0"
+  },
+  "files": [
+    "src/",
+    "client/",
+    "node/",
+    "index.d.ts",
+    "globals.d.ts"
+  ],
+  "exports": {
+    ".": "./client/index.js",
+    "./node": "./node/index.js",
+    "./package.json": "./package.json"
+  },
+  "contributors": [
+    "Rahim Alwer <rahim.alwer@gmail.com>"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/svelteness/svelteness.git",
+    "directory": "packages/kit-docs"
+  },
+  "bugs": {
+    "url": "https://github.com/svelteness/svelteness/issues"
+  },
+  "scripts": {
+    "build:pkg": "run-p build:client build:node build:node:types",
+    "build:client": "svelte-kit package && pnpm clean:client",
+    "build:node": "node ../../.scripts/build.js --entry=src/node/index.ts --outdir=node --platform=node --bundle --requireshim --external=vite,shiki,toml",
+    "build:node:types": "tsc -p src/node",
+    "clean": "rimraf client node",
+    "clean:client": "rimraf client/package.json client/README.md client/LICENSE",
+    "dev": "run-p \"kit:dev\" \"build:node -- -w\" \"build:node:types -- -w\"",
+    "kit:dev": "svelte-kit dev --port 3001",
+    "lint:eslint": "eslint src --fix",
+    "lint:prettier": "prettier src --write --loglevel warn"
+  },
+  "dependencies": {
+    "@types/lru-cache": "^7.4.0",
+    "@types/markdown-it": "^12.2.3",
+    "clsx": "^1.1.1",
+    "shiki": "^0.10.1",
+    "svelte-class-transition": "^1.0.4",
+    "toml": "^3.0.0"
+  },
+  "devDependencies": {
+    "@algolia/client-search": "^4.13.0",
+    "@docsearch/css": "^3.0.0",
+    "@docsearch/js": "^3.0.0",
+    "@iconify-json/ri": "^1.1.1",
+    "@rollup/pluginutils": "^4.2.0",
+    "@sveltejs/adapter-auto": "^1.0.0-next.30",
+    "@sveltejs/kit": "^1.0.0-next.288",
+    "@types/react-dom": "^17.0.14",
+    "@types/react": "^17.0.39",
+    "fs-extra": "^10.0.0",
+    "gray-matter": "^4.0.3",
+    "lru-cache": "^7.4.4",
+    "markdown-it-anchor": "^8.4.1",
+    "markdown-it-container": "^3.0.0",
+    "markdown-it-emoji": "^2.0.0",
+    "markdown-it": "^12.3.2",
+    "npm-run-all": "^4.1.5",
+    "react-dom": "^17.0.2",
+    "react": "^17.0.2",
+    "rimraf": "^3.0.2",
+    "svelte-preprocess": "^4.10.4",
+    "svelte": "^3.46.4",
+    "svelte2tsx": "^0.5.6",
+    "tslib": "^2.3.0",
+    "typescript": "^4.5.4",
+    "unplugin-icons": "^0.13.4",
+    "vite": "^2.8.6"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "svelte",
+    "svelte-kit",
+    "docs",
+    "documentation"
+  ]
+}
