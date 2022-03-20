@@ -1,6 +1,8 @@
 import adapter from '@sveltejs/adapter-auto';
+import path from 'path';
 import * as preprocess from 'svelte-preprocess';
-import Icons from 'unplugin-icons/vite';
+
+import { kitDocsPlugin } from './node';
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
@@ -20,10 +22,13 @@ const config = {
     vite: {
       resolve: {
         alias: {
-          // ...
+          $actions: path.resolve('./src/lib/actions'),
+          $components: path.resolve('./src/lib/components'),
+          $stores: path.resolve('./src/lib/stores'),
+          $utils: path.resolve('./src/lib/utils'),
         },
       },
-      plugins: [Icons({ compiler: 'svelte' })],
+      plugins: [kitDocsPlugin()],
     },
   },
 };
