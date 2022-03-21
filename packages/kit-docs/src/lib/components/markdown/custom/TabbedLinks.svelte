@@ -1,5 +1,5 @@
 <script lang="ts" context="module">
-  export type Link = {
+  export type TabbedLink = {
     title: string;
     href: string;
   };
@@ -9,7 +9,7 @@
   import { page } from '$app/stores';
   import clsx from 'clsx';
 
-  export let links: Link[] = [];
+  export let links: TabbedLink[] = [];
 </script>
 
 <div class="not-prose mt-10 mb-6 flex overflow-auto p-1">

@@ -8,8 +8,9 @@
       "$actions/*": ["src/lib/actions/*"],
       "$components/*": ["src/lib/components/*"],
       "$utils/*": ["src/lib/utils/*"],
-      "$node/*": ["src/node/*"],
-      "$stores/*": ["src/lib/stores/*"]
+      "$stores/*": ["src/lib/stores/*"],
+      "$$client": ["client/index"],
+      "$$node": ["node/index"]
     }
   }
 }

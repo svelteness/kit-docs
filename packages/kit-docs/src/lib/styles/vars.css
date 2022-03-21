@@ -1,7 +1,9 @@
 :root {
   font-size: 16px;
   scroll-padding-top: 8rem;
+}
 
+.kit-docs.markdown {
   --color-brand: var(--color-brand, #f30c59);
   --color-gray-soft: #707070;
   --color-gray-inverse: black;
@@ -15,7 +17,7 @@
   --prose-pre-bg: #1f2937;
 }
 
-:root.dark {
+.dark .kit-docs.markdown {
   color-scheme: dark;
 
   --color-brand: var(--color-brand-dark, #f75a8e);
@@ -27,28 +29,4 @@
   --color-gray-hover-inverse: #f5f5f5;
   --color-gray-elevate: #2d2d2d;
   --color-gray-body: #1a1a1a;
-}
-
-.js-focus-visible :focus:not([data-focus-visible-added]) {
-  @apply outline-none;
-}
-
-.js-focus-visible [data-focus-visible-added] {
-}
-
-* {
-  -webkit-tap-highlight-color: transparent;
-}
-
-.no-scrollbar {
-  scrollbar-width: none;
-}
-
-.no-scrollbar::-webkit-scrollbar {
-  display: none;
-}
-
-.svg-responsive > svg {
-  width: 100%;
-  height: 100%;
 }

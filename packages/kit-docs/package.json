@@ -17,6 +17,7 @@
   ],
   "exports": {
     ".": "./client/index.js",
+    "./client/*": "./client/*",
     "./node": "./node/index.js",
     "./package.json": "./package.json"
   },
@@ -35,7 +36,7 @@
     "build:pkg": "run-p build:client build:node build:node:types",
     "build:client": "svelte-kit package && pnpm clean:client",
     "build:node": "pnpm build:node:ext -- --entry=src/node/index.ts --outdir=node --platform=node --bundle --requireshim",
-    "build:node:ext": "node ../../.scripts/build.js --external=vite,shiki,toml,unplugin-icons,vite-plugin-windicss",
+    "build:node:ext": "node ../../.scripts/build.js --external=vite,shiki,toml,unplugin-icons",
     "build:node:types": "tsc -p src/node",
     "clean": "rimraf client node",
     "clean:client": "rimraf client/package.json client/README.md client/LICENSE",
@@ -52,9 +53,7 @@
     "shiki": "^0.10.1",
     "svelte-class-transition": "^1.0.4",
     "toml": "^3.0.0",
-    "unplugin-icons": "^0.13.4",
-    "vite-plugin-windicss": "^1.8.3",
-    "windicss": "^3.5.1"
+    "unplugin-icons": "^0.13.4"
   },
   "devDependencies": {
     "@algolia/client-search": "^4.13.0",

@@ -2,17 +2,13 @@
   export type SidebarItem = {
     title: string;
     slug: string;
-    match?: boolean;
+    match?: RegExp;
   };
 
   export type SidebarNav = Record<string, SidebarItem[]>;
 
   export function isActiveSidebarItem({ match, slug }: SidebarItem, currentPath: string) {
-    const isMatch =
-      match &&
-      (currentPath === slug || (currentPath.startsWith(slug) && currentPath[slug.length] === '/'));
-
-    return match ? isMatch : currentPath === slug;
+    return match ? match.test(slug) : currentPath === slug;
   }
 
   export const SIDEBAR_CONTEXT_KEY = Symbol();

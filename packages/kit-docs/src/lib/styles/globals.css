@@ -1,3 +1,27 @@
+.js-focus-visible :focus:not([data-focus-visible-added]) {
+  @apply outline-none;
+}
+
+.js-focus-visible [data-focus-visible-added] {
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.no-scrollbar {
+  scrollbar-width: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.svg-responsive > svg {
+  width: 100%;
+  height: 100%;
+}
+
 .markdown pre {
   tab-size: 2;
   -o-tab-size: 2;

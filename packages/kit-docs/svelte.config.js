@@ -2,7 +2,7 @@ import adapter from '@sveltejs/adapter-auto';
 import path from 'path';
 import * as preprocess from 'svelte-preprocess';
 
-import { kitDocsPlugin } from './node';
+import { kitDocsPlugin } from './node/index.js';
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
@@ -26,6 +26,7 @@ const config = {
           $components: path.resolve('./src/lib/components'),
           $stores: path.resolve('./src/lib/stores'),
           $utils: path.resolve('./src/lib/utils'),
+          $$client: path.resolve('./client'),
         },
       },
       plugins: [kitDocsPlugin()],

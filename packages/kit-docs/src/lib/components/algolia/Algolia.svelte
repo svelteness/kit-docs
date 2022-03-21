@@ -8,7 +8,7 @@
 
   let hasDocSearchLoaded = false;
   const DocSearchLoader = async () => {
-    const Component = await import('./AlgoliaSkeleton.svelte');
+    const Component = await import('./AlgoliaSearch.svelte');
     hasDocSearchLoaded = true;
     return Component;
   };

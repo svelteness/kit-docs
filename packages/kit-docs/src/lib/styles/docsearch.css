@@ -1,4 +1,4 @@
-:root {
+.kit-docs.markdown {
   --docsearch-primary-color: #282828;
   --docsearch-highlight-color: var(--docsearch-primary-color);
   --docsearch-text-color: var(--color-gray-inverse);
@@ -15,7 +15,7 @@
   --docsearch-hit-active-color: white;
 }
 
-:root.dark {
+.dark .kit-docs.markdown {
   --docsearch-primary-color: #f5f5f5;
   --docsearch-text-color: var(--color-gray-inverse);
   --docsearch-modal-shadow: none;

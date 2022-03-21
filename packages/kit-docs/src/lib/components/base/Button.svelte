@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { isUndefined } from '@vidstack/foundation';
+  import { isUndefined } from '$utils/unit';
 
   import clsx from 'clsx';
 

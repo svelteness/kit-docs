@@ -1,7 +1,7 @@
 <script lang="ts">
   import clsx from 'clsx';
   import { tick } from 'svelte';
-  import { getStepsContext } from '../markdown/Steps.svelte';
+  import { getStepsContext } from './Steps.svelte';
 
   const { steps, register } = getStepsContext();
 

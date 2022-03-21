@@ -1,9 +1,4 @@
 <script lang="ts">
-  import 'virtual:windi.css';
-  import '../../styles/app.css';
-  import '../../styles/markdown.css';
-  import '../../polyfills/focus-visible';
-
   import MenuUnfoldIcon from '~icons/ri/menu-unfold-fill';
   import RightArrowIcon from '~icons/ri/arrow-right-s-line';
 
