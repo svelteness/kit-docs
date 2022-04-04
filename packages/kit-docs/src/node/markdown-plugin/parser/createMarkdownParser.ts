@@ -1,9 +1,9 @@
 import MarkdownIt from 'markdown-it';
 
 import {
-  admonitionPlugin,
   anchorPlugin,
   codePlugin,
+  containersPlugin,
   createShikiPlugin,
   customComponentPlugin,
   emojiPlugin,
@@ -12,21 +12,19 @@ import {
   hoistTagsPlugin,
   importCodePlugin,
   linksPlugin,
-  responsiveTablePlugin,
-  stepsPlugin,
   tocPlugin,
-  yesNoPlugin,
 } from './plugins';
-import { type MarkdownParser } from './types';
+import type { MarkdownCustomComponents, MarkdownParser } from './types';
 
 export type MarkdownParserOptions = MarkdownIt.Options & {
   configureParser?(parser: MarkdownParser): void | Promise<void>;
+  customComponents?: MarkdownCustomComponents;
 };
 
 export async function createMarkdownParser(
   options: MarkdownParserOptions = {},
 ): Promise<MarkdownParser> {
-  const { configureParser, ...markdownItOptions } = options;
+  const { configureParser, customComponents = {}, ...markdownItOptions } = options;
 
   const parser = MarkdownIt({
     ...markdownItOptions,
@@ -41,12 +39,9 @@ export async function createMarkdownParser(
   parser.use(customComponentPlugin);
   parser.use(linksPlugin);
   parser.use(codePlugin);
-  parser.use(yesNoPlugin);
+  parser.use(containersPlugin);
   parser.use(importCodePlugin);
-  parser.use(responsiveTablePlugin);
   parser.use(await createShikiPlugin());
-  parser.use(admonitionPlugin);
-  parser.use(stepsPlugin);
   parser.use(hoistTagsPlugin);
 
   await configureParser?.(parser);

@@ -5,10 +5,6 @@
     "paths": {
       "$lib": ["src/lib"],
       "$lib/*": ["src/lib/*"],
-      "$actions/*": ["src/lib/actions/*"],
-      "$components/*": ["src/lib/components/*"],
-      "$utils/*": ["src/lib/utils/*"],
-      "$stores/*": ["src/lib/stores/*"],
       "$$client": ["client/index"],
       "$$node": ["node/index"]
     }

@@ -1,4 +1,7 @@
 import type MarkdownIt from 'markdown-it';
+import type Token from 'markdown-it/lib/token';
+
+import { type slugify } from './utils/slugify';
 
 export type MarkdownParser = MarkdownIt;
 
@@ -6,7 +9,47 @@ export type ParseMarkdownOptions = {
   baseUrl?: string;
   escapeConstants?: boolean;
   define?: Record<string, unknown>;
+  tags?: AddTagsFn;
+  customComponents?: MarkdownCustomComponents;
 };
+
+export type AddTagsFn = (data: {
+  fileName: string;
+  filePath: string;
+  meta: MarkdownMeta;
+  slugify: typeof slugify;
+}) => string[] | undefined | null;
+
+export type InlineMarkdownComponent =
+  | 'CodeInline'
+  | 'Emphasized'
+  | 'Image'
+  | 'Link'
+  | 'Strikethrough'
+  | 'Strong';
+
+export type BlockMarkdownComponent =
+  | 'Blockquote'
+  | 'CodeBlock'
+  | 'Heading1'
+  | 'Heading2'
+  | 'Heading3'
+  | 'Heading4'
+  | 'Heading5'
+  | 'Heading6'
+  | 'ListItem'
+  | 'OrderedList'
+  | 'Paragraph'
+  | 'Pre'
+  | 'Table'
+  | 'TableWrapper'
+  | 'UnorderedList';
+
+export type MarkdownCustomComponents = Record<string, MarkdownComponentContainer>;
+
+export type MarkdownComponentContainer =
+  | string
+  | { name: string; marker?: string; render(tokens: Token[], idx: number): string };
 
 export type MarkdownMeta = {
   title: string;

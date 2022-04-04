@@ -2,6 +2,7 @@ import { createFilter, type FilterPattern } from '@rollup/pluginutils';
 import { type Plugin } from 'vite';
 
 import {
+  AddTagsFn,
   createMarkdownParser,
   type MarkdownParser,
   type MarkdownParserOptions,
@@ -14,19 +15,24 @@ export type MarkdownPluginOptions = {
   /**
    * The markdown files to be parsed and rendered as Svelte components.
    *
-   * @default /\.md($|\?)/
+   * @defaultValue /\.md($|\?)/
    */
   include?: FilterPattern;
   /**
    * The markdown files to _not_ be parsed.
    *
-   * @default null
+   * @defaultValue null
    */
   exclude?: FilterPattern;
   /**
+   * Add custom Svelte or HTML tags (e.g., `<svelte:head>`, `<script>` or `<style>`) to the
+   * markdown component.
+   */
+  tags?: AddTagsFn;
+  /**
    * Markdown parser options.
    *
-   * @default null
+   * @defaultValue null
    */
   parser?: MarkdownParserOptions;
 };
@@ -48,11 +54,17 @@ export function markdownPlugin(options: MarkdownPluginOptions = {}): Plugin {
   /** Page system file paths. */
   const files = new Set<string>();
 
+  // TODO: resolve paths
+  // ~kit-docs/markdown/custom/${component}.svelte
+
+  // TODO: extend custom components
+
   const parseOptions = () =>
     ({
       baseUrl,
       escapeConstants: isBuild,
       define,
+      tags: options.tags,
     } as const);
 
   return {
