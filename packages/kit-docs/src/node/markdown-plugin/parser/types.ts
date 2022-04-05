@@ -1,55 +1,65 @@
 import type MarkdownIt from 'markdown-it';
 import type Token from 'markdown-it/lib/token';
 
-import { type slugify } from './utils/slugify';
-
 export type MarkdownParser = MarkdownIt;
 
 export type ParseMarkdownOptions = {
   baseUrl?: string;
   escapeConstants?: boolean;
   define?: Record<string, unknown>;
-  tags?: AddTagsFn;
-  customComponents?: MarkdownCustomComponents;
+  globalComponents?: string;
+  topLevelHtmlTags?: AddTopLevelHtmlTags;
 };
 
-export type AddTagsFn = (data: {
+export type AddTopLevelHtmlTags = (data: {
   fileName: string;
   filePath: string;
   meta: MarkdownMeta;
-  slugify: typeof slugify;
 }) => string[] | undefined | null;
 
-export type InlineMarkdownComponent =
-  | 'CodeInline'
-  | 'Emphasized'
-  | 'Image'
-  | 'Link'
-  | 'Strikethrough'
-  | 'Strong';
+export type InlineElementRule = 'emphasized' | 'image' | 'strikethrough' | 'strong';
 
-export type BlockMarkdownComponent =
-  | 'Blockquote'
-  | 'CodeBlock'
-  | 'Heading1'
-  | 'Heading2'
-  | 'Heading3'
-  | 'Heading4'
-  | 'Heading5'
-  | 'Heading6'
-  | 'ListItem'
-  | 'OrderedList'
-  | 'Paragraph'
-  | 'Pre'
-  | 'Table'
-  | 'TableWrapper'
-  | 'UnorderedList';
+export type BlockElementRule =
+  | 'blockquote'
+  | 'h1'
+  | 'h2'
+  | 'h3'
+  | 'h4'
+  | 'h5'
+  | 'h6'
+  | 'list_item'
+  | 'ordered_list'
+  | 'paragraph'
+  | 'pre'
+  | 'table'
+  | 'bullet_list';
 
-export type MarkdownCustomComponents = Record<string, MarkdownComponentContainer>;
+export type MarkdownInlineComponent = {
+  name: string;
+  rule: InlineElementRule;
+};
 
-export type MarkdownComponentContainer =
-  | string
-  | { name: string; marker?: string; render(tokens: Token[], idx: number): string };
+export type MarkdownBlockComponent = {
+  name: string;
+  rule: BlockElementRule;
+};
+
+export type MarkdownCustomComponent = {
+  name: string;
+  container?: MarkdownComponentContainer;
+};
+
+export type MarkdownComponentContainer = {
+  name: string;
+  marker?: string;
+  renderer?(componentName: string): (tokens: Token[], idx: number) => string;
+};
+
+export type MarkdownComponents = {
+  inline?: MarkdownInlineComponent[];
+  block?: MarkdownBlockComponent[];
+  custom?: MarkdownCustomComponent[];
+};
 
 export type MarkdownMeta = {
   title: string;
@@ -58,6 +68,7 @@ export type MarkdownMeta = {
   headers: MarkdownHeader[];
   frontmatter: MarkdownFrontmatter;
   lastUpdated: number;
+  hasHeaders: boolean;
 };
 
 export type MarkdownFrontmatter = Record<string, unknown>;
@@ -66,7 +77,7 @@ export type MarkdownHeader = {
   level: number;
   title: string;
   slug: string;
-  children: MarkdownHeader[];
+  children?: MarkdownHeader[];
 };
 
 export type MarkdownLinks = string[];

@@ -1,13 +1,12 @@
 import fs from 'fs';
+import { globbySync } from 'globby';
 import matter from 'gray-matter';
 import LRUCache from 'lru-cache';
 import path from 'path';
 import toml from 'toml';
 
 import type {
-  BlockMarkdownComponent,
-  InlineMarkdownComponent,
-  MarkdownCustomComponents,
+  MarkdownHeader,
   MarkdownMeta,
   MarkdownParser,
   MarkdownParserEnv,
@@ -16,7 +15,6 @@ import type {
 } from './types';
 import { commentOutTemplateTags, uncommentTemplateTags } from './utils/htmlEscape';
 import { preventViteReplace } from './utils/preventViteReplace';
-import { slugify } from './utils/slugify';
 
 export type ParseMarkdownToSvelteResult = {
   component: string;
@@ -46,9 +44,11 @@ export function parseMarkdownToSvelte(
 
   const fileName = path.basename(filePath, path.extname(filePath));
 
-  hoistedTags.push(...(options.tags?.({ fileName, filePath, meta, slugify }) ?? []));
+  hoistedTags.push(...(options.topLevelHtmlTags?.({ fileName, filePath, meta }) ?? []));
 
-  addGlobalImports(hoistedTags, options.customComponents);
+  if (options.globalComponents) {
+    addGlobalImports(hoistedTags, options.globalComponents);
+  }
 
   const component =
     dedupeHoistedTags(hoistedTags).join('\n') + `\n\n${uncommentTemplateTags(html)}`;
@@ -62,45 +62,15 @@ export function parseMarkdownToSvelte(
   return result;
 }
 
-export const inlineMarkdownComponents: InlineMarkdownComponent[] = [
-  'CodeInline',
-  'Emphasized',
-  'Image',
-  'Link',
-  'Strikethrough',
-  'Strong',
-];
+function addGlobalImports(tags: string[], glob: string) {
+  const files = globbySync(glob, { cwd: process.cwd() });
 
-export const blockMarkdownComponents: BlockMarkdownComponent[] = [
-  'Blockquote',
-  'CodeBlock',
-  'Heading1',
-  'Heading2',
-  'Heading3',
-  'Heading4',
-  'Heading5',
-  'Heading6',
-  'ListItem',
-  'OrderedList',
-  'Paragraph',
-  'Pre',
-  'Table',
-  'TableWrapper',
-  'UnorderedList',
-];
-
-function addGlobalImports(tags: string[], components: MarkdownCustomComponents = {}) {
-  const globalImports = [
-    ...inlineMarkdownComponents.map(
-      (component) => `import ${component} from '~kit-docs/markdown/inline/${component}.svelte'`,
-    ),
-    ...blockMarkdownComponents.map(
-      (component) => `import ${component} from '~kit-docs/markdown/block/${component}.svelte'`,
-    ),
-    ...Object.keys(components).map(
-      (component) => `import ${component} from '~kit-docs/markdown/custom/${component}.svelte';`,
-    ),
-  ].join('\n');
+  const globalImports = files
+    .map((filePath) => {
+      const componentName = path.basename(filePath, path.extname(filePath));
+      return `import ${componentName} from '/${filePath.replace(/^\//, '')}';`;
+    })
+    .join('\n');
 
   tags.push(['<script>', globalImports, '</script>'].join('\n'));
 }
@@ -152,6 +122,7 @@ function parseMarkdown(
       title: _title,
       description,
       frontmatter,
+      hasHeaders: hasMarkdownHeaders(headers) ?? false,
       lastUpdated: Math.round(fs.statSync(filePath).mtimeMs),
     },
   };
@@ -195,4 +166,10 @@ function dedupeHoistedTags(tags: string[] = []): string[] {
   });
 
   return Array.from(dedupe.values());
+}
+
+function hasMarkdownHeaders(headers?: MarkdownHeader[]) {
+  return (
+    headers && [...headers.map((h) => h.title), ...headers.map((h) => h.children).flat()].length > 1
+  );
 }

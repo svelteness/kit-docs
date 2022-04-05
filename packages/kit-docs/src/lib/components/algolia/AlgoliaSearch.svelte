@@ -1,6 +1,6 @@
 <script lang="ts">
   import '@docsearch/css';
-  import '../../styles/docsearch.css';
+  import '$lib/styles/docsearch.css';
 
   // @ts-expect-error - no types.
   import docsearch from '@docsearch/js';

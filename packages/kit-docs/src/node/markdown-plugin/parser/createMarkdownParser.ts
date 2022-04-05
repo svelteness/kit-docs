@@ -14,17 +14,17 @@ import {
   linksPlugin,
   tocPlugin,
 } from './plugins';
-import type { MarkdownCustomComponents, MarkdownParser } from './types';
+import type { InlineElementRule, MarkdownComponents, MarkdownParser } from './types';
 
 export type MarkdownParserOptions = MarkdownIt.Options & {
+  components?: MarkdownComponents;
   configureParser?(parser: MarkdownParser): void | Promise<void>;
-  customComponents?: MarkdownCustomComponents;
 };
 
 export async function createMarkdownParser(
   options: MarkdownParserOptions = {},
 ): Promise<MarkdownParser> {
-  const { configureParser, customComponents = {}, ...markdownItOptions } = options;
+  const { configureParser, components = {}, ...markdownItOptions } = options;
 
   const parser = MarkdownIt({
     ...markdownItOptions,
@@ -39,10 +39,31 @@ export async function createMarkdownParser(
   parser.use(customComponentPlugin);
   parser.use(linksPlugin);
   parser.use(codePlugin);
-  parser.use(containersPlugin);
+  parser.use(containersPlugin, components);
   parser.use(importCodePlugin);
   parser.use(await createShikiPlugin());
   parser.use(hoistTagsPlugin);
+
+  const inlineRuleMap: Partial<Record<InlineElementRule, string>> = {
+    strikethrough: 's',
+    emphasized: 'em',
+  };
+
+  for (const { name, rule } of components.inline ?? []) {
+    const mappedRule = inlineRuleMap[rule] ?? rule;
+    parser.renderer.rules[mappedRule] = () => {
+      return `<${name} />`;
+    };
+  }
+
+  for (const { name, rule } of components.block ?? []) {
+    parser.renderer.rules[`${rule}_open`] = () => {
+      return `<${name}>`;
+    };
+    parser.renderer.rules[`${rule}_close`] = () => {
+      return `</${name}>`;
+    };
+  }
 
   await configureParser?.(parser);
 

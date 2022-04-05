@@ -1,5 +1,5 @@
 <script lang="ts">
-  import '$styles/markdown.css';
+  import '$lib/styles/kit-docs.css';
 
   import { page } from '$app/stores';
   // import socialCardLarge from '$img/brand/social-card-large.jpg';

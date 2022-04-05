@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { wasEnterKeyPressed } from '@vidstack/foundation';
+  import { wasEnterKeyPressed } from '$lib/utils/keyboard';
 
   import clsx from 'clsx';
   import { createEventDispatcher } from 'svelte';

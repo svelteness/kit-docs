@@ -1,90 +1,17 @@
-<script lang="ts" context="module">
-  export type SidebarItem = {
-    title: string;
-    slug: string;
-    match?: RegExp;
-  };
-
-  export type SidebarNav = Record<string, SidebarItem[]>;
-
-  export function isActiveSidebarItem({ match, slug }: SidebarItem, currentPath: string) {
-    return match ? match.test(slug) : currentPath === slug;
-  }
-
-  export const SIDEBAR_CONTEXT_KEY = Symbol();
-
-  export type SidebarContext = {
-    nav: Readable<SidebarNav>;
-    allItems: Readable<SidebarItem[]>;
-    activeItemIndex: Readable<number>;
-    activeItem: Readable<SidebarItem | null>;
-    previousItem: Readable<SidebarItem | null>;
-    nextItem: Readable<SidebarItem | null>;
-    activeCategory: Readable<string | null>;
-  };
-
-  export function createSidebarContext(nav: Readable<SidebarNav>): SidebarContext {
-    const allItems = derived(nav, ($nav) => Object.values($nav).flat());
-
-    const activeItemIndex = derived([allItems, page], ([$allItems, $page]) =>
-      $allItems.findIndex((item) => isActiveSidebarItem(item, $page.url.pathname)),
-    );
-
-    const activeItem = derived(
-      [allItems, activeItemIndex],
-      ([$allItems, $activeItemIndex]) => $allItems[$activeItemIndex],
-    );
-
-    const previousItem = derived(
-      [allItems, activeItemIndex],
-      ([$allItems, $activeItemIndex]) => $allItems[$activeItemIndex - 1],
-    );
-
-    const nextItem = derived(
-      [allItems, activeItemIndex],
-      ([$allItems, $activeItemIndex]) => $allItems[$activeItemIndex + 1],
-    );
-
-    const activeCategory = derived([nav, activeItem], ([$nav, $activeItem]) =>
-      Object.keys($nav).find((category) =>
-        $nav[category].some(
-          (item) => item.title === $activeItem?.title && item.slug === $activeItem?.slug,
-        ),
-      ),
-    );
-
-    const ctx: SidebarContext = {
-      nav,
-      allItems,
-      activeItemIndex,
-      activeItem,
-      previousItem,
-      nextItem,
-      activeCategory,
-    };
-
-    setContext(SIDEBAR_CONTEXT_KEY, ctx);
-    return ctx;
-  }
-
-  export function getSidebarContext(): SidebarContext {
-    return getContext(SIDEBAR_CONTEXT_KEY);
-  }
-</script>
-
 <script lang="ts">
   import clsx from 'clsx';
-  import { createEventDispatcher, getContext, onMount, setContext } from 'svelte';
+  import { createEventDispatcher, onMount } from 'svelte';
   import { page } from '$app/stores';
 
   import CloseIcon from '~icons/ri/close-fill';
 
-  import { ariaBool } from '$utils/aria';
-  import { wasEnterKeyPressed } from '$utils/keyboard';
-  import { scrollIntoCenter } from '$utils/scroll';
-  import { isLargeScreen } from '$stores/isLargeScreen';
-  import Overlay from '$components/base/Overlay.svelte';
-  import { derived, type Readable } from 'svelte/store';
+  import { ariaBool } from '$lib/utils/aria';
+  import { wasEnterKeyPressed } from '$lib/utils/keyboard';
+  import { scrollIntoCenter } from '$lib/utils/scroll';
+  import { isLargeScreen } from '$lib/stores/isLargeScreen';
+  import Overlay from '$lib/components/base/Overlay.svelte';
+  import { getSidebarContext, isActiveSidebarItem } from './contexts';
+  import { isFunction } from '$lib/utils/unit';
 
   const dispatch = createEventDispatcher();
 
@@ -92,6 +19,11 @@
 
   // Only valid on small screen (<992px).
   export let open = false;
+
+  let _class: string | ((state: { open: boolean }) => string) = '';
+  export { _class as class };
+
+  export let style = '';
 
   const { nav, activeItem } = getSidebarContext();
 
@@ -110,21 +42,16 @@
 
 <aside
   id="main-sidebar"
-  class={clsx(
-    'fixed inset-0 z-50 w-96 992:w-72 max-w-[85vw] overflow-y-auto bg-gray-body',
-    'border-r border-gray-divider',
-    'transform transition-transform duration-200 ease-out -translate-x-full will-change-transform',
-    open && 'translate-x-0',
-    '992:top-[4.5rem] 992:pb-[5rem] 1200:top-20 1200:pb-24 992:left-0 992:w-[19.5rem] 992:h-full 992:translate-x-0 992:translate-y-px',
-  )}
+  class={clsx('sidebar', isFunction(_class) ? _class({ open }) : _class)}
   role={!$isLargeScreen ? 'dialog' : null}
   aria-modal={ariaBool(!$isLargeScreen)}
   bind:this={sidebar}
+  {style}
 >
-  <div class="sticky top-0 left-0 flex items-center 992:hidden">
+  <div class="992:hidden sticky top-0 left-0 flex items-center">
     <div class="flex-1" />
     <button
-      class={clsx('p-4 text-gray-soft hover:text-gray-inverse', !open && 'pointer-events-none')}
+      class={clsx('text-gray-soft hover:text-gray-inverse p-4', !open && 'pointer-events-none')}
       on:pointerdown={() => dispatch('close')}
       on:keydown={(e) => wasEnterKeyPressed(e) && dispatch('close', true)}
     >
@@ -133,9 +60,9 @@
     </button>
   </div>
 
-  <nav class="p-6 pt-0 pl-8">
+  <nav>
     {#if $$slots.search}
-      <div class="pointer-events-none sticky top-0 -ml-0.5 hidden min-h-[80px] 992:block">
+      <div class="992:block pointer-events-none sticky top-0 -ml-0.5 hidden min-h-[80px]">
         <div class="h-6 bg-white dark:bg-gray-800" />
         <div class="pointer-events-auto relative bg-white dark:bg-gray-800">
           <slot name="search" />
@@ -144,25 +71,33 @@
       </div>
     {/if}
 
-    <ul>
+    <slot name="top" />
+
+    <ul class={clsx(!$$slots.search && 'mt-6')}>
       {#each Object.keys($nav) as category (category)}
         {@const items = $nav[category]}
-        <li class="mt-12 first:mt-0 992:mt-10">
-          <h5 class="text-gray-strong mb-8 text-lg font-semibold 992:mb-3">{category}</h5>
-          <ul class="space-y-3 border-l border-gray-divider">
+        <li class="992:mt-10 mt-12 first:mt-0">
+          <h5 class="text-gray-strong 992:mb-3 mb-8 text-lg font-semibold">{category}</h5>
+          <ul class="border-gray-divider space-y-3 border-l">
             {#each items as item (item.title + item.slug)}
               <li class="first:mt-6">
                 <a
                   class={clsx(
-                    'border-l-2 -ml-px pl-4 py-2 992:py-1.5 flex items-center',
+                    '992:py-1.5 -ml-px flex items-center border-l-2 py-2 pl-4',
                     isActiveSidebarItem(item, $page.url.pathname)
-                      ? 'border-brand-200 dark:border-brand font-semibold text-brand'
-                      : 'border-transparent font-normal hover:border-gray-inverse text-gray-soft hover:text-gray-inverse',
+                      ? 'border-brand-200 dark:border-brand text-brand font-semibold'
+                      : 'hover:border-gray-inverse text-gray-soft hover:text-gray-inverse border-transparent font-normal',
                   )}
                   href={item.slug}
                   sveltekit:prefetch
                 >
+                  {#if item.icon?.before}
+                    <svelte:component this={item.icon.before} class="mr-1" width="24" height="24" />
+                  {/if}
                   {item.title}
+                  {#if item.icon?.after}
+                    <svelte:component this={item.icon.after} class="ml-1" width="24" height="24" />
+                  {/if}
                 </a>
               </li>
             {/each}
@@ -170,9 +105,11 @@
         </li>
       {/each}
     </ul>
+
+    <slot name="bottom" />
   </nav>
 </aside>
 
-<div class="z-40 992:hidden">
+<div class="992:hidden z-40">
   <Overlay {open} />
 </div>

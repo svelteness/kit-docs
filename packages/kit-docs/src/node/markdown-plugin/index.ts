@@ -1,11 +1,13 @@
 import { createFilter, type FilterPattern } from '@rollup/pluginutils';
-import { type Plugin } from 'vite';
+import { normalizePath, type Plugin } from 'vite';
 
 import {
-  AddTagsFn,
+  AddTopLevelHtmlTags,
   createMarkdownParser,
+  type MarkdownComponents,
   type MarkdownParser,
   type MarkdownParserOptions,
+  type ParseMarkdownOptions,
   parseMarkdownToSvelte,
 } from './parser';
 
@@ -21,30 +23,43 @@ export type MarkdownPluginOptions = {
   /**
    * The markdown files to _not_ be parsed.
    *
-   * @defaultValue null
+   * @defaultValue `null`
    */
   exclude?: FilterPattern;
   /**
-   * Add custom Svelte or HTML tags (e.g., `<svelte:head>`, `<script>` or `<style>`) to the
-   * markdown component.
+   * A glob pointing to Svelte component files that will be imported into every single
+   * markdown file. Minification/treeshaking will remove them if they're not being used.
+   *
+   * @defaultValue 'src/lib/components/markdown/**\/[^_]*.svelte'
    */
-  tags?: AddTagsFn;
+  globalComponents?: string;
+  /**
+   * Add custom top-level tags (e.g., `<svelte:head>`, `<script>` or `<style>`) to a markdown
+   * Svelte component.
+   *
+   * @defaultValue `null`
+   */
+  topLevelHtmlTags?: AddTopLevelHtmlTags;
   /**
    * Markdown parser options.
    *
-   * @defaultValue null
+   * @defaultValue `null`
    */
   parser?: MarkdownParserOptions;
 };
 
 const DEFAULT_INCLUDE_RE = /\.md($|\?)/;
 const DEFAULT_EXCLUDE_RE = null;
+const DEFAULT_GLOBAL_COMPONENTS = 'src/lib/components/markdown/**/[^_]*.svelte';
 
 export function markdownPlugin(options: MarkdownPluginOptions = {}): Plugin {
   let baseUrl: string;
   let parser: MarkdownParser;
   let isBuild: boolean;
   let define: Record<string, unknown> | undefined;
+
+  const topLevelHtmlTags = options.topLevelHtmlTags;
+  const globalComponents = options.globalComponents ?? DEFAULT_GLOBAL_COMPONENTS;
 
   const filter = createFilter(
     options.include ?? DEFAULT_INCLUDE_RE,
@@ -54,18 +69,17 @@ export function markdownPlugin(options: MarkdownPluginOptions = {}): Plugin {
   /** Page system file paths. */
   const files = new Set<string>();
 
-  // TODO: resolve paths
-  // ~kit-docs/markdown/custom/${component}.svelte
+  const parseOptions = (): ParseMarkdownOptions => ({
+    baseUrl,
+    escapeConstants: isBuild,
+    define,
+    globalComponents,
+    topLevelHtmlTags,
+  });
 
-  // TODO: extend custom components
-
-  const parseOptions = () =>
-    ({
-      baseUrl,
-      escapeConstants: isBuild,
-      define,
-      tags: options.tags,
-    } as const);
+  // TODO: extend this with global custom components
+  // TODO: add custom kit docs components if don't exist
+  const components: MarkdownComponents = options.parser?.components ?? {};
 
   return {
     name: PLUGIN_NAME,
@@ -74,12 +88,27 @@ export function markdownPlugin(options: MarkdownPluginOptions = {}): Plugin {
       baseUrl = config.base;
       isBuild = config.command === 'build';
       define = config.define;
-      parser = await createMarkdownParser(options.parser);
+      parser = await createMarkdownParser({
+        ...options.parser,
+        components,
+      });
+    },
+    configureServer(server) {
+      function restart() {
+        files.clear();
+        server.restart();
+      }
+
+      server.watcher
+        .add(globalComponents)
+        .on('add', () => restart())
+        .on('unlink', () => restart());
     },
     transform(code, id) {
       if (filter(id)) {
-        const { component } = parseMarkdownToSvelte(parser, code, id, parseOptions());
-        files.add(id);
+        const filePath = normalizePath(id);
+        const { component } = parseMarkdownToSvelte(parser, code, filePath, parseOptions());
+        files.add(filePath);
         return component;
       }
 

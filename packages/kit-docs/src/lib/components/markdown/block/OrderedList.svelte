@@ -1,3 +1,0 @@
-<ol {...$$restProps}>
-  <slot />
-</ol>

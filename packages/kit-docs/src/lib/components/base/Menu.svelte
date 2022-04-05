@@ -6,8 +6,8 @@
   import clsx from 'clsx';
   import Transition from 'svelte-class-transition';
 
-  import { ariaBool } from '$utils/aria';
-  import { dialogManager } from '$actions/dialogManager';
+  import { ariaBool } from '$lib/utils/aria';
+  import { dialogManager } from '$lib/actions/dialogManager';
 
   export let open = false;
 

@@ -1,1 +1,0 @@
-<p {...$$restProps}><slot /></p>

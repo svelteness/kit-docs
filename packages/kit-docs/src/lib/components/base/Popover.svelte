@@ -9,9 +9,11 @@
 
   import CloseIcon from '~icons/ri/close-fill';
 
-  import { ariaBool, wasEnterKeyPressed, hideDocumentScrollbar } from '@vidstack/foundation';
-  import { dialogManager, type CloseDialogCallback } from '$actions/dialogManager';
-  import { isLargeScreen } from '$stores/isLargeScreen';
+  import { ariaBool } from '$lib/utils/aria';
+  import { wasEnterKeyPressed } from '$lib/utils/keyboard';
+  import { dialogManager, type CloseDialogCallback } from '$lib/actions/dialogManager';
+  import { isLargeScreen } from '$lib/stores/isLargeScreen';
+  import { hideDocumentScrollbar } from '$lib/utils/scroll';
 
   import Overlay from './Overlay.svelte';
 

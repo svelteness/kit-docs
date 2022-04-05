@@ -58,3 +58,7 @@ export function createRegex(regex: string | RegExp) {
 export function isWindow(value: unknown): value is Window {
   return value === window;
 }
+
+export function isRegExp(value: unknown): value is RegExp {
+  return value instanceof RegExp;
+}

@@ -1,3 +1,7 @@
+body {
+  @apply min-h-screen w-screen overflow-x-hidden bg-gray-body text-gray-inverse;
+}
+
 .js-focus-visible :focus:not([data-focus-visible-added]) {
   @apply outline-none;
 }

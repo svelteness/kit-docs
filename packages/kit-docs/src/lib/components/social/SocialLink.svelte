@@ -5,7 +5,7 @@
   import GitHubIcon from '~icons/ri/github-fill';
   import TwitterIcon from '~icons/ri/twitter-fill';
 
-  import { uppercaseFirstLetter } from '$utils/string';
+  import { uppercaseFirstLetter } from '$lib/utils/string';
 
   export let type: 'discord' | 'gitHub' | 'twitter';
   export let title = uppercaseFirstLetter(type);
