@@ -7,7 +7,7 @@
 
   import clsx from 'clsx';
   import { onMount } from 'svelte';
-  import DocSearchSkeleton from './DocSearchSkeleton.svelte';
+  import AlgoliaSkeleton from './AlgoliaSkeleton.svelte';
 
   export let appId: string;
   export let indexName: string;
@@ -40,5 +40,5 @@
 <div class="contents" bind:this={container} />
 
 <div class={clsx(mounted ? 'hidden' : 'contents')}>
-  <DocSearchSkeleton />
+  <AlgoliaSkeleton />
 </div>

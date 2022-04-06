@@ -3,6 +3,7 @@ import minimist from 'minimist';
 import globby from 'fast-glob';
 import { build } from 'esbuild';
 import kleur from 'kleur';
+import { readFileSync } from 'fs';
 
 const args = minimist(process.argv.slice(2));
 
@@ -14,10 +15,6 @@ if (!args.entry) {
   console.error(kleur.red(`\n\n🚨 Missing entry argument \`--entry\`\n\n`));
 }
 
-if (!args.outdir) {
-  console.error(kleur.red(`\n\n🚨 Missing outdir argument \`--outdir\`\n\n`));
-}
-
 const IS_NODE = args.platform === 'node';
 const shims = IS_NODE ? [args.requireshim && requireShim()].filter(Boolean).join('\n') : '';
 
@@ -26,14 +23,15 @@ async function main() {
     .map((glob) => globby.sync(glob))
     .flat();
 
-  const outdir = path.resolve(process.cwd(), args.outdir);
+  const outdir = args.outdir ? path.resolve(process.cwd(), args.outdir) : undefined;
 
   await build({
     entryPoints,
+    outfile: args.outfile,
     outdir,
     logLevel: args.logLevel ?? 'warning',
     platform: args.platform ?? 'browser',
-    format: 'esm',
+    format: args.format ?? 'esm',
     target: 'es2020',
     watch: args.watch || args.w,
     splitting: IS_NODE || args.nosplit ? false : true,
@@ -48,8 +46,15 @@ async function main() {
     metafile: args.bundle && !args.watch && !args.w,
     incremental: args.watch || args.w,
     bundle: args.bundle,
-    external: args.bundle ? [...(args.external?.split(',') ?? [])] : undefined,
+    external: args.bundle
+      ? [...(args.external?.split(',') ?? []), ...(args.externaldeps ? getDeps() : [])]
+      : undefined,
   });
+}
+
+function getDeps() {
+  const pkg = JSON.parse(readFileSync(path.resolve(process.cwd(), 'package.json')).toString());
+  return [...Object.keys(pkg.dependencies || {}), ...Object.keys(pkg.peerDependencies || {})];
 }
 
 function requireShim() {
@@ -60,8 +65,8 @@ function requireShim() {
     'const require = __createRequire(import.meta.url);',
     'var __require = function(x) { return require(x); };',
     '__require.__proto__.resolve = require.resolve;',
-    'const __filename = __fileURLToPath(import.meta.url);',
-    'const __dirname = __path.dirname(__filename);',
+    'var __filename = __fileURLToPath(import.meta.url);',
+    'var __dirname = __path.dirname(__filename);',
   ].join('\n');
 }
 

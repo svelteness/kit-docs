@@ -14,10 +14,12 @@
 
   const context = getAllContexts();
 
-  async function mountComponent(importPath: string) {
+  async function mountComponent(asset?: string) {
     component?.$destroy();
 
-    const { default: Component } = (await import(importPath)).default as {
+    if (!asset) return;
+
+    const { default: Component } = (await import(/* @vite-ignore */ asset)).default as {
       default: typeof SvelteComponent;
     };
 
@@ -30,41 +32,12 @@
     hydrated = true;
   }
 
-  $: if (target) mountComponent($kitDocs.meta.rootPath);
+  $: if (target) mountComponent($kitDocs.meta?.asset);
 
   onDestroy(() => {
-    component.$destroy();
+    component?.$destroy();
     component = null;
   });
-
-  let html = '';
-  let head = '';
-  let css = '';
-  let style = () => (browser ? '' : `<style>${css ?? ''}</style>`);
-  if (!browser) {
-    const path = require('path');
-
-    const SSRComponent: ReturnType<typeof create_ssr_component> = require(path.resolve(
-      process.cwd(),
-      'src',
-      $kitDocs.meta.rootPath,
-    ));
-
-    ({
-      html,
-      head,
-      css: { code: css },
-    } = SSRComponent.render({ context }));
-  }
 </script>
 
-<svelte:head>
-  {@html head}
-  {@html style()}
-</svelte:head>
-
-<div class="contents" bind:this={target}>
-  {#if !browser}
-    {@html html ?? ''}
-  {/if}
-</div>
+<div class="contents" bind:this={target} />

@@ -1,5 +1,7 @@
 /// <reference types="unplugin-icons/types/svelte" />
 
+declare const __KIT_DOCS_HASH_MAP__: Record<string, string>;
+
 declare module '*?highlight' {
   const tokens: string;
   const code: string;

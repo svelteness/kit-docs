@@ -1,16 +1,11 @@
-/* eslint-disable @typescript-eslint/no-empty-interface */
-
 /// <reference types="@sveltejs/kit" />
 /// <reference types="../globals" />
-/// <reference types="unplugin-icons/types/svelte" />
 
-// See https://kit.svelte.dev/docs/typescript for information about these interfaces
+// See https://kit.svelte.dev/docs/types#the-app-namespace
+// for information about these interfaces
 declare namespace App {
-  interface Locals {}
-
-  interface Platform {}
-
-  interface Session {}
-
-  interface Stuff {}
+  // interface Locals {}
+  // interface Platform {}
+  // interface Session {}
+  // interface Stuff {}
 }

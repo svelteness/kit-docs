@@ -19,13 +19,14 @@
 
   // Only valid on small screen (<992px).
   export let open = false;
+  export let search = false;
 
   let _class: string | ((state: { open: boolean }) => string) = '';
   export { _class as class };
 
   export let style = '';
 
-  const { nav, activeItem } = getSidebarContext();
+  const { config, activeItem } = getSidebarContext();
 
   function scrollToActiveItem() {
     if (!$activeItem) return;
@@ -61,7 +62,7 @@
   </div>
 
   <nav>
-    {#if $$slots.search}
+    {#if search}
       <div class="992:block pointer-events-none sticky top-0 -ml-0.5 hidden min-h-[80px]">
         <div class="h-6 bg-white dark:bg-gray-800" />
         <div class="pointer-events-auto relative bg-white dark:bg-gray-800">
@@ -73,11 +74,15 @@
 
     <slot name="top" />
 
-    <ul class={clsx(!$$slots.search && 'mt-6')}>
-      {#each Object.keys($nav) as category (category)}
-        {@const items = $nav[category]}
+    <ul class={clsx(!search && 'mt-8')}>
+      {#each Object.keys($config.links) as category (category)}
+        {@const items = $config.links[category]}
         <li class="992:mt-10 mt-12 first:mt-0">
-          <h5 class="text-gray-strong 992:mb-3 mb-8 text-lg font-semibold">{category}</h5>
+          {#if category !== '.'}
+            <h5 class="text-gray-strong 992:mb-3 mb-8 text-lg font-semibold">{category}</h5>
+          {:else}
+            <h5 class="opacity-0 invisible my-0 py-0 -mt-8">&nbsp;</h5>
+          {/if}
           <ul class="border-gray-divider space-y-3 border-l">
             {#each items as item (item.title + item.slug)}
               <li class="first:mt-6">

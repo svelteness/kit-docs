@@ -69,6 +69,8 @@ export type MarkdownMeta = {
   frontmatter: MarkdownFrontmatter;
   lastUpdated: number;
   hasHeaders: boolean;
+  slug?: string;
+  asset?: string;
 };
 
 export type MarkdownFrontmatter = Record<string, unknown>;

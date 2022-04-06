@@ -16,155 +16,178 @@
   export let isSidebarOpen = false;
   export let isNavPopoverOpen = false;
 
+  export let search = false;
+
   let closeSidebar: CloseDialogCallback;
 
   const { activeCategory, activeItem, nextItem, previousItem } = getSidebarContext();
 </script>
 
-<div
-  class={clsx(
-    'border-gray-divider fixed top-0 z-30 w-full flex-none border-b',
-    isNavPopoverOpen
-      ? 'bg-gray-100 dark:bg-gray-800'
-      : 'supports-backdrop-blur:bg-white/60 bg-gray-200/95 backdrop-blur dark:bg-gray-800/60',
-  )}
->
-  <Navbar
-    contain
-    on:open-popover={() => {
-      isNavPopoverOpen = true;
-    }}
-    on:close-popover={() => {
-      isNavPopoverOpen = false;
-    }}
+<div class="kit-docs bg-gray-body min-h-full min-w-full h-full">
+  <div
+    class={clsx(
+      'border-gray-divider fixed top-0 z-30 w-full flex-none border-b',
+      isNavPopoverOpen
+        ? 'bg-gray-100 dark:bg-gray-800'
+        : 'supports-backdrop-blur:bg-white/60 bg-gray-200/95 backdrop-blur dark:bg-gray-800/60',
+    )}
   >
-    <svelte:fragment slot="search">
-      <slot name="search" />
-    </svelte:fragment>
+    <Navbar
+      {search}
+      contain
+      on:open-popover={() => {
+        isNavPopoverOpen = true;
+      }}
+      on:close-popover={() => {
+        isNavPopoverOpen = false;
+      }}
+    >
+      <svelte:fragment slot="search">
+        <slot name="search" />
+      </svelte:fragment>
+      <svelte:fragment slot="left">
+        <slot name="navbar-left" />
+      </svelte:fragment>
+      <svelte:fragment slot="right">
+        <slot name="navbar-right" />
+      </svelte:fragment>
+      <svelte:fragment slot="right-alt">
+        <slot name="navbar-right-alt" />
+      </svelte:fragment>
 
-    <svelte:fragment slot="left">
-      <slot name="navbar-left" />
-    </svelte:fragment>
+      <svelte:fragment slot="bottom">
+        <div class="border-gray-divider 992:hidden mt-4 flex w-full items-center border-t pt-4">
+          <button
+            id="main-sidebar-button"
+            type="button"
+            class="text-gray-soft hover:text-gray-inverse -ml-3 inline-flex justify-center rounded-md px-4 py-2 text-sm font-medium"
+            aria-controls="main-sidebar"
+            aria-expanded={ariaBool(isSidebarOpen)}
+            aria-haspopup="true"
+            use:dialogManager={{
+              closeOnSelectSelectors: ['a'],
+              onOpen: () => {
+                isSidebarOpen = true;
+                hideDocumentScrollbar(true);
+              },
+              onClose: () => {
+                isSidebarOpen = false;
+                hideDocumentScrollbar(false);
+              },
+              close: (cb) => {
+                closeSidebar = cb;
+              },
+            }}
+          >
+            <span class="sr-only">Open main sidebar</span>
+            <MenuUnfoldIcon width="28" height="28" />
+          </button>
 
-    <svelte:fragment slot="right">
-      <slot name="navbar-right" />
-    </svelte:fragment>
+          <ol
+            class="text-md text-gray-soft mt-px ml-1 flex items-center whitespace-nowrap leading-6"
+          >
+            {#if $activeCategory !== '.'}
+              <li class="flex items-center">
+                {$activeCategory}
+                <RightArrowIcon class="mx-1" width="16" height="16" />
+              </li>
+            {/if}
+            <li class="truncate font-semibold text-slate-900 dark:text-slate-200">
+              {$activeItem?.title}
+            </li>
+          </ol>
+        </div>
 
-    <svelte:fragment slot="bottom">
-      <div class="border-gray-divider 992:hidden mt-4 flex w-full items-center border-t pt-4">
-        <button
-          id="main-sidebar-button"
-          type="button"
-          class="text-gray-soft hover:text-gray-inverse -ml-3 inline-flex justify-center rounded-md px-4 py-2 text-sm font-medium"
-          aria-controls="main-sidebar"
-          aria-expanded={ariaBool(isSidebarOpen)}
-          aria-haspopup="true"
-          use:dialogManager={{
-            closeOnSelectSelectors: ['a'],
-            onOpen: () => {
-              isSidebarOpen = true;
-              hideDocumentScrollbar(true);
-            },
-            onClose: () => {
-              isSidebarOpen = false;
-              hideDocumentScrollbar(false);
-            },
-            close: (cb) => {
-              closeSidebar = cb;
-            },
-          }}
-        >
-          <span class="sr-only">Open main sidebar</span>
-          <MenuUnfoldIcon width="28" height="28" />
-        </button>
+        <slot name="navbar-bottom" />
+      </svelte:fragment>
 
-        <ol class="text-md text-gray-soft mt-px ml-1 flex items-center whitespace-nowrap leading-6">
-          <li class="flex items-center">
-            {$activeCategory}
-            <RightArrowIcon class="mx-1" width="16" height="16" />
-          </li>
-          <li class="truncate font-semibold text-slate-900 dark:text-slate-200">
-            {$activeItem?.title}
-          </li>
-        </ol>
+      <svelte:fragment slot="popover-top">
+        <slot name="navbar-popover-top" />
+      </svelte:fragment>
+      <svelte:fragment slot="popover-middle">
+        <slot name="navbar-popover-middle" />
+      </svelte:fragment>
+      <svelte:fragment slot="popover-options">
+        <slot name="navbar-popover-options" />
+      </svelte:fragment>
+      <svelte:fragment slot="popover-bottom">
+        <slot name="navbar-popover-bottom" />
+      </svelte:fragment>
+    </Navbar>
+  </div>
+
+  <div
+    class="z-20 mx-auto pt-40 992:pt-20 w-full max-w-[1440px] docs-layout flex flex-row min-h-full"
+  >
+    <Sidebar
+      {search}
+      class={({ open }) =>
+        clsx(
+          'self-start fixed top-0 left-0 transform bg-gray-body z-50 border-gray-divider border-r w-full max-w-[90vw] max-h-screen pb-8 px-5',
+          '-translate-x-full transform transition-transform duration-200 ease-out will-change-transform min-h-screen',
+          '992:translate-x-0 922:block 992:sticky 992:top-20 992:z-0 992:min-h-[calc(100vh-5rem)] 992:max-h-[calc(100vh-5rem)] 992:w-72 992:min-w-[17rem] overflow-y-auto 1460:pl-0.5',
+          open && 'translate-x-0',
+        )}
+      open={isSidebarOpen}
+      on:close={(e) => closeSidebar(e.detail)}
+    >
+      <svelte:fragment slot="top">
+        <slot name="sidebar-top" />
+      </svelte:fragment>
+      <svelte:fragment slot="bottom">
+        <slot name="sidebar-bottom" />
+      </svelte:fragment>
+      <svelte:fragment slot="search">
+        <slot name="search" />
+      </svelte:fragment>
+    </Sidebar>
+
+    <main class="pt-10 min-h-[80vh] w-full max-w-[85ch] overflow-x-hidden px-8 992:px-16">
+      <slot name="main-top" />
+
+      <slot />
+
+      {#if $previousItem || $nextItem}
+        <hr class="border-gray-divider mt-20" />
+      {/if}
+
+      <div class="992:text-xl flex items-center pt-12 pb-20 text-lg font-semibold text-gray-300">
+        {#if $previousItem}
+          <div class="mb-4 flex flex-col items-start">
+            <span class="text-gray-inverse ml-3 mb-4 inline-block">Previous</span>
+            <Button
+              arrow="left"
+              href={$previousItem.slug}
+              class="hover:text-gray-inverse"
+              sveltekit:prefetch
+            >
+              {$previousItem.title}
+            </Button>
+          </div>
+        {/if}
+
+        {#if $nextItem}
+          <div class="ml-auto mb-4 flex flex-col items-end">
+            <span class="text-gray-inverse mr-3 mb-4 inline-block">Next</span>
+            <Button
+              arrow="right"
+              href={$nextItem.slug}
+              class="hover:text-gray-inverse"
+              sveltekit:prefetch
+            >
+              {$nextItem.title}
+            </Button>
+          </div>
+        {/if}
       </div>
 
-      <slot name="navbar-bottom" />
-    </svelte:fragment>
+      <slot name="main-bottom" />
+    </main>
 
-    <svelte:fragment slot="popover-top">
-      <slot name="navbar-popover-top" />
-    </svelte:fragment>
-    <svelte:fragment slot="popover-middle">
-      <slot name="navbar-popover-middle" />
-    </svelte:fragment>
-    <svelte:fragment slot="popover-options">
-      <slot name="navbar-popover-options" />
-    </svelte:fragment>
-    <svelte:fragment slot="popover-bottom">
-      <slot name="navbar-popover-bottom" />
-    </svelte:fragment>
-  </Navbar>
-</div>
+    <div class="flex-1" />
 
-<div class="z-20 mx-auto pt-40 992:pt-20 w-full max-w-[1440px] docs-layout flex flex-row">
-  <Sidebar
-    class={({ open }) =>
-      clsx(
-        'self-start fixed top-0 left-0 transform bg-gray-body z-50 border-gray-divider border-r w-full max-w-[90vw] max-h-screen pb-8 px-5',
-        '-translate-x-full transform transition-transform duration-200 ease-out will-change-transform',
-        '992:translate-x-0 922:block 992:sticky 992:top-20 992:z-0 992:max-h-[calc(100vh-5rem)] 992:w-72 992:min-w-[17rem] overflow-y-auto 1460:pl-0.5',
-        open && 'translate-x-0',
-      )}
-    open={isSidebarOpen}
-    on:close={(e) => closeSidebar(e.detail)}
-  >
-    <svelte:fragment slot="top">
-      <slot name="sidebar-top" />
-    </svelte:fragment>
-    <svelte:fragment slot="bottom">
-      <slot name="sidebar-bottom" />
-    </svelte:fragment>
-    <svelte:fragment slot="search">
-      <slot name="search" />
-    </svelte:fragment>
-  </Sidebar>
-
-  <main class="pt-10 min-h-[80vh] w-full max-w-[85ch] overflow-x-hidden px-8 992:px-16">
-    <slot name="main-top" />
-
-    <slot />
-
-    {#if $previousItem || $nextItem}
-      <hr class="border-gray-divider mt-20" />
-    {/if}
-
-    <div class="992:text-xl flex items-center pt-12 pb-20 text-lg font-semibold text-gray-300">
-      {#if $previousItem}
-        <div class="mb-4 flex flex-col items-start">
-          <span class="text-gray-inverse ml-3 mb-4 inline-block">Previous</span>
-          <Button arrow="left" href={$previousItem.slug} class="hover:text-gray-inverse">
-            {$previousItem.title}
-          </Button>
-        </div>
-      {/if}
-
-      {#if $nextItem}
-        <div class="ml-auto mb-4 flex flex-col items-end">
-          <span class="text-gray-inverse mr-3 mb-4 inline-block">Next</span>
-          <Button arrow="right" href={$nextItem.slug} class="hover:text-gray-inverse">
-            {$nextItem.title}
-          </Button>
-        </div>
-      {/if}
-    </div>
-
-    <slot name="main-bottom" />
-  </main>
-
-  <div class="flex-1" />
-
-  <OnThisPage
-    class="pt-10 pb-8 hidden overflow-auto max-h-[calc(100vh-5rem)] min-w-[160px] sticky top-20 right-4 1440:right-6 1440:pr-4 1280:block"
-  />
+    <OnThisPage
+      class="pt-10 pb-8 hidden overflow-auto max-h-[calc(100vh-5rem)] min-w-[160px] sticky top-20 right-4 1440:right-6 1440:pr-4 1280:block"
+    />
+  </div>
 </div>

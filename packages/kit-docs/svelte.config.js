@@ -1,5 +1,6 @@
 import adapter from '@sveltejs/adapter-auto';
-import * as preprocess from 'svelte-preprocess';
+import preprocess from 'svelte-preprocess';
+import Icons from 'unplugin-icons/vite';
 
 import { kitDocsPlugin } from './node/index.js';
 
@@ -7,8 +8,7 @@ import { kitDocsPlugin } from './node/index.js';
 const config = {
   extensions: ['.svelte', '.md'],
 
-  // @ts-expect-error - CJS -> ESM conversion.
-  preprocess: [preprocess.default.typescript()],
+  preprocess: preprocess(),
 
   kit: {
     adapter: adapter(),
@@ -19,7 +19,10 @@ const config = {
     },
 
     vite: {
-      plugins: [kitDocsPlugin()],
+      plugins: [
+        Icons({ compiler: 'svelte' }),
+        kitDocsPlugin({ content: ['src/docs/**/*.(md|svelte)'] }),
+      ],
     },
   },
 };

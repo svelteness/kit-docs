@@ -75,7 +75,18 @@ function addGlobalImports(tags: string[], glob: string) {
   tags.push(['<script>', globalImports, '</script>'].join('\n'));
 }
 
-function parseMarkdown(
+export function getFrontmatter(source: string): Record<string, any> {
+  const { data: frontmatter } = matter(source, {
+    excerpt_separator: '<!-- more -->',
+    engines: {
+      toml: toml.parse.bind(toml),
+    },
+  });
+
+  return frontmatter ?? {};
+}
+
+export function parseMarkdown(
   parser: MarkdownParser,
   source: string,
   filePath: string,

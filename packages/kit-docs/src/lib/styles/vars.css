@@ -3,7 +3,7 @@
   scroll-padding-top: 8rem;
 }
 
-.kit-docs.markdown {
+:root {
   --color-brand: rgb(243, 12, 89);
   --color-brand-200: rgb(247, 105, 152);
   --color-brand-300: rgb(247, 90, 142);
@@ -30,7 +30,7 @@
   --prose-pre-bg: rgb(31, 41, 55);
 }
 
-.dark .kit-docs.markdown {
+:root.dark {
   color-scheme: dark;
 
   --color-brand: rgb(247, 90, 142);

@@ -1,17 +1,23 @@
-import { highlightPlugin, type HighlightPluginOptions } from 'highlight-plugin';
-import { markdownPlugin, type MarkdownPluginOptions } from 'markdown-plugin';
-import Icons from 'unplugin-icons/vite';
+import { type HighlightPluginOptions, kitDocsHighlightPlugin } from 'highlight-plugin';
+import { kitDocsMarkdownPlugin, type MarkdownPluginOptions } from 'markdown-plugin';
 import { type Plugin } from 'vite';
 
 export type KitDocsPluginOptions = {
-  icons?: false;
-  highlight?: HighlightPluginOptions;
+  highlight?: false | HighlightPluginOptions;
   markdown?: MarkdownPluginOptions;
 };
 
 export const kitDocsPlugin = (options: KitDocsPluginOptions = {}): Plugin[] =>
   [
-    highlightPlugin(options.highlight),
-    markdownPlugin(options.markdown),
-    options.icons !== false && Icons({ compiler: 'svelte' }),
-  ].filter(Boolean);
+    kitDocsHashMapPlugin(),
+    options.highlight !== false && kitDocsHighlightPlugin(options.highlight),
+    kitDocsMarkdownPlugin(options.markdown),
+  ].filter(Boolean) as Plugin[];
+
+export function kitDocsHashMapPlugin(): Plugin {
+  return {
+    name: '@svelteness/hash-map',
+    enforce: 'pre',
+    // ...
+  };
+}

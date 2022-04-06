@@ -1,8 +1,7 @@
 @import url('./fonts.css');
+@import url('./vars.css');
+@import url('./globals.css');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-@import url('./vars.css');
-@import url('./globals.css');

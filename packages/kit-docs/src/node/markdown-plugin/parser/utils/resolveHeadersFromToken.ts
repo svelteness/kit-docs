@@ -34,7 +34,7 @@ export const resolveHeadersFromTokens = (
       headers.push(header);
       stack.push(header);
     } else {
-      stack[0].children.push(header);
+      (stack[0].children ??= []).push(header);
       stack.unshift(header);
     }
   };

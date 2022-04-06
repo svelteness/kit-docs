@@ -13,6 +13,9 @@
   export let iconWidth = 28;
   export let iconHeight = 28;
 
+  let __class = '';
+  export { __class as class };
+
   const icons = {
     discord: DiscordIcon,
     gitHub: GitHubIcon,
@@ -20,7 +23,11 @@
   };
 </script>
 
-<a class="relative flex items-center text-gray-soft hover:text-gray-inverse" {href} target="_blank">
+<a
+  class={clsx('relative flex items-center text-gray-soft hover:text-gray-inverse', __class)}
+  {href}
+  target="_blank"
+>
   <svelte:component
     this={icons[type]}
     class={clsx($$slots.default && 'mr-2.5')}

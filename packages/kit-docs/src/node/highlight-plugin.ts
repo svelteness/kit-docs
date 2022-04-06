@@ -12,7 +12,7 @@ const PLUGIN_NAME = '@svelteness/highlight' as const;
 
 export type HighlightPluginOptions = HighlighterOptions;
 
-export const highlightPlugin = (options: HighlightPluginOptions = {}): Plugin => {
+export const kitDocsHighlightPlugin = (options: HighlightPluginOptions = {}): Plugin => {
   let highlighter: Highlighter;
 
   const highlightQueryRE = /\?highlight/;

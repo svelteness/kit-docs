@@ -1,5 +1,5 @@
-import { createFilter, type FilterPattern } from '@rollup/pluginutils';
-import { normalizePath, type Plugin } from 'vite';
+import { createFilter, type FilterPattern, normalizePath } from '@rollup/pluginutils';
+import { type Plugin } from 'vite';
 
 import {
   AddTopLevelHtmlTags,
@@ -28,7 +28,7 @@ export type MarkdownPluginOptions = {
   exclude?: FilterPattern;
   /**
    * A glob pointing to Svelte component files that will be imported into every single
-   * markdown file. Minification/treeshaking will remove them if they're not being used.
+   * markdown file.
    *
    * @defaultValue 'src/lib/components/markdown/**\/[^_]*.svelte'
    */
@@ -52,7 +52,7 @@ const DEFAULT_INCLUDE_RE = /\.md($|\?)/;
 const DEFAULT_EXCLUDE_RE = null;
 const DEFAULT_GLOBAL_COMPONENTS = 'src/lib/components/markdown/**/[^_]*.svelte';
 
-export function markdownPlugin(options: MarkdownPluginOptions = {}): Plugin {
+export function kitDocsMarkdownPlugin(options: MarkdownPluginOptions = {}): Plugin {
   let baseUrl: string;
   let parser: MarkdownParser;
   let isBuild: boolean;

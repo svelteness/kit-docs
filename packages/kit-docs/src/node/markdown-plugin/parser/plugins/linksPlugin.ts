@@ -1,4 +1,4 @@
-import { lstatSync } from 'fs-extra';
+import { lstatSync } from 'fs';
 import { type PluginSimple } from 'markdown-it';
 import { dirname, relative, resolve } from 'path';
 

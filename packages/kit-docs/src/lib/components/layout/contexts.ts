@@ -59,7 +59,7 @@ export function isActiveSidebarItem({ match, slug }: SidebarItem, currentPath: s
 export const SIDEBAR_CONTEXT_KEY = Symbol();
 
 export type SidebarContext = {
-  nav: Readable<SidebarConfig>;
+  config: Readable<SidebarConfig>;
   allItems: Readable<SidebarItem[]>;
   activeItemIndex: Readable<number>;
   activeItem: Readable<SidebarItem | null>;
@@ -90,16 +90,16 @@ export function createSidebarContext(config: Readable<SidebarConfig>): SidebarCo
     ([$allItems, $activeItemIndex]) => $allItems[$activeItemIndex + 1],
   );
 
-  const activeCategory = derived([config, activeItem], ([$nav, $activeItem]) =>
-    Object.keys($nav).find((category) =>
-      $nav[category].some(
+  const activeCategory = derived([config, activeItem], ([$config, $activeItem]) =>
+    Object.keys($config.links).find((category) =>
+      $config.links[category]?.some(
         (item) => item.title === $activeItem?.title && item.slug === $activeItem?.slug,
       ),
     ),
   );
 
   const context: SidebarContext = {
-    nav: config,
+    config,
     allItems,
     activeItemIndex,
     activeItem,

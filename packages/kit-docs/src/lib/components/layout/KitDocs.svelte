@@ -15,11 +15,11 @@
   export let meta: MarkdownMeta;
 
   const navbarConfig = writable<NavbarConfig>();
-  $: $navbarConfig = navbar;
+  $: $navbarConfig = navbar ?? { links: [] };
   setNavbarContext(navbarConfig);
 
   const sidebarConfig = writable<SidebarConfig>();
-  $: $sidebarConfig = sidebar;
+  $: $sidebarConfig = sidebar ?? { links: {} };
   setSidebarContext(createSidebarContext(sidebarConfig));
 
   $: __kitDocs.set({

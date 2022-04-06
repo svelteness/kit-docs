@@ -19,7 +19,7 @@ export type MarkdownMeta = {
   frontmatter: MarkdownFrontmatter;
   lastUpdated: number;
   slug: string;
-  rootPath: string;
+  asset: string;
   hasHeaders: boolean;
 };
 

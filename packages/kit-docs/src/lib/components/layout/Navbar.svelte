@@ -14,6 +14,7 @@
   import { getNavbarContext } from './contexts';
 
   export let contain = false;
+  export let search = false;
 
   const dispatch = createEventDispatcher();
 
@@ -36,7 +37,9 @@
     <div class="flex-1" />
 
     <div class="992:hidden -mr-2 flex items-center">
-      <slot name="search" />
+      {#if search}
+        <slot name="search" />
+      {/if}
 
       <Popover overlay on:open={onOpenPopover} on:close={onClosePopover}>
         <svelte:fragment slot="button">
@@ -102,10 +105,12 @@
         </ul>
       </nav>
 
-      <div class="border-gray-divider mx-5 h-7 w-2 border-l-[1.5px]" />
+      <slot name="right" />
+
+      <div class="border-gray-divider ml-6 mr-2.5 h-7 w-2 border-l-[1.5px]" />
 
       <div class="hidden 992:flex items-center">
-        <slot name="right" />
+        <slot name="right-alt" />
         <ColorSchemeMenu />
       </div>
     </div>

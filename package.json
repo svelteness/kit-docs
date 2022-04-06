@@ -8,7 +8,7 @@
     "packages/*"
   ],
   "scripts": {
-    "build": "turbo run build",
+    "build": "turbo run build:pkg",
     "build:app": "turbo run build:app",
     "build:vercel": "turbo run build:vercel",
     "clean": "turbo run clean",
