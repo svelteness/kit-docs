@@ -1,27 +1,49 @@
 import type { RequestHandler } from '@sveltejs/kit';
 import { readdirSync, readFileSync, statSync } from 'fs';
+import { globbySync } from 'globby';
+import kleur from 'kleur';
 import LRUCache from 'lru-cache';
 import { getFrontmatter } from 'markdown-plugin/parser';
 import { basename, dirname, extname, relative, resolve } from 'path';
 import { kebabToTitleCase } from 'utils/string';
 
-const SRC_DIR = resolve(process.cwd(), 'src');
+const CWD = process.cwd();
+const SRC_DIR = resolve(CWD, 'src');
+
+const orderedPathTokenRE = /\[\d\]/g;
 
 export function createMetaRequestHandler(): RequestHandler {
-  return async () => {
-    // TODO: when looking for file, we need to account for numbers [1]introduction/[2]...
-    // TODO: this needs to write output somewhere (slugs)...
+  return async ({ params }) => {
+    const slug = paramToPath(params.file);
+
+    try {
+      const glob = `src/${slug
+        .split('/')
+        .map((s) => `*${s}`)
+        .join('/')}.{md,svelte}`;
+
+      const file = globbySync(glob)[0];
+      const filePath = resolve(CWD, file);
+      const matchedSlug = file.replace(orderedPathTokenRE, '').replace(extname(file), '');
+
+      if (matchedSlug !== `src/${slug}`) {
+        throw Error('Could not find file.');
+      }
+
+      // TODO: this needs to write output somewhere (slugs)...
+    } catch (e) {
+      console.log(
+        kleur.red(`\n[kit-docs]: meta request failed\n\nFile: ${params.file}.\nSlug: ${slug}\n`),
+      );
+    }
 
     return {
-      body: {
-        hasHeaders: false,
-      },
+      body: {},
     };
   };
 }
 
 export function createSidebarRequestHandler(): RequestHandler {
-  const orderedPathTokenRE = /\[\d\]/g;
   const headingRE = /#\s(.*?)($|\n|\r)/;
 
   return async ({ params }) => {
@@ -58,8 +80,10 @@ export function createSidebarRequestHandler(): RequestHandler {
         },
       };
     } catch (e) {
-      console.warn(
-        `\n[kit-docs]: sidebar request failed\n\nMessage: Directory does not exist.\nPath: ${path}\n`,
+      console.log(
+        kleur.red(
+          `\n[kit-docs]: sidebar request failed\n\nMessage: Directory does not exist.\nPath: ${path}\n`,
+        ),
       );
     }
 

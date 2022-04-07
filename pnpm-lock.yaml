@@ -115,6 +115,7 @@ importers:
       clsx: ^1.1.1
       globby: ^13.1.1
       gray-matter: ^4.0.3
+      kleur: ^4.1.4
       lru-cache: ^7.4.4
       markdown-it: ^12.3.2
       markdown-it-anchor: ^8.4.1
@@ -143,6 +144,7 @@ importers:
       clsx: 1.1.1
       globby: 13.1.1
       gray-matter: 4.0.3
+      kleur: 4.1.4
       lru-cache: 7.7.3
       markdown-it: 12.3.2
       markdown-it-anchor: 8.5.0_d643ca6eb40ae68ab966a77bead78073
@@ -2825,7 +2827,6 @@ packages:
   /kleur/4.1.4:
     resolution: {integrity: sha512-8QADVssbrFjivHWQU7KkMgptGTl6WAcSdlbBPY4uNF+mWr6DGcKrvY2w4FQJoXch7+fKMjj0dRrL75vk3k23OA==}
     engines: {node: '>=6'}
-    dev: true
 
   /kolorist/1.5.1:
     resolution: {integrity: sha512-lxpCM3HTvquGxKGzHeknB/sUjuVoUElLlfYnXZT73K8geR9jQbroGlSCFBax9/0mpGoD3kzcMLnOlGQPJJNyqQ==}
