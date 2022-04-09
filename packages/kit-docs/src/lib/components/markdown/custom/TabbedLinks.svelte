@@ -12,7 +12,7 @@
   export let links: TabbedLink[] = [];
 </script>
 
-<div class="not-prose mt-10 mb-6 flex overflow-auto p-1">
+<div class="not-kd-prose mt-10 mb-6 flex overflow-auto p-1">
   <div class="min-w-full flex-none pr-4">
     <ul class="flex space-x-6 whitespace-nowrap border-b border-gray-divider">
       {#each links as link (link.title + link.href)}

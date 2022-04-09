@@ -8,19 +8,21 @@ import type { MarkdownComponents, MarkdownParser } from '../types';
 
 const propsRE = /\|?(.*?)=(.*?)(?=(\||$))/g;
 const bodyRE = /\((.*?)\)(?:=)(.*)/;
-const tagRE = /tag=(.*?)(?:&|$)/;
-const slotRE = /slot=(.*?)(?:&|$)/;
+const tagRE = /tag=(.*?)(?:&|\))/;
+const slotRE = /slot=(.*?)(?:&|\))/;
 
 function renderDefault(componentName: string) {
-  return (tokens: Token[], idx: number) => {
+  return function (tokens: Token[], idx: number) {
     const token = tokens[idx];
 
     const props: string[] = [];
     const body: string[] = [];
 
-    for (const [propMatch, prop, value] of token.info.matchAll(propsRE)) {
+    const matchedProps = token.info.trim().matchAll(propsRE);
+
+    for (const [propMatch, prop, value] of matchedProps) {
       if (bodyRE.test(propMatch)) {
-        const [_, content] = propMatch.match(bodyRE) ?? [];
+        const [_, __, content] = propMatch.match(bodyRE) ?? [];
         const tag = propMatch.match(tagRE)?.[1];
         const slot = propMatch.match(slotRE)?.[1];
         if (isString(tag) && isString(content)) {
@@ -34,9 +36,9 @@ function renderDefault(componentName: string) {
     }
 
     if (token.nesting === 1) {
-      return `<${componentName} ${props.join(' ')}>\n ${body.join('\n ')}`;
+      return `<${componentName} ${props.join(' ')}>\n ${body.join('\n ')}\n`;
     } else {
-      return `</${componentName}\n`;
+      return `</${componentName}>\n`;
     }
   };
 }
@@ -49,6 +51,6 @@ export const containersPlugin: PluginWithOptions<MarkdownComponents> = (
     const name: string = options?.name ?? titleToSnakeCase(componentName);
     const marker: string = options?.marker ?? ':';
     const render = options?.renderer?.(componentName) ?? renderDefault(componentName);
-    parser.use(container(name, { marker, render }));
+    parser.use(container, name, { marker, render });
   }
 };

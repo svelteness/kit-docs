@@ -31,7 +31,7 @@
   bind:this={li}
 >
   <div class={clsx('mb-6 1200:mb-2', orientation === 'horizontal' ? 'col-span-2' : 'col-span-4')}>
-    <span class="not-prose mb-4 text-base font-semibold leading-7 text-gray-inverse">
+    <span class="not-kd-prose mb-4 text-base font-semibold leading-7 text-gray-inverse">
       <slot name="title" />
     </span>
 

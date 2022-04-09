@@ -11,6 +11,7 @@ import minimist from 'minimist';
 import path from 'path';
 import prompt from 'enquirer';
 import semver from 'semver';
+import { writeFileSync } from 'fs';
 
 // @ts-expect-error - .
 const require = createRequire(import.meta.url);

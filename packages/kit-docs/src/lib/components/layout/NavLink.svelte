@@ -10,7 +10,7 @@
   $: isActive = match?.test($page.url.pathname);
 </script>
 
-<li class="mt-4 first:mt-0">
+<li class="mt-4 first:mt-0 992:mt-0">
   <a
     class={clsx(
       isActive

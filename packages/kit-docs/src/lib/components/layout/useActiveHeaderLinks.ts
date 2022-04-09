@@ -94,10 +94,16 @@ export function useActiveHeaderLinks() {
   );
 
   onMount(() => {
-    onScroll();
-    window.addEventListener('scroll', onScroll);
-    disposal.add(() => window.removeEventListener('scroll', onScroll));
-    disposal.add(kitDocs.subscribe(onScroll));
+    setTimeout(() => {
+      onScroll();
+      window.addEventListener('scroll', onScroll);
+      disposal.add(() => window.removeEventListener('scroll', onScroll));
+      disposal.add(kitDocs.subscribe(onScroll));
+    }, 300);
+
+    return () => {
+      disposal.dispose();
+    };
   });
 }
 

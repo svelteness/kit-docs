@@ -20,7 +20,6 @@ export * from './loaders';
 export * from './components/layout/contexts';
 export { default as Footer } from './components/layout/Footer.svelte';
 export { default as KitDocs } from './components/layout/KitDocs.svelte';
-export { default as KitDocsContent } from './components/layout/KitDocsContent.svelte';
 export { default as KitDocsLayout } from './components/layout/KitDocsLayout.svelte';
 export { default as Navbar } from './components/layout/Navbar.svelte';
 export { default as NavLink } from './components/layout/NavLink.svelte';

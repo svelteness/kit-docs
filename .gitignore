@@ -3,6 +3,8 @@ turbo-graph*
 
 .svelte-kit
 
+dist/
+
 /scratchpad/
 /sandbox/
 /apps/*/sandbox/

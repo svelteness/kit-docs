@@ -1,10 +1,10 @@
 import fs from 'fs';
-import { globbySync } from 'globby';
 import matter from 'gray-matter';
 import LRUCache from 'lru-cache';
-import path from 'path';
 import toml from 'toml';
 
+import { getFileNameFromPath } from '../../utils/path';
+import { hashString } from '../../utils/string';
 import type {
   MarkdownHeader,
   MarkdownMeta,
@@ -21,16 +21,16 @@ export type ParseMarkdownToSvelteResult = {
   meta: MarkdownMeta;
 };
 
-const cache = new LRUCache<string, ParseMarkdownToSvelteResult>({ max: 1024 });
-
+const svelteCache = new LRUCache<string, ParseMarkdownToSvelteResult>({ max: 1024 });
 export function parseMarkdownToSvelte(
   parser: MarkdownParser,
   source: string,
   filePath: string,
   options: ParseMarkdownOptions = {},
 ): ParseMarkdownToSvelteResult {
-  const cachedResult = cache.get(source);
-  if (cachedResult) return cachedResult;
+  const cacheKey = hashString(filePath + source);
+
+  if (svelteCache.has(cacheKey)) return svelteCache.get(cacheKey)!;
 
   const {
     html,
@@ -42,12 +42,12 @@ export function parseMarkdownToSvelte(
 
   const { hoistedTags = [] } = parserEnv as MarkdownParserEnv;
 
-  const fileName = path.basename(filePath, path.extname(filePath));
+  const fileName = getFileNameFromPath(filePath);
 
   hoistedTags.push(...(options.topLevelHtmlTags?.({ fileName, filePath, meta }) ?? []));
 
-  if (options.globalComponents) {
-    addGlobalImports(hoistedTags, options.globalComponents);
+  if (options.globalComponentFiles) {
+    addGlobalImports(hoistedTags, options.globalComponentFiles);
   }
 
   const component =
@@ -58,16 +58,14 @@ export function parseMarkdownToSvelte(
     meta,
   };
 
-  cache.set(source, result);
+  svelteCache.set(cacheKey, result);
   return result;
 }
 
-function addGlobalImports(tags: string[], glob: string) {
-  const files = globbySync(glob, { cwd: process.cwd() });
-
+function addGlobalImports(tags: string[], files: string[]) {
   const globalImports = files
     .map((filePath) => {
-      const componentName = path.basename(filePath, path.extname(filePath));
+      const componentName = getFileNameFromPath(filePath);
       return `import ${componentName} from '/${filePath.replace(/^\//, '')}';`;
     })
     .join('\n');
@@ -75,7 +73,12 @@ function addGlobalImports(tags: string[], glob: string) {
   tags.push(['<script>', globalImports, '</script>'].join('\n'));
 }
 
+const frontmatterCache = new LRUCache({ max: 1024 });
 export function getFrontmatter(source: string): Record<string, any> {
+  const cacheKey = hashString(source);
+
+  if (frontmatterCache.has(cacheKey)) return frontmatterCache.get(cacheKey)!;
+
   const { data: frontmatter } = matter(source, {
     excerpt_separator: '<!-- more -->',
     engines: {
@@ -83,15 +86,21 @@ export function getFrontmatter(source: string): Record<string, any> {
     },
   });
 
+  frontmatterCache.set(cacheKey, frontmatter ?? {});
   return frontmatter ?? {};
 }
 
+const mdCache = new LRUCache<string, ParsedMarkdownResult>({ max: 1024 });
 export function parseMarkdown(
   parser: MarkdownParser,
   source: string,
   filePath: string,
   options: ParseMarkdownOptions = {},
 ): ParsedMarkdownResult {
+  const cacheKey = hashString(filePath + source);
+
+  if (mdCache.has(cacheKey)) return mdCache.get(cacheKey)!;
+
   const {
     data: frontmatter,
     content,
@@ -138,6 +147,7 @@ export function parseMarkdown(
     },
   };
 
+  mdCache.set(cacheKey, result);
   return result;
 }
 

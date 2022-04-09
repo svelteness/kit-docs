@@ -1,6 +1,10 @@
 import { createFilter, type FilterPattern, normalizePath } from '@rollup/pluginutils';
+import { globbySync } from 'globby';
+import { join, resolve } from 'path';
+import { fileURLToPath } from 'url';
 import { type Plugin } from 'vite';
 
+import { getFileNameFromPath } from '../utils/path';
 import {
   AddTopLevelHtmlTags,
   createMarkdownParser,
@@ -13,7 +17,9 @@ import {
 
 const PLUGIN_NAME = '@svelteness/markdown' as const;
 
-export type MarkdownPluginOptions = {
+const __dirname = fileURLToPath(import.meta.url);
+
+export type MarkdownPluginOptions = MarkdownParserOptions & {
   /**
    * The markdown files to be parsed and rendered as Svelte components.
    *
@@ -40,12 +46,6 @@ export type MarkdownPluginOptions = {
    * @defaultValue `null`
    */
   topLevelHtmlTags?: AddTopLevelHtmlTags;
-  /**
-   * Markdown parser options.
-   *
-   * @defaultValue `null`
-   */
-  parser?: MarkdownParserOptions;
 };
 
 const DEFAULT_INCLUDE_RE = /\.md($|\?)/;
@@ -58,8 +58,13 @@ export function kitDocsMarkdownPlugin(options: MarkdownPluginOptions = {}): Plug
   let isBuild: boolean;
   let define: Record<string, unknown> | undefined;
 
-  const topLevelHtmlTags = options.topLevelHtmlTags;
-  const globalComponents = options.globalComponents ?? DEFAULT_GLOBAL_COMPONENTS;
+  const {
+    include = DEFAULT_INCLUDE_RE,
+    exclude = DEFAULT_EXCLUDE_RE,
+    globalComponents = DEFAULT_GLOBAL_COMPONENTS,
+    topLevelHtmlTags,
+    ...parserOptions
+  } = options;
 
   const filter = createFilter(
     options.include ?? DEFAULT_INCLUDE_RE,
@@ -69,17 +74,44 @@ export function kitDocsMarkdownPlugin(options: MarkdownPluginOptions = {}): Plug
   /** Page system file paths. */
   const files = new Set<string>();
 
+  const globalComponentFiles = globbySync(globalComponents).map(normalizePath);
+
   const parseOptions = (): ParseMarkdownOptions => ({
     baseUrl,
     escapeConstants: isBuild,
     define,
-    globalComponents,
+    globalComponentFiles,
     topLevelHtmlTags,
   });
 
-  // TODO: extend this with global custom components
-  // TODO: add custom kit docs components if don't exist
-  const components: MarkdownComponents = options.parser?.components ?? {};
+  const components: MarkdownComponents = parserOptions?.components ?? {};
+
+  function addGlobalComponents(files: string[]) {
+    for (const file of files) {
+      const name = getFileNameFromPath(file);
+      const has = globalComponentFiles.some((file) => getFileNameFromPath(file) === name);
+      if (!has) globalComponentFiles.push(file);
+    }
+  }
+
+  function addMarkdownComponents(files: string[]) {
+    for (const file of files) {
+      const componentName = getFileNameFromPath(file);
+      const has = components.custom?.some(({ name }) => name === componentName);
+      if (!has) (components.custom ??= []).push({ name: componentName });
+    }
+  }
+
+  addMarkdownComponents(globalComponentFiles);
+
+  try {
+    const root = resolve(__dirname, '../../client/components/markdown');
+    const paths = globbySync('**/*.svelte', { cwd: root }).map(normalizePath);
+    addMarkdownComponents(paths);
+    addGlobalComponents(paths.map((path) => join(root, path)));
+  } catch (e) {
+    // no-op
+  }
 
   return {
     name: PLUGIN_NAME,
@@ -89,7 +121,7 @@ export function kitDocsMarkdownPlugin(options: MarkdownPluginOptions = {}): Plug
       isBuild = config.command === 'build';
       define = config.define;
       parser = await createMarkdownParser({
-        ...options.parser,
+        ...parserOptions,
         components,
       });
     },

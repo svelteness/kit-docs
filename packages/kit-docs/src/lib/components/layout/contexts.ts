@@ -2,7 +2,8 @@ import { getContext, setContext, SvelteComponent } from 'svelte';
 import { derived, type Readable } from 'svelte/store';
 
 import { page } from '$app/stores';
-import { isRegExp } from '$lib/utils/unit';
+import { kebabToTitleCase, titleToKebabCase } from '$lib/utils/string';
+import { isRegExp, isString } from '$lib/utils/unit';
 
 export const NAVBAR_CONTEXT_KEY = Symbol('');
 
@@ -31,18 +32,63 @@ export function setNavbarContext(context: NavbarContext) {
   setContext(NAVBAR_CONTEXT_KEY, context);
 }
 
-export type SidebarItem = {
+export type SidebarLink = {
   title: string;
   slug: string;
   match?: 'deep' | RegExp;
   icon?: { before?: SvelteComponent; after?: SvelteComponent };
 };
 
-export type SidebarConfig = {
-  links: Record<string, SidebarItem[]>;
+export type SidebarLinks = {
+  [category: string]: SidebarLink[];
 };
 
-export function isActiveSidebarItem({ match, slug }: SidebarItem, currentPath: string) {
+export type SidebarSimpleLinks = {
+  [category: string]: string[];
+};
+
+export type SidebarConfig = {
+  baseUrl?: string;
+  links: SidebarLinks | SidebarSimpleLinks;
+};
+
+export type NormalizedSidebarConfig = {
+  baseUrl?: string;
+  links: SidebarLinks;
+};
+
+export function normalizeSidebarConfig(config?: SidebarConfig): NormalizedSidebarConfig {
+  if (!config) return { links: {} };
+
+  const links: SidebarLinks = {};
+
+  const baseUrl = config.baseUrl?.replace(/\/$/, '') ?? '';
+
+  for (const category of Object.keys(config.links)) {
+    const categoryLinks = config.links[category];
+    const categorySlug = titleToKebabCase(category);
+
+    for (const categoryLink of categoryLinks) {
+      const link: SidebarLink = isString(categoryLink)
+        ? {
+            title: kebabToTitleCase(categoryLink),
+            slug: `${baseUrl}/${categorySlug}/${categoryLink}`,
+          }
+        : categoryLink;
+
+      if (!links[category]) links[category] = [];
+
+      links[category].push(link);
+    }
+  }
+
+  return {
+    ...config,
+    links,
+  };
+}
+
+export function isActiveSidebarLink({ match, slug }: SidebarLink, currentPath: string) {
   if (match === 'deep') {
     return (
       currentPath === slug || (currentPath.startsWith(slug) && currentPath[slug.length] === '/')
@@ -59,52 +105,54 @@ export function isActiveSidebarItem({ match, slug }: SidebarItem, currentPath: s
 export const SIDEBAR_CONTEXT_KEY = Symbol();
 
 export type SidebarContext = {
-  config: Readable<SidebarConfig>;
-  allItems: Readable<SidebarItem[]>;
-  activeItemIndex: Readable<number>;
-  activeItem: Readable<SidebarItem | null>;
-  previousItem: Readable<SidebarItem | null>;
-  nextItem: Readable<SidebarItem | null>;
+  config: Readable<NormalizedSidebarConfig>;
+  allLinks: Readable<SidebarLink[]>;
+  activeLinkIndex: Readable<number>;
+  activeLink: Readable<SidebarLink | null>;
+  previousLink: Readable<SidebarLink | null>;
+  nextLink: Readable<SidebarLink | null>;
   activeCategory: Readable<string | null>;
 };
 
-export function createSidebarContext(config: Readable<SidebarConfig>): SidebarContext {
-  const allItems = derived(config, ($config) => Object.values($config.links).flat());
-
-  const activeItemIndex = derived([allItems, page], ([$allItems, $page]) =>
-    $allItems.findIndex((item) => isActiveSidebarItem(item, $page.url.pathname)),
+export function createSidebarContext(config: Readable<NormalizedSidebarConfig>): SidebarContext {
+  const allLinks = derived(config, ($config) =>
+    Object.values(normalizeSidebarConfig($config).links).flat(),
   );
 
-  const activeItem = derived(
-    [allItems, activeItemIndex],
-    ([$allItems, $activeItemIndex]) => $allItems[$activeItemIndex],
+  const activeLinkIndex = derived([allLinks, page], ([$allLinks, $page]) =>
+    $allLinks.findIndex((link) => isActiveSidebarLink(link, $page.url.pathname)),
   );
 
-  const previousItem = derived(
-    [allItems, activeItemIndex],
-    ([$allItems, $activeItemIndex]) => $allItems[$activeItemIndex - 1],
+  const activeLink = derived(
+    [allLinks, activeLinkIndex],
+    ([$allLinks, $activeLinkIndex]) => $allLinks[$activeLinkIndex],
   );
 
-  const nextItem = derived(
-    [allItems, activeItemIndex],
-    ([$allItems, $activeItemIndex]) => $allItems[$activeItemIndex + 1],
+  const previousLink = derived(
+    [allLinks, activeLinkIndex],
+    ([$allLinks, $activeLinkIndex]) => $allLinks[$activeLinkIndex - 1],
   );
 
-  const activeCategory = derived([config, activeItem], ([$config, $activeItem]) =>
+  const nextLink = derived(
+    [allLinks, activeLinkIndex],
+    ([$allLinks, $activeLinkIndex]) => $allLinks[$activeLinkIndex + 1],
+  );
+
+  const activeCategory = derived([config, activeLink], ([$config, $activeLink]) =>
     Object.keys($config.links).find((category) =>
       $config.links[category]?.some(
-        (item) => item.title === $activeItem?.title && item.slug === $activeItem?.slug,
+        (link) => link.title === $activeLink?.title && link.slug === $activeLink?.slug,
       ),
     ),
   );
 
   const context: SidebarContext = {
     config,
-    allItems,
-    activeItemIndex,
-    activeItem,
-    previousItem,
-    nextItem,
+    allLinks,
+    activeLinkIndex,
+    activeLink,
+    previousLink,
+    nextLink,
     activeCategory,
   };
 

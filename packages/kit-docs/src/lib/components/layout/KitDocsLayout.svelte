@@ -20,7 +20,7 @@
 
   let closeSidebar: CloseDialogCallback;
 
-  const { activeCategory, activeItem, nextItem, previousItem } = getSidebarContext();
+  const { activeCategory, activeLink, nextLink, previousLink } = getSidebarContext();
 </script>
 
 <div class="kit-docs bg-gray-body min-h-full min-w-full h-full">
@@ -93,7 +93,7 @@
               </li>
             {/if}
             <li class="truncate font-semibold text-slate-900 dark:text-slate-200">
-              {$activeItem?.title}
+              {$activeLink?.title}
             </li>
           </ol>
         </div>
@@ -145,37 +145,45 @@
     <main class="pt-10 min-h-[80vh] w-full max-w-[85ch] overflow-x-hidden px-8 992:px-16">
       <slot name="main-top" />
 
-      <slot />
+      <article class="markdown kd-prose dark:kd-prose-invert z-10">
+        {#if $activeCategory !== '.'}
+          <p class="text-brand mb-3.5 text-[15px] font-semibold leading-6">
+            {$activeCategory}
+          </p>
+        {/if}
 
-      {#if $previousItem || $nextItem}
+        <slot />
+      </article>
+
+      {#if $previousLink || $nextLink}
         <hr class="border-gray-divider mt-20" />
       {/if}
 
       <div class="992:text-xl flex items-center pt-12 pb-20 text-lg font-semibold text-gray-300">
-        {#if $previousItem}
+        {#if $previousLink}
           <div class="mb-4 flex flex-col items-start">
             <span class="text-gray-inverse ml-3 mb-4 inline-block">Previous</span>
             <Button
               arrow="left"
-              href={$previousItem.slug}
+              href={$previousLink.slug}
               class="hover:text-gray-inverse"
               sveltekit:prefetch
             >
-              {$previousItem.title}
+              {$previousLink.title}
             </Button>
           </div>
         {/if}
 
-        {#if $nextItem}
+        {#if $nextLink}
           <div class="ml-auto mb-4 flex flex-col items-end">
             <span class="text-gray-inverse mr-3 mb-4 inline-block">Next</span>
             <Button
               arrow="right"
-              href={$nextItem.slug}
+              href={$nextLink.slug}
               class="hover:text-gray-inverse"
               sveltekit:prefetch
             >
-              {$nextItem.title}
+              {$nextLink.title}
             </Button>
           </div>
         {/if}

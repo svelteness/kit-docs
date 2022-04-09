@@ -30,17 +30,17 @@ const kitDocsScreens = {
 
 const kitDocsColors = {
   brand: {
-    DEFAULT: 'var(--color-brand)',
-    50: 'var(--color-brand-50)',
-    100: 'var(--color-brand-100)',
-    200: 'var(--color-brand-200)',
-    300: 'var(--color-brand-300)',
-    400: 'var(--color-brand-400)',
-    500: 'var(--color-brand-500)',
-    600: 'var(--color-brand-600)',
-    700: 'var(--color-brand-700)',
-    800: 'var(--color-brand-800)',
-    900: 'var(--color-brand-900)',
+    DEFAULT: 'var(--kd-color-brand)',
+    50: 'var(--kd-color-brand-50)',
+    100: 'var(--kd-color-brand-100)',
+    200: 'var(--kd-color-brand-200)',
+    300: 'var(--kd-color-brand-300)',
+    400: 'var(--kd-color-brand-400)',
+    500: 'var(--kd-color-brand-500)',
+    600: 'var(--kd-color-brand-600)',
+    700: 'var(--kd-color-brand-700)',
+    800: 'var(--kd-color-brand-800)',
+    900: 'var(--kd-color-brand-900)',
   },
   gray: {
     DEFAULT: '#313131',
@@ -54,14 +54,14 @@ const kitDocsColors = {
     700: '#222222',
     800: '#1A1A1A',
     900: '#121212',
-    divider: 'var(--color-gray-divider)',
-    soft: 'var(--color-gray-soft)',
-    inverse: 'var(--color-gray-inverse)',
-    current: 'var(--color-gray-current)',
-    hover: 'var(--color-gray-hover)',
-    'hover-inverse': 'var(--color-gray-hover-inverse)',
-    elevate: 'var(--color-gray-elevate)',
-    body: 'var(--color-gray-body)',
+    divider: 'var(--kd-color-gray-divider)',
+    soft: 'var(--kd-color-gray-soft)',
+    inverse: 'var(--kd-color-gray-inverse)',
+    current: 'var(--kd-color-gray-current)',
+    hover: 'var(--kd-color-gray-hover)',
+    'hover-inverse': 'var(--kd-color-gray-hover-inverse)',
+    elevate: 'var(--kd-color-gray-elevate)',
+    body: 'var(--kd-color-gray-body)',
   },
   code: {
     highlight: 'rgb(125 211 252 / 0.1)',
@@ -161,7 +161,7 @@ function kitDocsTypography(theme) {
         a: {
           fontWeight: theme('fontWeight.semibold'),
           textDecoration: 'none',
-          borderBottom: `1px solid var(--color-brand)`,
+          borderBottom: `1px solid var(--kd-color-brand)`,
         },
         'a:hover': {
           borderBottomWidth: '2px',
@@ -182,7 +182,7 @@ function kitDocsTypography(theme) {
           fontVariantLigatures: 'none',
         },
         pre: {
-          backgroundColor: 'var(--prose-pre-bg)',
+          backgroundColor: 'var(--kd-prose-pre-bg)',
           boxShadow: 'none',
           display: 'flex',
         },
@@ -258,6 +258,27 @@ function kitDocsTypography(theme) {
   };
 }
 
+const kitDocsPlugins = [
+  require('@tailwindcss/typography')({ className: 'kd-prose' }),
+  kitDocsVariants,
+];
+
+const kitDocsConfig = {
+  content: ['./src/lib/**/*.svelte'],
+  darkMode: 'class',
+  theme: {
+    fontFamily: kitDocsFontFamily,
+    screens: kitDocsScreens,
+    extend: {
+      colors: kitDocsColors,
+      keyframes: kitDocsKeyframes,
+      animation: kitDocsAnimations,
+      typography: kitDocsTypography,
+    },
+  },
+  plugins: kitDocsPlugins,
+};
+
 module.exports = {
   kitDocsAnimations,
   kitDocsColors,
@@ -266,4 +287,6 @@ module.exports = {
   kitDocsScreens,
   kitDocsTypography,
   kitDocsVariants,
+  kitDocsPlugins,
+  kitDocsConfig,
 };

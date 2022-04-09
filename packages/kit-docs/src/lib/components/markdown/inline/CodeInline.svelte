@@ -2,6 +2,4 @@
   export let code: string;
 </script>
 
-<code>
-  {@html code}
-</code>
+<code>{code}</code>

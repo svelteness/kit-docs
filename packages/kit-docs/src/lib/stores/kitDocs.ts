@@ -1,6 +1,6 @@
 import { type Readable, writable } from 'svelte/store';
 
-import type { NavbarConfig, SidebarConfig } from '$lib/components/layout/contexts';
+import type { NavbarConfig, NormalizedSidebarConfig } from '$lib/components/layout/contexts';
 
 export type MarkdownFrontmatter = Record<string, unknown>;
 
@@ -16,17 +16,17 @@ export type MarkdownMeta = {
   description: string;
   excerpt: string;
   headers: MarkdownHeader[];
+  hasHeaders: boolean;
   frontmatter: MarkdownFrontmatter;
   lastUpdated: number;
   slug: string;
-  asset: string;
-  hasHeaders: boolean;
+  file: string;
 };
 
 export type KitDocsContext = {
   meta: MarkdownMeta;
   navbar: NavbarConfig;
-  sidebar: SidebarConfig;
+  sidebar: NormalizedSidebarConfig;
 };
 
 /** @internal */

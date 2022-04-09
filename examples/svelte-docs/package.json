@@ -1,0 +1,22 @@
+{
+  "name": "svelte-docs",
+  "version": "0.0.0",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "svelte-kit dev",
+    "build": "svelte-kit build",
+    "package": "svelte-kit package",
+    "preview": "svelte-kit preview",
+    "prepare": "svelte-kit sync"
+  },
+  "devDependencies": {
+    "@iconify-json/ri": "^1.1.1",
+    "@sveltejs/adapter-auto": "next",
+    "@sveltejs/kit": "next",
+    "@svelteness/kit-docs": "workspace:*",
+    "svelte": "^3.44.0",
+    "svelte-preprocess": "^4.10.1",
+    "unplugin-icons": "^0.13.4"
+  }
+}

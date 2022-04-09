@@ -7,7 +7,7 @@ export type ParseMarkdownOptions = {
   baseUrl?: string;
   escapeConstants?: boolean;
   define?: Record<string, unknown>;
-  globalComponents?: string;
+  globalComponentFiles?: string[];
   topLevelHtmlTags?: AddTopLevelHtmlTags;
 };
 
@@ -66,11 +66,9 @@ export type MarkdownMeta = {
   description: string;
   excerpt: string;
   headers: MarkdownHeader[];
+  hasHeaders: boolean;
   frontmatter: MarkdownFrontmatter;
   lastUpdated: number;
-  hasHeaders: boolean;
-  slug?: string;
-  asset?: string;
 };
 
 export type MarkdownFrontmatter = Record<string, unknown>;

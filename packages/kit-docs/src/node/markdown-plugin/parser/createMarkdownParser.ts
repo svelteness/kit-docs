@@ -1,4 +1,5 @@
 import MarkdownIt from 'markdown-it';
+import { type HighlighterOptions } from 'shiki';
 
 import {
   anchorPlugin,
@@ -16,20 +17,18 @@ import {
 } from './plugins';
 import type { InlineElementRule, MarkdownComponents, MarkdownParser } from './types';
 
-export type MarkdownParserOptions = MarkdownIt.Options & {
+export type MarkdownParserOptions = {
   components?: MarkdownComponents;
+  shiki?: HighlighterOptions;
   configureParser?(parser: MarkdownParser): void | Promise<void>;
 };
 
 export async function createMarkdownParser(
   options: MarkdownParserOptions = {},
 ): Promise<MarkdownParser> {
-  const { configureParser, components = {}, ...markdownItOptions } = options;
+  const { configureParser, shiki = {}, components = {} } = options;
 
-  const parser = MarkdownIt({
-    ...markdownItOptions,
-    html: true,
-  });
+  const parser = MarkdownIt({ html: true });
 
   parser.use(emojiPlugin);
   parser.use(anchorPlugin);
@@ -41,8 +40,10 @@ export async function createMarkdownParser(
   parser.use(codePlugin);
   parser.use(containersPlugin, components);
   parser.use(importCodePlugin);
-  parser.use(await createShikiPlugin());
+  parser.use(await createShikiPlugin(shiki));
   parser.use(hoistTagsPlugin);
+
+  responsiveTablePlugin(parser);
 
   const inlineRuleMap: Partial<Record<InlineElementRule, string>> = {
     strikethrough: 's',
@@ -68,4 +69,14 @@ export async function createMarkdownParser(
   await configureParser?.(parser);
 
   return parser;
+}
+
+function responsiveTablePlugin(parser: MarkdownParser) {
+  parser.renderer.rules.table_open = function () {
+    return `<TableWrapper><table>`;
+  };
+
+  parser.renderer.rules.table_close = function () {
+    return '</table></TableWrapper>';
+  };
 }

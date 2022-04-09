@@ -1,4 +1,5 @@
 import adapter from '@sveltejs/adapter-auto';
+// import adapterStatic from '@sveltejs/adapter-static';
 import preprocess from 'svelte-preprocess';
 import Icons from 'unplugin-icons/vite';
 
@@ -18,10 +19,20 @@ const config = {
       emitTypes: true,
     },
 
+    prerender: {
+      default: true,
+    },
+
     vite: {
       plugins: [
         Icons({ compiler: 'svelte' }),
-        kitDocsPlugin({ content: ['src/docs/**/*.(md|svelte)'] }),
+        kitDocsPlugin({
+          markdown: {
+            shiki: {
+              theme: 'material-ocean',
+            },
+          },
+        }),
       ],
     },
   },

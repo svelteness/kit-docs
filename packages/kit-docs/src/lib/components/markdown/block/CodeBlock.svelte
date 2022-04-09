@@ -52,12 +52,12 @@
 
 <div
   class={clsx(
-    'code-fence overflow-y-auto relative max-h-[60vh] 576:max-h-[32rem] my-8 rounded-md shadow-lg mx-auto',
+    'code-block overflow-y-auto relative max-h-[60vh] 576:max-h-[32rem] my-8 rounded-md shadow-lg mx-auto',
     'border border-gray-divider',
     lang && `lang-${lang}`,
     ext && `ext-${ext}`,
   )}
-  style="background-color: var(--prose-pre-bg);"
+  style="background-color: var(--kd-prose-pre-bg);"
 >
   {#if showTopBar}
     <div
@@ -78,10 +78,11 @@
         >
           <div
             class={clsx(
-              'text-white absolute top-2.5 right-4 transition-opacity z-10 duration-300 bg-brand-300/80 px-2 py-1 rounded-md ease-out text-sm font-mono',
+              'text-white absolute top-2.5 right-4 transition-opacity z-10 duration-300 px-2 py-1 rounded-md ease-out text-sm font-mono',
               showCopiedCodePrompt ? 'opacity-100' : 'hidden opacity-0',
             )}
             aria-hidden="true"
+            style="background-color: var(--kd-code-copied-bg-color);"
           >
             Copied!
           </div>
@@ -123,7 +124,8 @@
       {#each lines as lineNumber}
         {#if isHighlightLine(lineNumber)}
           <div
-            class="w-full border-l-[5px] border-l-brand-300 bg-brand-200/5 font-mono text-transparent"
+            class="w-full border-l-[5px] font-mono text-transparent"
+            style="border-color: var(--kd-code-highlight-border); background-color: var(--kd-code-highlight-color);"
           >
             &nbsp;
           </div>

@@ -29,10 +29,7 @@ export const FOCUSABLE_DIALOG_ELEMENTS = [
   '[tabindex]:not([tabindex^="-"])',
 ];
 
-export function dialogManager(
-  dialogBtn: HTMLElement,
-  options: DialogManagerOptions = {},
-): SvelteActionReturnType {
+export function dialogManager(dialogBtn: HTMLElement, options: DialogManagerOptions = {}): any {
   const disposal = createDisposalBin();
   const dialogDisposal = createDisposalBin();
 

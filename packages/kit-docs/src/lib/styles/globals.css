@@ -46,22 +46,22 @@ body {
   margin-top: 4rem;
 }
 
-.markdown .code-fence .code pre {
+.markdown .code-block .code pre {
   margin: 0;
 }
 
-.markdown .code-fence.lang-bash pre span {
+.markdown .code-block.lang-bash pre span {
   color: #fafafa !important;
 }
 
-.markdown .code-fence.lang-bash pre .line:not(:empty)::before {
+.markdown .code-block.lang-bash pre .line:not(:empty)::before {
   content: '> ';
   font-weight: bold;
-  color: #f75a8e;
+  color: var(--terminal-line-pointer);
 }
 
 .markdown .step code {
-  color: var(--color-gray-inverse);
+  color: var(--kd-color-gray-inverse);
 }
 
 .markdown .step .code-fence {

@@ -10,7 +10,7 @@
   import { scrollIntoCenter } from '$lib/utils/scroll';
   import { isLargeScreen } from '$lib/stores/isLargeScreen';
   import Overlay from '$lib/components/base/Overlay.svelte';
-  import { getSidebarContext, isActiveSidebarItem } from './contexts';
+  import { getSidebarContext, isActiveSidebarLink } from './contexts';
   import { isFunction } from '$lib/utils/unit';
 
   const dispatch = createEventDispatcher();
@@ -26,11 +26,11 @@
 
   export let style = '';
 
-  const { config, activeItem } = getSidebarContext();
+  const { config, activeLink } = getSidebarContext();
 
   function scrollToActiveItem() {
-    if (!$activeItem) return;
-    const activeEl = sidebar.querySelector(`a[href="${$activeItem.slug}"]`);
+    if (!$activeLink) return;
+    const activeEl = sidebar.querySelector(`a[href="${$activeLink.slug}"]`);
     if (activeEl) {
       scrollIntoCenter(sidebar, activeEl, { behaviour: 'smooth' });
     }
@@ -49,7 +49,7 @@
   bind:this={sidebar}
   {style}
 >
-  <div class="992:hidden sticky top-0 left-0 flex items-center">
+  <div class="992:hidden sticky top-0 left-0 flex items-center -mx-5">
     <div class="flex-1" />
     <button
       class={clsx('text-gray-soft hover:text-gray-inverse p-4', !open && 'pointer-events-none')}
@@ -76,32 +76,35 @@
 
     <ul class={clsx(!search && 'mt-8')}>
       {#each Object.keys($config.links) as category (category)}
-        {@const items = $config.links[category]}
+        {@const links = $config.links[category]}
         <li class="992:mt-10 mt-12 first:mt-0">
           {#if category !== '.'}
             <h5 class="text-gray-strong 992:mb-3 mb-8 text-lg font-semibold">{category}</h5>
           {:else}
-            <h5 class="opacity-0 invisible my-0 py-0 -mt-8">&nbsp;</h5>
+            <div class="mt-10" />
           {/if}
           <ul class="border-gray-divider space-y-3 border-l">
-            {#each items as item (item.title + item.slug)}
+            {#each links as link (link.title + link.slug)}
               <li class="first:mt-6">
                 <a
                   class={clsx(
                     '992:py-1.5 -ml-px flex items-center border-l-2 py-2 pl-4',
-                    isActiveSidebarItem(item, $page.url.pathname)
-                      ? 'border-brand-200 dark:border-brand text-brand font-semibold'
+                    isActiveSidebarLink(link, $page.url.pathname)
+                      ? 'text-brand font-semibold'
                       : 'hover:border-gray-inverse text-gray-soft hover:text-gray-inverse border-transparent font-normal',
                   )}
-                  href={item.slug}
+                  href={link.slug}
                   sveltekit:prefetch
+                  style={isActiveSidebarLink(link, $page.url.pathname)
+                    ? 'border-color: var(--kd-sidebar-border-active);'
+                    : ''}
                 >
-                  {#if item.icon?.before}
-                    <svelte:component this={item.icon.before} class="mr-1" width="24" height="24" />
+                  {#if link.icon?.before}
+                    <svelte:component this={link.icon.before} class="mr-1" width="24" height="24" />
                   {/if}
-                  {item.title}
-                  {#if item.icon?.after}
-                    <svelte:component this={item.icon.after} class="ml-1" width="24" height="24" />
+                  {link.title}
+                  {#if link.icon?.after}
+                    <svelte:component this={link.icon.after} class="ml-1" width="24" height="24" />
                   {/if}
                 </a>
               </li>

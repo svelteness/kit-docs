@@ -3,6 +3,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "outDir": "../../node",
+    "declarationDir": "../../node-types",
     "lib": ["es2019"]
   },
   "include": ["**/*.ts"]

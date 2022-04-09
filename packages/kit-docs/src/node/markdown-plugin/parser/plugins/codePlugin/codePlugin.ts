@@ -71,6 +71,6 @@ export const codePlugin: PluginSimple = (parser) => {
       .filter(Boolean)
       .join(' ');
 
-    return `<CodeFence ${props} />`;
+    return `<CodeBlock ${props} />`;
   };
 };

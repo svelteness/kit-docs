@@ -60,8 +60,6 @@
           </nav>
         </section>
 
-        <hr class="my-6 h-2 w-full border-t-2 border-dashed border-gray-200 dark:border-gray-400" />
-
         <slot name="popover-middle" />
 
         <hr class="my-6 h-2 w-full border-t-2 border-dashed border-gray-200 dark:border-gray-400" />

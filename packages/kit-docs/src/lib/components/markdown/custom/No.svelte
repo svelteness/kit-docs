@@ -1,4 +1,4 @@
-<div class="not-prose my-10 flex items-start">
+<div class="not-kd-prose my-10 flex items-start">
   <div
     class="relative -ml-1 mr-2.5 flex min-h-[24px] min-w-[24px] items-center justify-center rounded-full bg-rose-400 text-white"
   >

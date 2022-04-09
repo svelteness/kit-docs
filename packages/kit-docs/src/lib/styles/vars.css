@@ -4,42 +4,36 @@
 }
 
 :root {
-  --color-brand: rgb(243, 12, 89);
-  --color-brand-200: rgb(247, 105, 152);
-  --color-brand-300: rgb(247, 90, 142);
+  --kd-color-brand: rgb(243, 12, 89);
 
-  /* Following colors are not used: */
-  /* --color-brand-50: rgb(248, 126, 167); */
-  /* --color-brand-100: rgb(232, 232, 232); */
-  /* --color-brand-400: rgb(246, 76, 132); */
-  /* --color-brand-500: rgb(245, 61, 122); */
-  /* --color-brand-600: rgb(243, 12, 89); */
-  /* --color-brand-700: rgb(194, 10, 71); */
-  /* --color-brand-800: rgb(146, 7, 53); */
-  /* --color-brand-900: rgb(97, 5, 35); */
+  --kd-color-gray-soft: rgb(112, 112, 112);
+  --kd-color-gray-inverse: hsl(0, 0%, 0%);
+  --kd-color-gray-current: rgb(255, 255, 255);
+  --kd-color-gray-divider: rgb(234, 234, 234);
+  --kd-color-gray-hover: rgb(245, 245, 245);
+  --kd-color-gray-hover-inverse: rgb(53, 53, 53);
+  --kd-color-gray-elevate: rgb(255, 255, 255);
+  --kd-color-gray-body: rgb(255, 255, 255);
 
-  --color-gray-soft: rgb(112, 112, 112);
-  --color-gray-inverse: hsl(0, 0%, 0%);
-  --color-gray-current: rgb(255, 255, 255);
-  --color-gray-divider: rgb(234, 234, 234);
-  --color-gray-hover: rgb(245, 245, 245);
-  --color-gray-hover-inverse: rgb(53, 53, 53);
-  --color-gray-elevate: rgb(255, 255, 255);
-  --color-gray-body: rgb(255, 255, 255);
-
-  --prose-pre-bg: rgb(31, 41, 55);
+  --kd-prose-pre-bg: rgb(31, 41, 55);
+  --kd-sidebar-border-active: rgb(247, 90, 142);
+  --kd-code-copied-bg-color: rgba(247, 90, 142, 0.8);
+  --kd-code-highlight-border: rgb(247, 105, 152);
+  --kd-code-highlight-color: rgba(247, 105, 152, 0.05);
 }
 
 :root.dark {
   color-scheme: dark;
 
-  --color-brand: rgb(247, 90, 142);
-  --color-gray-soft: rgb(140, 140, 140);
-  --color-gray-inverse: rgb(255, 255, 255);
-  --color-gray-current: rgb(0, 0, 0);
-  --color-gray-divider: rgb(49, 49, 49);
-  --color-gray-hover: rgb(54, 54, 54);
-  --color-gray-hover-inverse: rgb(245, 245, 245);
-  --color-gray-elevate: rgb(45, 45, 45);
-  --color-gray-body: rgb(26, 26, 26);
+  --kd-color-brand: rgb(247, 90, 142);
+  --kd-color-gray-soft: rgb(140, 140, 140);
+  --kd-color-gray-inverse: rgb(255, 255, 255);
+  --kd-color-gray-current: rgb(0, 0, 0);
+  --kd-color-gray-divider: rgb(49, 49, 49);
+  --kd-color-gray-hover: rgb(54, 54, 54);
+  --kd-color-gray-hover-inverse: rgb(245, 245, 245);
+  --kd-color-gray-elevate: rgb(45, 45, 45);
+  --kd-color-gray-body: rgb(26, 26, 26);
+
+  --kd-sidebar-border-active: var(--kd-color-brand);
 }
