@@ -279,6 +279,57 @@ const kitDocsConfig = {
   plugins: kitDocsPlugins,
 };
 
+function extendKitDocsConfig(config = {}) {
+  return {
+    ...config,
+    content: config.content ?? ['./src/lib/**/*.svelte'],
+    darkMode: 'class',
+    theme: {
+      ...config.theme,
+      fontFamily: {
+        ...kitDocsFontFamily,
+        ...config.theme?.fontFamily,
+      },
+      screens: {
+        ...kitDocsScreens,
+        ...config.theme?.screens,
+      },
+      extend: {
+        ...config.theme?.extend,
+        colors: {
+          ...kitDocsColors,
+          ...config.theme?.extend?.colors,
+        },
+        keyframes: {
+          ...kitDocsKeyframes,
+          ...config.theme?.extend?.keyframes,
+        },
+        animation: {
+          ...kitDocsAnimations,
+          ...config.theme?.extend?.animation,
+        },
+        typography: (...args) => {
+          const kitDocs = kitDocsTypography(...args);
+          const user = config.extend?.typography?.(...args);
+
+          return {
+            ...user,
+            DEFAULT: {
+              ...kitDocs.DEFAULT,
+              ...user?.DEFAULT,
+              css: {
+                ...kitDocs.DEFAULT.css,
+                ...user?.DEFAULT?.css,
+              },
+            },
+          };
+        },
+      },
+    },
+    plugins: [...kitDocsPlugins, ...(config.plugins ?? [])],
+  };
+}
+
 module.exports = {
   kitDocsAnimations,
   kitDocsColors,
@@ -289,4 +340,5 @@ module.exports = {
   kitDocsVariants,
   kitDocsPlugins,
   kitDocsConfig,
+  extendKitDocsConfig,
 };
