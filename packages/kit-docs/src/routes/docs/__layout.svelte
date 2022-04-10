@@ -1,21 +1,25 @@
 <script lang="ts" context="module">
-  import {
-    createKitDocsLoader,
-    type MarkdownMeta,
-    type NavbarConfig,
-    type SidebarConfig,
-  } from '$lib';
-
   export const prerender = true;
 
   export const load = createKitDocsLoader();
 </script>
 
 <script lang="ts">
+  import '$lib/polyfills';
   import '$lib/styles/prebundled.css';
   import '$lib/styles/vars.css';
 
-  import { KitDocs, KitDocsLayout, Button, SocialLink } from '$lib';
+  import {
+    createKitDocsLoader,
+    type MarkdownMeta,
+    type NavbarConfig,
+    type SidebarConfig,
+    KitDocs,
+    KitDocsLayout,
+    Button,
+    SocialLink,
+    createSidebarContext,
+  } from '$lib';
 
   export let meta: MarkdownMeta;
 
@@ -30,7 +34,7 @@
     ],
   };
 
-  let sidebar: SidebarConfig = {
+  const sidebar: SidebarConfig = {
     baseUrl: '/docs',
     links: {
       'Component Format': ['script', 'style', 'module'],
@@ -41,17 +45,19 @@
       Accessibility: ['warnings'],
     },
   };
+
+  const { activeCategory } = createSidebarContext(sidebar);
 </script>
 
 <svelte:head>
-  <title>{meta.title} | Svelte</title>
+  <title>{$activeCategory}: {meta.title} | Svelte</title>
   <meta name="description" content={meta.description} />
   <meta name="twitter:description" content={meta.description} />
   <meta name="og:description" content={meta.description} />
 </svelte:head>
 
-<KitDocs {navbar} {sidebar} {meta}>
-  <KitDocsLayout>
+<KitDocs {meta}>
+  <KitDocsLayout {navbar} {sidebar}>
     <div slot="navbar-left">
       <div class="logo">
         <Button href="/">Logo</Button>

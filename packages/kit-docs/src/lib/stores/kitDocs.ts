@@ -1,7 +1,5 @@
 import { type Readable, writable } from 'svelte/store';
 
-import type { NavbarConfig, NormalizedSidebarConfig } from '$lib/components/layout/contexts';
-
 export type MarkdownFrontmatter = Record<string, unknown>;
 
 export type MarkdownHeader = {
@@ -25,8 +23,6 @@ export type MarkdownMeta = {
 
 export type KitDocsContext = {
   meta: MarkdownMeta;
-  navbar: NavbarConfig;
-  sidebar: NormalizedSidebarConfig;
 };
 
 /** @internal */

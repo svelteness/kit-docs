@@ -8,6 +8,7 @@ import { getFileNameFromPath } from '../utils/path';
 import {
   AddTopLevelHtmlTags,
   createMarkdownParser,
+  MarkdownComponentContainer,
   type MarkdownComponents,
   type MarkdownParser,
   type MarkdownParserOptions,
@@ -98,7 +99,11 @@ export function kitDocsMarkdownPlugin(options: MarkdownPluginOptions = {}): Plug
     for (const file of files) {
       const componentName = getFileNameFromPath(file);
       const has = components.custom?.some(({ name }) => name === componentName);
-      if (!has) (components.custom ??= []).push({ name: componentName });
+      if (!has)
+        (components.custom ??= []).push({
+          ...getMarkdownContainer(file),
+          name: componentName,
+        });
     }
   }
 
@@ -157,4 +162,12 @@ export function kitDocsMarkdownPlugin(options: MarkdownPluginOptions = {}): Plug
       }
     },
   };
+}
+
+function getMarkdownContainer(path: string): Partial<MarkdownComponentContainer> | null {
+  if (!path.includes('@svelteness/kit-docs')) return null;
+
+  if (path.includes('Step.svelte')) return { marker: '!' };
+
+  return null;
 }

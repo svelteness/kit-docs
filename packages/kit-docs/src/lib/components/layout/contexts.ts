@@ -1,5 +1,5 @@
 import { getContext, setContext, SvelteComponent } from 'svelte';
-import { derived, type Readable } from 'svelte/store';
+import { derived, type Readable, readable } from 'svelte/store';
 
 import { page } from '$app/stores';
 import { kebabToTitleCase, titleToKebabCase } from '$lib/utils/string';
@@ -26,6 +26,10 @@ export function getNavbarContext(): NavbarContext {
     console.error(e);
     console.warn('[kit-docs]: attempted to get navbar context before setting it.');
   }
+}
+
+export function createNavbarContext(config: Readable<NavbarConfig>): NavbarContext {
+  return config;
 }
 
 export function setNavbarContext(context: NavbarContext) {
@@ -114,10 +118,14 @@ export type SidebarContext = {
   activeCategory: Readable<string | null>;
 };
 
-export function createSidebarContext(config: Readable<NormalizedSidebarConfig>): SidebarContext {
-  const allLinks = derived(config, ($config) =>
-    Object.values(normalizeSidebarConfig($config).links).flat(),
-  );
+export function createSidebarContext(
+  config: SidebarConfig | Readable<SidebarConfig>,
+): SidebarContext {
+  const configStore = 'subscribe' in config ? config : readable(config);
+
+  const normalizedConfig = derived(configStore, ($config) => normalizeSidebarConfig($config));
+
+  const allLinks = derived(normalizedConfig, ($config) => Object.values($config.links).flat());
 
   const activeLinkIndex = derived([allLinks, page], ([$allLinks, $page]) =>
     $allLinks.findIndex((link) => isActiveSidebarLink(link, $page.url.pathname)),
@@ -138,7 +146,7 @@ export function createSidebarContext(config: Readable<NormalizedSidebarConfig>):
     ([$allLinks, $activeLinkIndex]) => $allLinks[$activeLinkIndex + 1],
   );
 
-  const activeCategory = derived([config, activeLink], ([$config, $activeLink]) =>
+  const activeCategory = derived([normalizedConfig, activeLink], ([$config, $activeLink]) =>
     Object.keys($config.links).find((category) =>
       $config.links[category]?.some(
         (link) => link.title === $activeLink?.title && link.slug === $activeLink?.slug,
@@ -147,7 +155,7 @@ export function createSidebarContext(config: Readable<NormalizedSidebarConfig>):
   );
 
   const context: SidebarContext = {
-    config,
+    config: normalizedConfig,
     allLinks,
     activeLinkIndex,
     activeLink,

@@ -1,6 +1,4 @@
 <script context="module" lang="ts">
-  import { createKitDocsLoader } from '@svelteness/kit-docs';
-
   export const prerender = true;
 
   export const load = createKitDocsLoader();
@@ -12,39 +10,36 @@
   import '$lib/styles/kit-docs.css';
 
   import {
-    type NavbarConfig,
-    type SidebarConfig,
     type MarkdownMeta,
     KitDocs,
     KitDocsLayout,
     Button,
     SocialLink,
+    createKitDocsLoader,
+    createSidebarContext,
+    type NavbarConfig,
+    type SidebarConfig,
   } from '@svelteness/kit-docs';
 
   export let meta: MarkdownMeta;
 
-  const navbar: NavbarConfig = {
-    links: [],
-  };
+  const navbar: NavbarConfig = { links: [] };
+  const sidebar: SidebarConfig = { links: {} };
 
-  let sidebar: SidebarConfig = {
-    links: {},
-  };
+  const { activeCategory } = createSidebarContext(sidebar);
 </script>
 
 <svelte:head>
-  <title>{meta.title} | Svelteness</title>
+  <title>{$activeCategory}: {meta.title} | Svelteness</title>
   <meta name="description" content={meta.description} />
   <meta name="twitter:description" content={meta.description} />
   <meta name="og:description" content={meta.description} />
 </svelte:head>
 
-<KitDocs {navbar} {sidebar} {meta}>
-  <KitDocsLayout>
+<KitDocs {meta}>
+  <KitDocsLayout {navbar} {sidebar}>
     <div slot="navbar-left">
-      <Button href="/">
-        <!-- LOGO -->
-      </Button>
+      <Button href="/">Logo</Button>
     </div>
 
     <div class="socials" slot="navbar-right-alt">

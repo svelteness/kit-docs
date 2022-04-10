@@ -1,11 +1,5 @@
-html,
-body,
-body > div {
-  @apply h-full min-h-screen w-screen;
-}
-
 body {
-  @apply overflow-x-hidden;
+  @apply min-h-screen w-screen;
 }
 
 .js-focus-visible :focus:not([data-focus-visible-added]) {

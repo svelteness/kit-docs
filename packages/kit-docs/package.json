@@ -50,7 +50,7 @@
     "build:kit": "svelte-kit build",
     "clean": "rimraf client node",
     "clean:client": "rimraf client/package.json client/README.md client/LICENSE dist",
-    "dev": "pnpm build:node && run-p \"dev:kit\" \"build:node -- -w\" \"build:node:types -- -w\"",
+    "dev": "pnpm build:node && run-p \"dev:kit\" \"build:node -- -w\"",
     "dev:kit": "svelte-kit dev",
     "preview": "svelte-kit preview",
     "lint:eslint": "eslint src --fix",
