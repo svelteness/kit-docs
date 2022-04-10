@@ -7,6 +7,7 @@ import { type Plugin } from 'vite';
 import { getFileNameFromPath } from '../utils/path';
 import {
   AddTopLevelHtmlTags,
+  clearMarkdownCaches,
   createMarkdownParser,
   MarkdownComponentContainer,
   type MarkdownComponents,
@@ -132,6 +133,7 @@ export function kitDocsMarkdownPlugin(options: MarkdownPluginOptions = {}): Plug
     },
     configureServer(server) {
       function restart() {
+        clearMarkdownCaches();
         files.clear();
         server.restart();
       }
@@ -166,8 +168,6 @@ export function kitDocsMarkdownPlugin(options: MarkdownPluginOptions = {}): Plug
 
 function getMarkdownContainer(path: string): Partial<MarkdownComponentContainer> | null {
   if (!path.includes('@svelteness/kit-docs')) return null;
-
   if (path.includes('Step.svelte')) return { marker: '!' };
-
   return null;
 }

@@ -5,7 +5,7 @@
 </script>
 
 <script lang="ts">
-  import '@svelteness/kit-docs/polyfills/index.js';
+  import '@svelteness/kit-docs/client/polyfills/index.js';
   import '@svelteness/kit-docs/client/styles/prebundled.css';
   import '$lib/styles/kit-docs.css';
 

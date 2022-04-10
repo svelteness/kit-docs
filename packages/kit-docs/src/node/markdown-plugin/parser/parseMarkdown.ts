@@ -194,3 +194,9 @@ function hasMarkdownHeaders(headers?: MarkdownHeader[]) {
     headers && [...headers.map((h) => h.title), ...headers.map((h) => h.children).flat()].length > 1
   );
 }
+
+export function clearMarkdownCaches() {
+  frontmatterCache.clear();
+  mdCache.clear();
+  svelteCache.clear();
+}
