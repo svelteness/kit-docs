@@ -6,7 +6,7 @@ Documentation integration for [SvelteKit][sveltekit].
 
 ## 📖 Documentation
 
-You can find our documentation at [svelteness.dev/kit-docs](https://www.svelteness.dev/kit-docs).
+You can find our documentation at [kit-docs.svelteness.dev](https://kit-docs.svelteness.dev).
 
 [package]: https://www.npmjs.com/package/@svelteness/kit-docs
 [package-badge]: https://img.shields.io/npm/v/@svelteness/kit-docs/latest
