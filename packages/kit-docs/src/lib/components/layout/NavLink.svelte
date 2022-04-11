@@ -2,6 +2,7 @@
   import clsx from 'clsx';
   import { page } from '$app/stores';
   import { isNull } from '$lib/utils/unit';
+  import { prefetchLink } from '$lib/actions/prefetchLink';
 
   export let title: string;
   export let slug: string;
@@ -19,6 +20,7 @@
     )}
     href={slug}
     target={isNull(match) ? '_blank' : null}
+    use:prefetchLink
   >
     {title}
   </a>

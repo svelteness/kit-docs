@@ -1,7 +1,7 @@
 <script lang="ts" context="module">
   export const prerender = true;
 
-  export const load = createKitDocsLoader();
+  export const load = createKitDocsLoader({ sidebar: '/docs' });
 </script>
 
 <script lang="ts">
@@ -19,9 +19,11 @@
     Button,
     SocialLink,
     createSidebarContext,
+    kebabToTitleCase,
   } from '$lib';
 
   export let meta: MarkdownMeta;
+  export let sidebar: SidebarConfig;
 
   const navbar: NavbarConfig = {
     links: [
@@ -34,19 +36,12 @@
     ],
   };
 
-  const sidebar: SidebarConfig = {
-    baseUrl: '/docs',
-    links: {
-      'Component Format': ['script', 'style', 'module'],
-      'Template Syntax': ['foundation', 'element-directives', 'component-directives'],
-      Runtime: ['svelte', 'stores', 'motion', 'transitions', 'animate', 'easing', 'register'],
-      'Component API': ['client', 'server', 'custom-element'],
-      Compiler: ['compile', 'parse', 'preprocess', 'version', 'walk'],
-      Accessibility: ['warnings'],
-    },
+  const _sidebar: SidebarConfig = {
+    ...sidebar,
+    formatCategory: (category) => kebabToTitleCase(category).replace('Api', 'API'),
   };
 
-  const { activeCategory } = createSidebarContext(sidebar);
+  const { activeCategory } = createSidebarContext(_sidebar);
 </script>
 
 <svelte:head>
@@ -57,7 +52,7 @@
 </svelte:head>
 
 <KitDocs {meta}>
-  <KitDocsLayout {navbar} {sidebar}>
+  <KitDocsLayout {navbar} sidebar={_sidebar}>
     <div slot="navbar-left">
       <div class="logo">
         <Button href="/">Logo</Button>

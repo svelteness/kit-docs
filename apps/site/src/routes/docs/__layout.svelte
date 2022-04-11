@@ -39,7 +39,7 @@
 <KitDocs {meta}>
   <KitDocsLayout {navbar} {sidebar}>
     <div slot="navbar-left">
-      <Button href="/">Logo</Button>
+      <Button href="#">Logo</Button>
     </div>
 
     <div class="socials" slot="navbar-right-alt">

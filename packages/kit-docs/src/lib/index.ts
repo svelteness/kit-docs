@@ -1,5 +1,6 @@
 // Actions
 export * from './actions/dialogManager';
+export * from './actions/prefetchLink';
 
 // Components
 export { default as Algolia } from './components/algolia/Algolia.svelte';
@@ -28,7 +29,7 @@ export { default as Sidebar } from './components/layout/Sidebar.svelte';
 export { useActiveHeaderLinks } from './components/layout/useActiveHeaderLinks';
 
 // Markdown (Block)
-export { default as CodeBlock } from './components/markdown/block/CodeBlock.svelte';
+export { default as CodeFence } from './components/markdown/block/CodeFence.svelte';
 export { default as Table } from './components/markdown/block/Table.svelte';
 export { default as TableWrapper } from './components/markdown/block/TableWrapper.svelte';
 
@@ -52,3 +53,4 @@ export * from './stores/kitDocs';
 
 // Utils
 export * from './utils/scroll';
+export * from './utils/string';

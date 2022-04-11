@@ -10,6 +10,7 @@
   import { scrollIntoCenter } from '$lib/utils/scroll';
   import { isLargeScreen } from '$lib/stores/isLargeScreen';
   import Overlay from '$lib/components/base/Overlay.svelte';
+  import { prefetchLink } from '$lib/actions/prefetchLink';
   import { getSidebarContext, isActiveSidebarLink } from './contexts';
   import { isFunction } from '$lib/utils/unit';
 
@@ -79,7 +80,9 @@
         {@const links = $config.links[category]}
         <li class="992:mt-10 mt-12 first:mt-0">
           {#if category !== '.'}
-            <h5 class="text-gray-strong 992:mb-3 mb-8 text-lg font-semibold">{category}</h5>
+            <h5 class="text-gray-strong 992:mb-3 mb-8 text-lg font-semibold">
+              {category}
+            </h5>
           {:else}
             <div class="mt-10" />
           {/if}
@@ -94,7 +97,7 @@
                       : 'hover:border-gray-inverse text-gray-soft hover:text-gray-inverse border-transparent font-normal',
                   )}
                   href={link.slug}
-                  sveltekit:prefetch
+                  use:prefetchLink
                   style={isActiveSidebarLink(link, $page.url.pathname)
                     ? 'border-color: var(--kd-sidebar-border-active);'
                     : ''}

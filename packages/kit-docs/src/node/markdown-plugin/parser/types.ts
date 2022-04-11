@@ -21,16 +21,10 @@ export type InlineElementRule = 'emphasized' | 'image' | 'strikethrough' | 'stro
 
 export type BlockElementRule =
   | 'blockquote'
-  | 'h1'
-  | 'h2'
-  | 'h3'
-  | 'h4'
-  | 'h5'
-  | 'h6'
+  | 'heading'
   | 'list_item'
   | 'ordered_list'
   | 'paragraph'
-  | 'pre'
   | 'table'
   | 'bullet_list';
 

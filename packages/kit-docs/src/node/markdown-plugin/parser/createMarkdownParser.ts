@@ -51,15 +51,33 @@ export async function createMarkdownParser(
   };
 
   for (const { name, rule } of components.inline ?? []) {
+    if (rule === 'image') {
+      parser.renderer.rules.image = function (tokens, idx, _, __, self) {
+        const token = tokens[idx];
+        return `<${name} ${self.renderAttrs(token)} />`;
+      };
+      continue;
+    }
+
     const mappedRule = inlineRuleMap[rule] ?? rule;
-    parser.renderer.rules[mappedRule] = () => {
-      return `<${name} />`;
+    parser.renderer.rules[`${mappedRule}_open`] = () => {
+      return `<${name}>`;
+    };
+    parser.renderer.rules[`${mappedRule}_close`] = () => {
+      return `</${name}>`;
     };
   }
 
   for (const { name, rule } of components.block ?? []) {
-    parser.renderer.rules[`${rule}_open`] = () => {
-      return `<${name}>`;
+    parser.renderer.rules[`${rule}_open`] = (tokens, idx) => {
+      const token = tokens[idx];
+      const props: string[] = [];
+
+      if (/h(\d)/.test(token.tag)) {
+        props.push(`level=${token.tag.slice(1)}`);
+      }
+
+      return `<${name} ${props.join(' ')}>`;
     };
     parser.renderer.rules[`${rule}_close`] = () => {
       return `</${name}>`;

@@ -54,11 +54,13 @@ export type SidebarSimpleLinks = {
 export type SidebarConfig = {
   baseUrl?: string;
   links: SidebarLinks | SidebarSimpleLinks;
+  formatCategory?: (category: string) => string;
 };
 
 export type NormalizedSidebarConfig = {
   baseUrl?: string;
   links: SidebarLinks;
+  formatCategory?: (category: string) => string;
 };
 
 export function normalizeSidebarConfig(config?: SidebarConfig): NormalizedSidebarConfig {
@@ -71,6 +73,7 @@ export function normalizeSidebarConfig(config?: SidebarConfig): NormalizedSideba
   for (const category of Object.keys(config.links)) {
     const categoryLinks = config.links[category];
     const categorySlug = titleToKebabCase(category);
+    const categoryName = config.formatCategory?.(category) ?? kebabToTitleCase(category);
 
     for (const categoryLink of categoryLinks) {
       const link: SidebarLink = isString(categoryLink)
@@ -80,9 +83,9 @@ export function normalizeSidebarConfig(config?: SidebarConfig): NormalizedSideba
           }
         : categoryLink;
 
-      if (!links[category]) links[category] = [];
+      if (!links[categoryName]) links[categoryName] = [];
 
-      links[category].push(link);
+      links[categoryName].push(link);
     }
   }
 
@@ -146,13 +149,13 @@ export function createSidebarContext(
     ([$allLinks, $activeLinkIndex]) => $allLinks[$activeLinkIndex + 1],
   );
 
-  const activeCategory = derived([normalizedConfig, activeLink], ([$config, $activeLink]) =>
-    Object.keys($config.links).find((category) =>
+  const activeCategory = derived([normalizedConfig, activeLink], ([$config, $activeLink]) => {
+    return Object.keys($config.links).find((category) =>
       $config.links[category]?.some(
         (link) => link.title === $activeLink?.title && link.slug === $activeLink?.slug,
       ),
-    ),
-  );
+    );
+  });
 
   const context: SidebarContext = {
     config: normalizedConfig,

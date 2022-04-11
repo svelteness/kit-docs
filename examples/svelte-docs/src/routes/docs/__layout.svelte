@@ -1,7 +1,7 @@
 <script context="module">
   export const prerender = true;
 
-  export const load = createKitDocsLoader();
+  export const load = createKitDocsLoader({ sidebar: '/docs' });
 </script>
 
 <script>
@@ -18,10 +18,14 @@
     KitDocsLayout,
     Button,
     SocialLink,
+    kebabToTitleCase,
   } from '@svelteness/kit-docs';
 
   /** @type {import('@svelteness/kit-docs').MarkdownMeta} */
   export let meta;
+
+  /** @type {import('@svelteness/kit-docs').SidebarConfig} */
+  export let sidebar;
 
   /** @type {import('@svelteness/kit-docs').NavbarConfig} */
   const navbar = {
@@ -36,18 +40,12 @@
   };
 
   /** @type {import('@svelteness/kit-docs').SidebarConfig} */
-  const sidebar = {
-    links: {
-      'Component Format': ['script', 'style', 'module'],
-      'Template Syntax': ['foundation', 'element-directives', 'component-directives'],
-      Runtime: ['svelte', 'stores', 'motion', 'transitions', 'animate', 'easing', 'register'],
-      'Component API': ['client', 'server', 'custom-element'],
-      Compiler: ['compile', 'parse', 'preprocess', 'version', 'walk'],
-      Accessibility: ['warnings'],
-    },
+  const _sidebar = {
+    ...sidebar,
+    formatCategory: (category) => kebabToTitleCase(category).replace('Api', 'API'),
   };
 
-  const { activeCategory } = createSidebarContext(sidebar);
+  const { activeCategory } = createSidebarContext(_sidebar);
 </script>
 
 <svelte:head>
@@ -58,7 +56,7 @@
 </svelte:head>
 
 <KitDocs {meta}>
-  <KitDocsLayout {navbar} {sidebar}>
+  <KitDocsLayout {navbar} sidebar={_sidebar}>
     <div slot="navbar-left">
       <div class="logo">
         <Button href="/">
