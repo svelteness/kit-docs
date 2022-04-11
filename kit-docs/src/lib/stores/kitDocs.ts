@@ -1,6 +1,6 @@
-import { type Readable, writable } from 'svelte/store';
+import { derived, type Readable, writable } from 'svelte/store';
 
-export type MarkdownFrontmatter = Record<string, unknown>;
+export type MarkdownFrontmatter = Record<string, any>;
 
 export type MarkdownHeader = {
   level: number;
@@ -18,16 +18,17 @@ export type MarkdownMeta = {
   frontmatter: MarkdownFrontmatter;
   lastUpdated: number;
   slug: string;
-  file: string;
 };
 
-export type KitDocsContext = {
+export type KitDocsStuff = {
   meta: MarkdownMeta;
 };
 
 /** @internal */
-export const __kitDocs = writable<KitDocsContext | null>(null);
+export const __kitDocs = writable<KitDocsStuff | null>(null);
 
-export const kitDocs: Readable<KitDocsContext | null> = {
+export const kitDocs: Readable<KitDocsStuff | null> = {
   subscribe: __kitDocs.subscribe,
 };
+
+export const frontmatter = derived(kitDocs, ($kitDocs) => $kitDocs?.meta.frontmatter);

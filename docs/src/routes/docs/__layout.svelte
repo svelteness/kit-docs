@@ -63,9 +63,7 @@
     </div>
 
     <div class="socials" slot="navbar-right-alt">
-      <SocialLink type="twitter" href="#" />
-      <SocialLink type="discord" href="#" />
-      <SocialLink type="gitHub" href="#" />
+      <SocialLink type="gitHub" href="https://github.com/svelteness/kit-docs" />
     </div>
 
     <slot />
