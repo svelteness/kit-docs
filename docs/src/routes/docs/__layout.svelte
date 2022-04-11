@@ -1,7 +1,7 @@
 <script context="module" lang="ts">
   export const prerender = true;
 
-  export const load = createKitDocsLoader({ sidebar: '/docs/kit-docs' });
+  export const load = createKitDocsLoader({ sidebar: '/docs' });
 </script>
 
 <script lang="ts">
@@ -11,7 +11,10 @@
   import '@svelteness/kit-docs/client/styles/theme.css';
   import '$lib/styles/kit-docs.css';
 
-  import KitDocsLogo from '$lib/img/logo.svg?raw';
+  import { page } from '$app/stores';
+
+  import kitDocsLogo from '$lib/img/kit-docs-logo.svg?raw';
+  import socialCardLarge from '$lib/img/social-card-large.jpg';
 
   import {
     type MarkdownMeta,
@@ -28,23 +31,25 @@
   export let meta: MarkdownMeta;
   export let sidebar: SidebarConfig;
 
-  const navbar: NavbarConfig = { links: [] };
+  const navbar: NavbarConfig = {
+    links: [{ title: 'Documentation', slug: '/docs', match: /\/docs/ }],
+  };
 
   const { activeCategory } = createSidebarContext(sidebar);
 </script>
 
 <svelte:head>
-  <title>{$activeCategory}: {meta.title} | Svelteness</title>
+  <title>{$activeCategory}: {meta.title} | KitDocs</title>
   <meta name="description" content={meta.description} />
   <meta name="twitter:description" content={meta.description} />
   <meta name="og:description" content={meta.description} />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:site" content="@vidstackjs" />
-  <!-- <meta name="twitter:image" content={`https://vidstack.io${socialCardLarge}`} /> -->
+  <meta name="twitter:image" content={`https://kit-docs.svelteness.dev${socialCardLarge}`} />
   <meta name="twitter:creator" content="@vidstackjs" />
-  <!-- <meta property="og:url" content={`https://vidstack.io${$page.url.pathname}`} /> -->
+  <meta property="og:url" content={`https://kit-docs.svelteness.dev${$page.url.pathname}`} />
   <meta property="og:type" content="article" />
-  <!-- <meta property="og:image" content={`https://vidstack.io${socialCardLarge}`} /> -->
+  <meta name="og:image" content={`https://kit-docs.svelteness.dev${socialCardLarge}`} />
 </svelte:head>
 
 <KitDocs {meta}>
@@ -52,7 +57,7 @@
     <div slot="navbar-left">
       <div class="logo">
         <Button href="#">
-          {@html KitDocsLogo}
+          {@html kitDocsLogo}
         </Button>
       </div>
     </div>

@@ -1,6 +1,6 @@
 {
-  "name": "Svelteness",
-  "short_name": "Svelteness",
+  "name": "KitDocs",
+  "short_name": "KitDocs",
   "icons": [
     {
       "src": "logo-192x192.png",
@@ -15,6 +15,6 @@
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#ffc107",
+  "theme_color": "#e97f06",
   "background_color": "#212121"
 }
