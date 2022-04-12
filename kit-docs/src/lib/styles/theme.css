@@ -30,44 +30,58 @@ body {
   height: 100%;
 }
 
-.markdown pre {
+.kit-docs pre {
   tab-size: 2;
   -o-tab-size: 2;
   -moz-tab-size: 2;
 }
 
-.markdown p + .admonition {
+.kit-docs p + .admonition {
   margin-top: 2.5rem;
 }
 
-.markdown .admonition + table {
+.kit-docs .admonition + .steps {
+  margin-top: 3.5rem;
+}
+
+.kit-docs .admonition + table {
   margin-top: 4rem;
 }
 
-.markdown .code-block .code pre {
+.kit-docs .code-fence .code pre {
   margin: 0;
 }
 
-.markdown .code-block.lang-bash pre span {
+.kit-docs .code-fence.lang-bash pre span {
   color: #fafafa !important;
 }
 
-.markdown .code-block.lang-bash pre .line:not(:empty)::before {
+.kit-docs .code-fence.lang-bash pre .line:not(:empty)::before {
   content: '> ';
   font-weight: bold;
-  color: var(--terminal-line-pointer);
+  color: var(--kd-terminal-line-pointer);
 }
 
-.markdown .step code {
+.kit-docs .step .description > code {
   color: var(--kd-color-gray-inverse);
 }
 
-.markdown .step .code-fence {
+.kit-docs .step .code-fence {
   margin: 0;
   padding: 0;
 }
 
-.markdown .header-anchor {
+.kit-docs .code-fence + .code-fence {
+  margin-top: 0.5rem;
+}
+
+.kit-docs h1 + .steps,
+.kit-docs h2 + .steps,
+.kit-docs h3 + .steps {
+  margin-top: 2.5rem;
+}
+
+.kit-docs .header-anchor {
   margin-left: -1.25em;
   padding: 0 0.23em;
   font-size: 0.9em;
@@ -77,16 +91,16 @@ body {
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .markdown h1:hover .header-anchor,
-  .markdown h2:hover .header-anchor,
-  .markdown h3:hover .header-anchor,
-  .markdown h4:hover .header-anchor {
+  .kit-docs h1:hover .header-anchor,
+  .kit-docs h2:hover .header-anchor,
+  .kit-docs h3:hover .header-anchor,
+  .kit-docs h4:hover .header-anchor {
     opacity: 1;
     margin-left: 0;
   }
 }
 
-.markdown .header-anchor:focus-visible {
+.kit-docs .header-anchor:focus-visible {
   opacity: 1;
   margin-left: 0;
 }

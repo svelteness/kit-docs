@@ -1,6 +1,6 @@
 import { createFilter, type FilterPattern, normalizePath } from '@rollup/pluginutils';
 import { globbySync } from 'globby';
-import { join, resolve } from 'path';
+import { resolve } from 'path';
 import { fileURLToPath } from 'url';
 import { type Plugin } from 'vite';
 
@@ -18,6 +18,8 @@ import {
 } from './parser';
 
 const PLUGIN_NAME = '@svelteness/markdown' as const;
+
+const CWD = process.cwd();
 
 // @ts-ignore
 const __dirname = fileURLToPath(import.meta.url);
@@ -111,12 +113,15 @@ export function kitDocsMarkdownPlugin(options: MarkdownPluginOptions = {}): Plug
     }
   }
 
-  addMarkdownComponents(globalComponentFiles);
+  const absGlobalComponentPaths = globalComponentFiles
+    .map((path) => resolve(CWD, path))
+    .map(normalizePath);
+  addMarkdownComponents(absGlobalComponentPaths);
 
   try {
     const root = resolve(__dirname, '../../client/components/markdown');
     const paths = globbySync('**/*.svelte', { cwd: root }).map(normalizePath);
-    const absPaths = paths.map((path) => join(root, path));
+    const absPaths = paths.map((path) => resolve(root, path)).map(normalizePath);
     addMarkdownComponents(absPaths);
     addGlobalComponents(absPaths);
   } catch (e) {
@@ -171,9 +176,7 @@ export function kitDocsMarkdownPlugin(options: MarkdownPluginOptions = {}): Plug
 }
 
 function getMarkdownContainer(path: string, name: string): MarkdownComponentContainer | undefined {
-  if (!path.includes('@svelteness/kit-docs') && !path.includes('kit-docs/kit-docs')) {
-    return;
-  }
+  if (!path.includes('kit-docs')) return;
 
   if (name === 'Step') return { marker: '!' };
 

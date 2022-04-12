@@ -1,15 +1,15 @@
-<script context="module" lang="ts">
+<script context="module">
   export const prerender = true;
 
   export const load = createKitDocsLoader({ sidebar: '/docs' });
 </script>
 
-<script lang="ts">
+<script>
   import '@svelteness/kit-docs/client/polyfills/index.js';
   import '@svelteness/kit-docs/client/styles/normalize.css';
   import '@svelteness/kit-docs/client/styles/fonts.css';
   import '@svelteness/kit-docs/client/styles/theme.css';
-  import '$lib/styles/kit-docs.css';
+  import '@svelteness/kit-docs/client/styles/vars.css';
 
   import { page } from '$app/stores';
 
@@ -17,21 +17,22 @@
   import socialCardLarge from '$lib/img/social-card-large.jpg';
 
   import {
-    type MarkdownMeta,
     KitDocs,
     KitDocsLayout,
     Button,
     SocialLink,
     createKitDocsLoader,
     createSidebarContext,
-    type NavbarConfig,
-    type SidebarConfig,
   } from '@svelteness/kit-docs';
 
-  export let meta: MarkdownMeta;
-  export let sidebar: SidebarConfig;
+  /** @type {import('@svelteness/kit-docs').MarkdownMeta} */
+  export let meta;
 
-  const navbar: NavbarConfig = {
+  /** @type {import('@svelteness/kit-docs').ResolvedSidebarConfig} */
+  export let sidebar;
+
+  /** @type {import('@svelteness/kit-docs').NavbarConfig} */
+  const navbar = {
     links: [{ title: 'Documentation', slug: '/docs', match: /\/docs/ }],
   };
 
@@ -44,9 +45,9 @@
   <meta name="twitter:description" content={meta.description} />
   <meta name="og:description" content={meta.description} />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:site" content="@vidstackjs" />
+  <meta name="twitter:site" content="@mihar_22" />
   <meta name="twitter:image" content={`https://kit-docs.svelteness.dev${socialCardLarge}`} />
-  <meta name="twitter:creator" content="@vidstackjs" />
+  <meta name="twitter:creator" content="@mihar_22" />
   <meta property="og:url" content={`https://kit-docs.svelteness.dev${$page.url.pathname}`} />
   <meta property="og:type" content="article" />
   <meta name="og:image" content={`https://kit-docs.svelteness.dev${socialCardLarge}`} />
@@ -71,6 +72,14 @@
 </KitDocs>
 
 <style>
+  :global(:root) {
+    --kd-color-brand-rgb: 233, 127, 6;
+  }
+
+  :global(:root.dark) {
+    --kd-color-brand-rgb: 213, 149, 76;
+  }
+
   .logo :global(a) {
     margin-left: 0.25rem;
     display: flex;

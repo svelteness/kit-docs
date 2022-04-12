@@ -6,7 +6,7 @@ import { titleToSnakeCase } from '../../../utils/string';
 import { isString } from '../../../utils/unit';
 import type { MarkdownCustomComponent, MarkdownParser } from '../types';
 
-const propsRE = /\|?(.*?)=(.*?)(?=(\||$))/g;
+const propsRE = /(?:\s|\|)(.*?)=(.*?)(?=(\||$))/g;
 const bodyRE = /\((.*?)\)(?:=)(.*)/;
 const tagRE = /tag=(.*?)(?:&|\))/;
 const slotRE = /slot=(.*?)(?:&|\))/;

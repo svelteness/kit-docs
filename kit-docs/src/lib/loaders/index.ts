@@ -1,6 +1,6 @@
 import type { Load } from '@sveltejs/kit';
 
-import type { NormalizedSidebarConfig } from '$lib/components/layout/contexts';
+import type { ResolvedSidebarConfig } from '$lib/components/layout/contexts';
 import type { MarkdownMeta } from '$lib/stores/kitDocs';
 
 export function getRootDirFromUrl(url: URL) {
@@ -34,7 +34,7 @@ export async function loadKitDocsMeta(
 export async function loadKitDocsSidebar(
   path: string,
   fetch: (info: RequestInfo, init?: RequestInit) => Promise<Response>,
-): Promise<NormalizedSidebarConfig> {
+): Promise<ResolvedSidebarConfig> {
   const res = await fetch(`/kit-docs/${slugToRequestParam(path.replace(/^\//, ''))}.sidebar.json`);
   return res.json();
 }
@@ -63,6 +63,6 @@ export function createKitDocsLoader(options: KitDocsLoaderOptions = {}): Load {
 export type LoadKitDocsResult = {
   props: {
     meta: MarkdownMeta;
-    sidebar?: NormalizedSidebarConfig;
+    sidebar?: ResolvedSidebarConfig;
   };
 };

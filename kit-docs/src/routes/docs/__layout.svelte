@@ -95,4 +95,12 @@
   .socials > :global(a) {
     padding: 0 0.5rem;
   }
+
+  :global(:root) {
+    --kd-color-brand-rgb: 209, 59, 18;
+  }
+
+  :global(:root.dark) {
+    --kd-color-brand-rgb: 227, 105, 70;
+  }
 </style>

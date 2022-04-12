@@ -36,15 +36,15 @@
     <span class="not-prose mb-4 text-base font-semibold leading-7 text-gray-inverse">
       {#if $$slots.title}
         <slot name="title" />
-      {:else}
+      {:else if title}
         <h3>{title}</h3>
       {/if}
     </span>
 
-    <div class="text-sm">
+    <div class="description text-sm">
       {#if $$slots.description}
         <slot name="description" />
-      {:else}
+      {:else if description}
         <p>{description}</p>
       {/if}
     </div>

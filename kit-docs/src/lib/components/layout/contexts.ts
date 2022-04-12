@@ -57,13 +57,13 @@ export type SidebarConfig = {
   formatCategory?: (category: string) => string;
 };
 
-export type NormalizedSidebarConfig = {
+export type ResolvedSidebarConfig = {
   baseUrl?: string;
   links: SidebarLinks;
   formatCategory?: (category: string) => string;
 };
 
-export function normalizeSidebarConfig(config?: SidebarConfig): NormalizedSidebarConfig {
+export function normalizeSidebarConfig(config?: SidebarConfig): ResolvedSidebarConfig {
   if (!config) return { links: {} };
 
   const links: SidebarLinks = {};
@@ -112,7 +112,7 @@ export function isActiveSidebarLink({ match, slug }: SidebarLink, currentPath: s
 export const SIDEBAR_CONTEXT_KEY = Symbol();
 
 export type SidebarContext = {
-  config: Readable<NormalizedSidebarConfig>;
+  config: Readable<ResolvedSidebarConfig>;
   allLinks: Readable<SidebarLink[]>;
   activeLinkIndex: Readable<number>;
   activeLink: Readable<SidebarLink | null>;
