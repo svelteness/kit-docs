@@ -5,7 +5,7 @@
   export async function load() {
     return {
       status: 307,
-      redirect: '/docs/component-format/script',
+      redirect: `/docs/component-format/script`,
     };
   }
 </script>
