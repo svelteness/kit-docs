@@ -1,4 +1,4 @@
-import adapter from '@sveltejs/adapter-auto';
+import adapter from '@sveltejs/adapter-static';
 import { kitDocsPlugin } from '@svelteness/kit-docs/node';
 import preprocess from 'svelte-preprocess';
 import Icons from 'unplugin-icons/vite';
@@ -16,6 +16,7 @@ const config = {
 
     prerender: {
       default: true,
+      entries: ['*'],
     },
 
     vite: {

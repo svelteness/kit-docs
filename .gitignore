@@ -1,11 +1,15 @@
 .turbo
 turbo-graph*
 
-.svelte-kit/
 dist/
+.svelte-kit/
+
+docs/build/
+
+kit-docs/build/
 kit-docs/client/
 kit-docs/node/
-node-types/
+kit-docs/node-types/
 
 *~
 *.sw[mnpcod]

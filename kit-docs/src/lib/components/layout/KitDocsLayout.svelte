@@ -152,7 +152,7 @@
         clsx(
           'self-start fixed top-0 left-0 transform bg-gray-body z-50 border-gray-divider border-r w-full max-w-[90vw] max-h-screen pb-8 px-5',
           '-translate-x-full transform transition-transform duration-200 ease-out will-change-transform min-h-screen',
-          '992:translate-x-0 922:block 992:sticky 992:z-0 992:w-72 992:min-w-[17rem] overflow-y-auto 1460:pl-0.5',
+          '992:translate-x-0 922:block 992:sticky 992:z-0 992:w-[17rem] 992:min-w-[17rem] overflow-y-auto 1460:pl-0.5',
           open && 'translate-x-0',
           navbar
             ? '992:top-20 992:min-h-[calc(100vh-5rem)] 992:max-h-[calc(100vh-5rem)]'
@@ -172,7 +172,12 @@
       </svelte:fragment>
     </Sidebar>
 
-    <main class="pt-10 min-h-screen w-full max-w-[85ch] overflow-x-hidden px-8 992:px-16">
+    <main
+      class={clsx(
+        'pt-10 w-full max-w-[85ch] overflow-x-hidden px-8 992:px-16',
+        navbar ? 'min-h-[calc(100vh-10rem)] 992:min-h-[calc(100vh-5rem)]' : 'min-h-screen',
+      )}
+    >
       <slot name="main-top" />
 
       <article class="markdown prose dark:prose-invert z-10">

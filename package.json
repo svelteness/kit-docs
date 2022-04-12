@@ -12,7 +12,7 @@
     "prepare": "husky install",
     "release": "pnpm clean && pnpm build && pnpm release --filter kit-docs && git push --follow-tags origin main && npm publish kit-docs",
     "docs:dev": "pnpm dev --filter docs",
-    "docs:build": "pnpm build && pnpm build --filter docs",
+    "docs:build": "pnpm build --filter docs",
     "docs:preview": "pnpm preview --filter docs"
   },
   "devDependencies": {

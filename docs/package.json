@@ -2,10 +2,10 @@
   "name": "docs",
   "type": "module",
   "scripts": {
-    "dev": "svelte-kit dev --port 3001",
+    "dev": "svelte-kit dev -p 3002",
     "build": "svelte-kit build",
     "package": "svelte-kit package",
-    "preview": "svelte-kit preview",
+    "preview": "svelte-kit preview -p 3002",
     "prepare": "svelte-kit sync",
     "check": "svelte-check --tsconfig ./tsconfig.json",
     "check:watch": "svelte-check --tsconfig ./tsconfig.json --watch"

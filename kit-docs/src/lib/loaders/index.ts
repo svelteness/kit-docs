@@ -20,7 +20,8 @@ export async function loadKitDocsMeta(
   slug: string,
   fetch: (info: RequestInfo, init?: RequestInit) => Promise<Response>,
 ): Promise<MarkdownMeta> {
-  return (await fetch(`/kit-docs/${slugToRequestParam(slug.replace(/^\//, ''))}.meta.json`)).json();
+  const res = await fetch(`/kit-docs/${slugToRequestParam(slug.replace(/^\//, ''))}.meta.json`);
+  return res.json();
 }
 
 /**
@@ -32,9 +33,8 @@ export async function loadKitDocsSidebar(
   path: string,
   fetch: (info: RequestInfo, init?: RequestInit) => Promise<Response>,
 ): Promise<NormalizedSidebarConfig> {
-  return (
-    await fetch(`/kit-docs/${slugToRequestParam(path.replace(/^\//, ''))}.sidebar.json`)
-  ).json();
+  const res = await fetch(`/kit-docs/${slugToRequestParam(path.replace(/^\//, ''))}.sidebar.json`);
+  return res.json();
 }
 
 export type KitDocsLoaderOptions = {
