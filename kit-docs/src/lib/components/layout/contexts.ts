@@ -96,17 +96,17 @@ export function normalizeSidebarConfig(config?: SidebarConfig): NormalizedSideba
 }
 
 export function isActiveSidebarLink({ match, slug }: SidebarLink, currentPath: string) {
+  const path = currentPath.replace(/\.html/, '');
+
   if (match === 'deep') {
-    return (
-      currentPath === slug || (currentPath.startsWith(slug) && currentPath[slug.length] === '/')
-    );
+    return path === slug || (path.startsWith(slug) && path[slug.length] === '/');
   }
 
   if (isRegExp(match)) {
     return match.test(slug);
   }
 
-  return currentPath === slug;
+  return path === slug;
 }
 
 export const SIDEBAR_CONTEXT_KEY = Symbol();

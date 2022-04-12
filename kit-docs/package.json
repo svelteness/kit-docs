@@ -51,7 +51,7 @@
     "lint:prettier": "prettier src --write --loglevel warn",
     "kit:dev": "svelte-kit dev -p 3001",
     "kit:build": "svelte-kit build",
-    "kit:preview": "svelte-kit preview -p 3001",
+    "kit:preview": "sirv build -p 3001",
     "kit:sync": "svelte-kit sync",
     "release": "standard-version"
   },
@@ -95,6 +95,7 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "rimraf": "^3.0.2",
+    "sirv-cli": "^2.0.2",
     "standard-version": "^9.3.0",
     "svelte": "^3.46.4",
     "svelte-preprocess": "^4.10.4",

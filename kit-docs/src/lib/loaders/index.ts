@@ -20,7 +20,9 @@ export async function loadKitDocsMeta(
   slug: string,
   fetch: (info: RequestInfo, init?: RequestInit) => Promise<Response>,
 ): Promise<MarkdownMeta> {
-  const res = await fetch(`/kit-docs/${slugToRequestParam(slug.replace(/^\//, ''))}.meta.json`);
+  const res = await fetch(
+    `/kit-docs/${slugToRequestParam(slug.replace(/^\//, '').replace(/\.html$/, ''))}.meta.json`,
+  );
   return res.json();
 }
 

@@ -59,7 +59,7 @@
   <KitDocsLayout {navbar} sidebar={_sidebar}>
     <div slot="navbar-left">
       <div class="logo">
-        <Button href="/">
+        <Button href="#">
           {@html SvelteLogo}
         </Button>
       </div>
