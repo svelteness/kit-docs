@@ -23,10 +23,8 @@ const config = {
       plugins: [
         Icons({ compiler: 'svelte' }),
         kitDocsPlugin({
-          markdown: {
-            shiki: {
-              theme: 'vitesse-dark',
-            },
+          shiki: {
+            theme: 'vitesse-dark',
           },
         }),
       ],
