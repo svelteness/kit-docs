@@ -36,6 +36,7 @@
   },
   "scripts": {
     "build": "run-s build:node build:node:types build:client build:styles",
+    "build:app": "run-s build:node kit:sync kit:build",
     "build:client": "svelte-kit package && run-s build:client:types clean:client",
     "build:client:types": "api-extractor run && rimraf temp client/**/*.d.ts",
     "build:node": "pnpm build:node:ext -- --entry=src/node/index.ts --outdir=node --platform=node --bundle --requireshim",
