@@ -30,7 +30,7 @@
   $: navLinks = $context.links;
 </script>
 
-<div class="1200:py-5 flex w-full flex-col items-center justify-center px-5 py-4">
+<div class="1200:py-5 flex w-full flex-col items-center justify-center px-5 py-4 992:min-h-[5rem]">
   <div class={clsx('flex w-full items-center', contain && 'max-w-[1440px] mx-auto')}>
     <slot name="left" />
 

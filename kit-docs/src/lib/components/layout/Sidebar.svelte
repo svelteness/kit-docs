@@ -62,7 +62,7 @@
     </button>
   </div>
 
-  <nav>
+  <nav class="992:px-2">
     {#if search}
       <div class="992:block pointer-events-none sticky top-0 -ml-0.5 hidden min-h-[80px]">
         <div class="h-6 bg-white dark:bg-gray-800" />

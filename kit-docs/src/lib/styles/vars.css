@@ -11,7 +11,7 @@
   --kd-font-family-mono: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation, Mono,
     Fira Code VF, monospace;
 
-  --kd-color-brand: rgb(243, 12, 89);
+  --kd-color-brand: rgb(209, 59, 18);
 
   --kd-color-gray-soft: rgb(112, 112, 112);
   --kd-color-gray-inverse: hsl(0, 0%, 0%);
@@ -23,16 +23,16 @@
   --kd-color-gray-body: rgb(255, 255, 255);
 
   --kd-prose-pre-bg: rgb(31, 41, 55);
-  --kd-sidebar-border-active: rgb(247, 90, 142);
-  --kd-code-copied-bg-color: rgba(247, 90, 142, 0.8);
-  --kd-code-highlight-border: rgb(247, 105, 152);
-  --kd-code-highlight-color: rgba(247, 105, 152, 0.05);
+  --kd-sidebar-border-active: var(--kd-color-brand);
+  --kd-code-copied-bg-color: rgba(209, 59, 18, 0.8);
+  --kd-code-highlight-border: var(--kd-color-brand);
+  --kd-code-highlight-color: rgba(209, 59, 18, 0.05);
 }
 
 :root.dark {
   color-scheme: dark;
 
-  --kd-color-brand: rgb(247, 90, 142);
+  --kd-color-brand: rgb(227, 105, 70);
   --kd-color-gray-soft: rgb(140, 140, 140);
   --kd-color-gray-inverse: rgb(255, 255, 255);
   --kd-color-gray-current: rgb(0, 0, 0);

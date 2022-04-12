@@ -8,6 +8,8 @@
   let li: HTMLLIElement;
   let index = register();
 
+  export let title: string | null = null;
+  export let description: string | null = null;
   export let orientation: 'horizontal' | 'vertical' = 'horizontal';
 
   $: if ($steps > 0 && li) {
@@ -32,11 +34,19 @@
 >
   <div class={clsx('mb-6 1200:mb-2', orientation === 'horizontal' ? 'col-span-2' : 'col-span-4')}>
     <span class="not-prose mb-4 text-base font-semibold leading-7 text-gray-inverse">
-      <slot name="title" />
+      {#if $$slots.title}
+        <slot name="title" />
+      {:else}
+        <h3>{title}</h3>
+      {/if}
     </span>
 
     <div class="text-sm">
-      <slot name="description" />
+      {#if $$slots.description}
+        <slot name="description" />
+      {:else}
+        <p>{description}</p>
+      {/if}
     </div>
   </div>
 

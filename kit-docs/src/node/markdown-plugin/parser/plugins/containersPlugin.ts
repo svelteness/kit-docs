@@ -23,7 +23,7 @@ function renderDefault(parser: MarkdownParser, componentName: string) {
     for (const [propMatch, prop, value] of matchedProps) {
       if (bodyRE.test(propMatch)) {
         const [_, __, content] = propMatch.match(bodyRE) ?? [];
-        const tag = propMatch.match(tagRE)?.[1];
+        const tag = propMatch.match(tagRE)?.[1] ?? 'p';
         const slot = propMatch.match(slotRE)?.[1];
         if (isString(tag) && isString(content)) {
           body.push(

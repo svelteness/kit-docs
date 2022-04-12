@@ -11,6 +11,8 @@
   import '$lib/styles/theme.css';
   import '$lib/styles/vars.css';
 
+  import SvelteLogo from '../../img/svelte-horizontal.svg?raw';
+
   import {
     createKitDocsLoader,
     type MarkdownMeta,
@@ -57,7 +59,9 @@
   <KitDocsLayout {navbar} sidebar={_sidebar}>
     <div slot="navbar-left">
       <div class="logo">
-        <Button href="/">Logo</Button>
+        <Button href="/">
+          {@html SvelteLogo}
+        </Button>
       </div>
     </div>
 
