@@ -4,14 +4,14 @@ import container from 'markdown-it-container';
 
 import { titleToSnakeCase } from '../../../utils/string';
 import { isString } from '../../../utils/unit';
-import type { MarkdownComponents, MarkdownParser } from '../types';
+import type { MarkdownCustomComponent, MarkdownParser } from '../types';
 
 const propsRE = /\|?(.*?)=(.*?)(?=(\||$))/g;
 const bodyRE = /\((.*?)\)(?:=)(.*)/;
 const tagRE = /tag=(.*?)(?:&|\))/;
 const slotRE = /slot=(.*?)(?:&|\))/;
 
-function renderDefault(componentName: string) {
+function renderDefault(parser: MarkdownParser, componentName: string) {
   return function (tokens: Token[], idx: number) {
     const token = tokens[idx];
 
@@ -27,7 +27,14 @@ function renderDefault(componentName: string) {
         const slot = propMatch.match(slotRE)?.[1];
         if (isString(tag) && isString(content)) {
           body.push(
-            [`<${tag}${isString(slot) ? ` slot="${slot}"` : ''}>`, content, `</${tag}>`].join('\n'),
+            [
+              `<${tag}${isString(slot) ? ` slot="${slot}"` : ''}>`,
+              parser
+                .render(content)
+                .replace(/^<p>/, '')
+                .replace(/<\/p>\n?$/, ''),
+              `</${tag}>`,
+            ].join('\n'),
           );
         }
       } else if (isString(prop) && isString(value)) {
@@ -43,14 +50,14 @@ function renderDefault(componentName: string) {
   };
 }
 
-export const containersPlugin: PluginWithOptions<MarkdownComponents> = (
+export const containersPlugin: PluginWithOptions<MarkdownCustomComponent[]> = (
   parser: MarkdownParser,
-  components = {},
+  components = [],
 ) => {
-  for (const { name: componentName, container: options } of components.custom ?? []) {
+  for (const { name: componentName, container: options } of components) {
     const name: string = options?.name ?? titleToSnakeCase(componentName);
     const marker: string = options?.marker ?? ':';
-    const render = options?.renderer?.(componentName) ?? renderDefault(componentName);
+    const render = options?.renderer?.(componentName) ?? renderDefault(parser, componentName);
     parser.use(container, name, { marker, render });
   }
 };

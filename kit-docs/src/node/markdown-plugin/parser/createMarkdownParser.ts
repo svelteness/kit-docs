@@ -15,7 +15,14 @@ import {
   linksPlugin,
   tocPlugin,
 } from './plugins';
-import type { InlineElementRule, MarkdownComponents, MarkdownParser } from './types';
+import type {
+  InlineElementRule,
+  MarkdownBlockComponent,
+  MarkdownComponents,
+  MarkdownCustomComponent,
+  MarkdownInlineComponent,
+  MarkdownParser,
+} from './types';
 
 export type MarkdownParserOptions = {
   components?: MarkdownComponents;
@@ -26,7 +33,19 @@ export type MarkdownParserOptions = {
 export async function createMarkdownParser(
   options: MarkdownParserOptions = {},
 ): Promise<MarkdownParser> {
-  const { configureParser, shiki = {}, components = {} } = options;
+  const { configureParser, shiki = {}, components = [] } = options;
+
+  const inlineComponents = components.filter(
+    ({ type }) => type === 'inline',
+  ) as MarkdownInlineComponent[];
+
+  const blockComponents = components.filter(
+    ({ type }) => type === 'block',
+  ) as MarkdownBlockComponent[];
+
+  const customComponents = components.filter(
+    ({ type }) => type === 'custom',
+  ) as MarkdownCustomComponent[];
 
   const parser = MarkdownIt({ html: true });
 
@@ -38,7 +57,7 @@ export async function createMarkdownParser(
   parser.use(customComponentPlugin);
   parser.use(linksPlugin);
   parser.use(codePlugin);
-  parser.use(containersPlugin, components);
+  parser.use(containersPlugin, customComponents);
   parser.use(importCodePlugin);
   parser.use(await createShikiPlugin(shiki));
   parser.use(hoistTagsPlugin);
@@ -50,7 +69,7 @@ export async function createMarkdownParser(
     emphasized: 'em',
   };
 
-  for (const { name, rule } of components.inline ?? []) {
+  for (const { name, rule } of inlineComponents) {
     if (rule === 'image') {
       parser.renderer.rules.image = function (tokens, idx, _, __, self) {
         const token = tokens[idx];
@@ -68,7 +87,7 @@ export async function createMarkdownParser(
     };
   }
 
-  for (const { name, rule } of components.block ?? []) {
+  for (const { name, rule } of blockComponents) {
     parser.renderer.rules[`${rule}_open`] = (tokens, idx) => {
       const token = tokens[idx];
       const props: string[] = [];

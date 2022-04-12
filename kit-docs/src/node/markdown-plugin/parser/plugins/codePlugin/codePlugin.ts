@@ -10,14 +10,8 @@ import { resolveLanguage } from './resolveLanguage';
 export const codePlugin: PluginSimple = (parser) => {
   parser.renderer.rules.code_inline = (tokens, idx) => {
     const token = tokens[idx];
-
     const code = token.content.replace(/:ignore$/, '');
-    const noTranslate = token.content.endsWith(':ignore');
-
-    const props = [`code={${JSON.stringify(code)}}`, noTranslate && 'noTranslate']
-      .filter(Boolean)
-      .join(' ');
-
+    const props = [`code={${JSON.stringify(code)}}`].join(' ');
     return `<CodeInline ${props} />`;
   };
 
@@ -49,11 +43,11 @@ export const codePlugin: PluginSimple = (parser) => {
       ?.map((range) => `[${range[0]}, ${range[1]}]`)
       .join(',')}]`;
 
-    const title = info.match(/:title=(.*?)(:|{|$)/)?.[1];
-    const useLineNumbers = /:line-numbers/.test(info);
-    const showCopyCode = /:copy(-highlight)?/.test(info);
-    const copyHighlightOnly = /:copy-highlight/.test(info);
-    const slot = info.match(/:slot=(.*?)(:|{|$)/)?.[1] ?? (/:slot/.test(info) && language.ext);
+    const title = info.match(/\|?title=(.*?)(\||{|$)/)?.[1];
+    const useLineNumbers = /\|?line-numbers/.test(info);
+    const showCopyCode = /\|?copy(-highlight)?/.test(info);
+    const copyHighlightOnly = /\|?copy-highlight/.test(info);
+    const slot = info.match(/:\|?slot=(.*?)(\||{|$)/)?.[1] ?? (/:slot/.test(info) && language.ext);
 
     const props = [
       title && `title="${title}"`,

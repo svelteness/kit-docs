@@ -30,30 +30,33 @@ export type BlockElementRule =
 
 export type MarkdownInlineComponent = {
   name: string;
+  type: 'inline';
   rule: InlineElementRule;
 };
 
 export type MarkdownBlockComponent = {
   name: string;
+  type: 'block';
   rule: BlockElementRule;
 };
 
 export type MarkdownCustomComponent = {
   name: string;
+  type: 'custom';
   container?: MarkdownComponentContainer;
 };
 
 export type MarkdownComponentContainer = {
-  name: string;
+  name?: string;
   marker?: string;
   renderer?(componentName: string): (tokens: Token[], idx: number) => string;
 };
 
-export type MarkdownComponents = {
-  inline?: MarkdownInlineComponent[];
-  block?: MarkdownBlockComponent[];
-  custom?: MarkdownCustomComponent[];
-};
+export type MarkdownComponents = (
+  | MarkdownInlineComponent
+  | MarkdownBlockComponent
+  | MarkdownCustomComponent
+)[];
 
 export type MarkdownMeta = {
   title: string;

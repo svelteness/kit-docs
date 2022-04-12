@@ -87,7 +87,7 @@ export function kitDocsMarkdownPlugin(options: MarkdownPluginOptions = {}): Plug
     topLevelHtmlTags,
   });
 
-  const components: MarkdownComponents = parserOptions?.components ?? {};
+  const components: MarkdownComponents = parserOptions?.components ?? [];
 
   function addGlobalComponents(files: string[]) {
     for (const file of files) {
@@ -100,12 +100,14 @@ export function kitDocsMarkdownPlugin(options: MarkdownPluginOptions = {}): Plug
   function addMarkdownComponents(files: string[]) {
     for (const file of files) {
       const componentName = getFileNameFromPath(file);
-      const has = components.custom?.some(({ name }) => name === componentName);
-      if (!has)
-        (components.custom ??= []).push({
-          ...getMarkdownContainer(file),
+      const has = components.some(({ name, type }) => type === 'custom' && name === componentName);
+      if (!has) {
+        components.push({
           name: componentName,
+          type: 'custom',
+          container: getMarkdownContainer(file, componentName),
         });
+      }
     }
   }
 
@@ -114,8 +116,9 @@ export function kitDocsMarkdownPlugin(options: MarkdownPluginOptions = {}): Plug
   try {
     const root = resolve(__dirname, '../../client/components/markdown');
     const paths = globbySync('**/*.svelte', { cwd: root }).map(normalizePath);
-    addMarkdownComponents(paths);
-    addGlobalComponents(paths.map((path) => join(root, path)));
+    const absPaths = paths.map((path) => join(root, path));
+    addMarkdownComponents(absPaths);
+    addGlobalComponents(absPaths);
   } catch (e) {
     // no-op
   }
@@ -167,8 +170,12 @@ export function kitDocsMarkdownPlugin(options: MarkdownPluginOptions = {}): Plug
   };
 }
 
-function getMarkdownContainer(path: string): Partial<MarkdownComponentContainer> | null {
-  if (!path.includes('@svelteness/kit-docs')) return null;
-  if (path.includes('Step.svelte')) return { marker: '!' };
-  return null;
+function getMarkdownContainer(path: string, name: string): MarkdownComponentContainer | undefined {
+  if (!path.includes('@svelteness/kit-docs') && !path.includes('kit-docs/kit-docs')) {
+    return;
+  }
+
+  if (name === 'Step') return { marker: '!' };
+
+  return undefined;
 }
