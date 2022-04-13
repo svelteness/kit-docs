@@ -10,7 +10,7 @@
     "preview": "pnpm preview --filter kit-docs",
     "preinstall": "npx only-allow pnpm",
     "prepare": "husky install",
-    "release": "pnpm clean && pnpm build && pnpm release --filter kit-docs && git push --follow-tags origin main && npm publish kit-docs",
+    "release": "pnpm clean && pnpm build && pnpm release --filter kit-docs && git push --follow-tags origin main && cd kit-docs && npm publish",
     "docs:dev": "pnpm dev --filter docs",
     "docs:build": "pnpm build --filter docs",
     "docs:preview": "pnpm preview --filter docs"
