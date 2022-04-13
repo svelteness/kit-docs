@@ -44,7 +44,7 @@
 
 <div
   class="kit-docs bg-gray-body min-h-full min-w-full h-full"
-  style="font-family: var(--kd-font-family-sans);"
+  style="font-family: var(--kd-font-family-sans, inherit);"
 >
   {#if navbar}
     <div

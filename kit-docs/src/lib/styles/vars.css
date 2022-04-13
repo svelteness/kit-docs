@@ -14,7 +14,7 @@
   --kd-color-brand: rgb(var(--kd-color-brand-rgb));
 
   --kd-color-gray-soft: rgb(112, 112, 112);
-  --kd-color-gray-inverse: hsl(0, 0%, 0%);
+  --kd-color-gray-inverse: rgb(0, 0, 0);
   --kd-color-gray-current: rgb(255, 255, 255);
   --kd-color-gray-divider: rgb(234, 234, 234);
   --kd-color-gray-hover: rgb(245, 245, 245);

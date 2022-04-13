@@ -25,16 +25,6 @@ module.exports = {
       colors: {
         brand: {
           DEFAULT: 'var(--kd-color-brand)',
-          50: 'var(--kd-color-brand-50)',
-          100: 'var(--kd-color-brand-100)',
-          200: 'var(--kd-color-brand-200)',
-          300: 'var(--kd-color-brand-300)',
-          400: 'var(--kd-color-brand-400)',
-          500: 'var(--kd-color-brand-500)',
-          600: 'var(--kd-color-brand-600)',
-          700: 'var(--kd-color-brand-700)',
-          800: 'var(--kd-color-brand-800)',
-          900: 'var(--kd-color-brand-900)',
         },
         gray: {
           DEFAULT: '#313131',
