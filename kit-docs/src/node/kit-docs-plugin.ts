@@ -12,6 +12,20 @@ export type KitDocsPluginOptions = {
 
 export const kitDocsPlugin = (options: KitDocsPluginOptions = {}): Plugin[] =>
   [
+    corePlugin(),
     options.highlight !== false && kitDocsHighlightPlugin(options.shiki),
     kitDocsMarkdownPlugin({ ...options.markdown, shiki: options.shiki }),
   ].filter(Boolean) as Plugin[];
+
+function corePlugin(): Plugin {
+  return {
+    name: '@svelteness/kit-docs',
+    config() {
+      return {
+        optimizeDeps: {
+          exclude: ['@svelteness/kit-docs'],
+        },
+      };
+    },
+  };
+}
