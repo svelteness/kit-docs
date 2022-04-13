@@ -1,8 +1,7 @@
-import fs from 'fs';
+import fs, { readFileSync } from 'fs';
 import matter from 'gray-matter';
 import LRUCache from 'lru-cache';
-import { createRequire } from 'module';
-import { relative } from 'path';
+import { resolve } from 'path';
 import toml from 'toml';
 
 import { getFileNameFromPath } from '../../utils/path';
@@ -20,10 +19,12 @@ import { preventViteReplace } from './utils/preventViteReplace';
 
 let kitDocsImportPath = '@svelteness/kit-docs';
 try {
-  const path = createRequire(import.meta.url).resolve('@svelteness/kit-docs');
-  const relativePath = relative(process.cwd(), path);
-  if (relativePath.startsWith('client')) {
-    kitDocsImportPath = '$lib';
+  const pkgPath = resolve(process.cwd(), 'package.json');
+  if (pkgPath.endsWith('kit-docs/package.json')) {
+    const pkg = readFileSync(pkgPath).toString();
+    if (/"name": "@svelteness\/kit-docs"/.test(pkg)) {
+      kitDocsImportPath = '$lib';
+    }
   }
 } catch (e) {
   //  no-op
