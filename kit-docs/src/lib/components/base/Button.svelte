@@ -12,10 +12,13 @@
   let __class = '';
   export { __class as class };
 
+  $: isButton = __as === 'button' && isUndefined($$restProps['href']);
+
   $: buttonClass = clsx(
-    'group transform-gpu rounded-md text-lg font-medium transition-transform hover:scale-105',
+    'group transform-gputext-lg font-medium transition-transform hover:scale-105',
     type === 'raised' &&
       'bg-gray-inverse text-gray-current hover:bg-gray-hover-inverse shadow-md hover:shadow-xl px-8 py-3 ',
+    isButton && 'rounded-md',
     __class,
   );
 
@@ -32,7 +35,7 @@
   );
 </script>
 
-{#if __as === 'button' && isUndefined($$restProps['href'])}
+{#if isButton}
   <button class={buttonClass} {...$$restProps}>
     {#if arrow === 'left'}
       <span class={arrowClass}>&lt;-</span>

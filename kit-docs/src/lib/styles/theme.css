@@ -36,7 +36,8 @@ body {
   -moz-tab-size: 2;
 }
 
-.kit-docs p + .admonition {
+.kit-docs p + .admonition,
+.kit-docs p + .steps {
   margin-top: 2.5rem;
 }
 

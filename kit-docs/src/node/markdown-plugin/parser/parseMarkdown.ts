@@ -1,6 +1,8 @@
 import fs from 'fs';
 import matter from 'gray-matter';
 import LRUCache from 'lru-cache';
+import { createRequire } from 'module';
+import { relative } from 'path';
 import toml from 'toml';
 
 import { getFileNameFromPath } from '../../utils/path';
@@ -15,6 +17,17 @@ import type {
 } from './types';
 import { commentOutTemplateTags, uncommentTemplateTags } from './utils/htmlEscape';
 import { preventViteReplace } from './utils/preventViteReplace';
+
+let kitDocsImportPath = '@svelteness/kit-docs';
+try {
+  const path = createRequire(import.meta.url).resolve('@svelteness/kit-docs');
+  const relativePath = relative(process.cwd(), path);
+  if (relativePath.startsWith('client')) {
+    kitDocsImportPath = '$lib';
+  }
+} catch (e) {
+  //  no-op
+}
 
 export type ParseMarkdownToSvelteResult = {
   component: string;
@@ -43,6 +56,12 @@ export function parseMarkdownToSvelte(
   const { hoistedTags = [] } = parserEnv as MarkdownParserEnv;
 
   const fileName = getFileNameFromPath(filePath);
+
+  if (kitDocsImportPath.length) {
+    hoistedTags.push(
+      ['<script>', `import { frontmatter } from "${kitDocsImportPath}";`, '</script>'].join('\n'),
+    );
+  }
 
   hoistedTags.push(...(options.topLevelHtmlTags?.({ fileName, filePath, meta }) ?? []));
 

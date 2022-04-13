@@ -15,20 +15,26 @@
   export let copyHighlightOnly = false;
   export let copySteps = false;
 
+  let currentStep = 1;
+  let stepHighlightLines = [];
+
+  $: if (copySteps) {
+    stepHighlightLines = [highlightLines[currentStep - 1] ?? [currentStep, currentStep]];
+  }
+
+  $: currentHighlightedLines = copySteps ? stepHighlightLines : highlightLines;
+
   const isHighlightLine = (lineNumber: number, _?: any): boolean =>
-    highlightLines.some(([start, end]) => lineNumber >= start && lineNumber <= end);
+    currentHighlightedLines.some(([start, end]) => lineNumber >= start && lineNumber <= end);
 
   // `linesCount-1` since last line is always empty (prettier)
   $: lines = [...Array(linesCount - 1).keys()].map((n) => n + 1);
-
-  let currentStep = 1;
-  $: if (copySteps) highlightLines = [[currentStep, currentStep]];
 
   let showCopiedCodePrompt = false;
   async function copyCodeToClipboard() {
     try {
       const copiedCode =
-        highlightLines.length > 0 && (copyHighlightOnly || copySteps)
+        currentHighlightedLines.length > 0 && (copyHighlightOnly || copySteps)
           ? rawCode
               .split('\n')
               .filter((_, i) => isHighlightLine(i + 1))
@@ -43,7 +49,8 @@
     showCopiedCodePrompt = true;
     if (copySteps) {
       const nextStep = currentStep + 1;
-      currentStep = nextStep > lines.length ? 1 : nextStep;
+      const maxSteps = highlightLines.length > 0 ? highlightLines.length : lines.length;
+      currentStep = nextStep > maxSteps ? 1 : nextStep;
     }
   }
 
@@ -130,7 +137,7 @@
       aria-hidden="true"
     >
       {#each lines as lineNumber}
-        {#if isHighlightLine(lineNumber, highlightLines)}
+        {#if isHighlightLine(lineNumber, currentHighlightedLines)}
           <div
             class="w-full border-l-[5px] font-mono text-transparent"
             style="border-color: var(--kd-code-highlight-border); background-color: var(--kd-code-highlight-color);"

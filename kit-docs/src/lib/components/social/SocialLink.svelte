@@ -24,7 +24,10 @@
 </script>
 
 <a
-  class={clsx('relative flex items-center text-gray-soft hover:text-gray-inverse', __class)}
+  class={clsx(
+    'relative flex items-center text-gray-soft hover:text-gray-inverse border-0',
+    __class,
+  )}
   {href}
   target="_blank"
 >

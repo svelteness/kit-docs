@@ -7,7 +7,7 @@
 
 <div
   class={clsx(
-    'flex h-6 items-center justify-center rounded-full px-2.5 py-1 text-xs tracking-wide font-mono font-medium',
+    'inline-flex h-6 items-center justify-center rounded-full px-2.5 py-1 text-xs tracking-wide font-mono font-medium',
     'border border-gray-divider shadow-sm',
     __class,
   )}

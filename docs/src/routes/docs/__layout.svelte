@@ -81,7 +81,7 @@
   }
 
   .logo :global(a) {
-    margin-left: 0.25rem;
+    margin-left: 0.5rem;
     display: flex;
     align-items: center;
   }

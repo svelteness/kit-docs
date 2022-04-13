@@ -1,12 +1,11 @@
-<script context="module" lang="ts">
-  import type { Load } from '@sveltejs/kit';
-
+<script context="module">
   export const prerender = true;
 
-  export const load: Load = () => {
+  /** @type {import("@sveltejs/kit").Load} */
+  export function load() {
     return {
       status: 307,
       redirect: '/docs/getting-started/introduction',
     };
-  };
+  }
 </script>
