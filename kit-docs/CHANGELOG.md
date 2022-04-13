@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.5](https://github.com/svelteness/kit-docs/compare/v0.2.4...v0.2.5) (2022-04-13)
+
+
+### Bug Fixes
+
+* move algolia back makes no difference ([7b501f7](https://github.com/svelteness/kit-docs/commit/7b501f7662e735898e109886b739582495ef37f5))
+
 ### [0.2.4](https://github.com/svelteness/kit-docs/compare/v0.2.3...v0.2.4) (2022-04-13)
 
 
