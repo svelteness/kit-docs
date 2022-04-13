@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.3](https://github.com/svelteness/kit-docs/compare/v0.2.2...v0.2.3) (2022-04-13)
+
+
+### Bug Fixes
+
+* exclude kit docs from vite optimization so aliases are mapped ([72aa757](https://github.com/svelteness/kit-docs/commit/72aa75708620db04f52ce4ca84ff4c258699282b))
+* use `.js` extension to avoid node module resolution errors ([49470de](https://github.com/svelteness/kit-docs/commit/49470deee805d19b1949d90555dc5da3d830069f))
+
 ### [0.2.2](https://github.com/svelteness/kit-docs/compare/v0.2.1...v0.2.2) (2022-04-13)
 
 
