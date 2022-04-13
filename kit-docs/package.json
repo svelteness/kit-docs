@@ -35,7 +35,7 @@
     "url": "https://github.com/svelteness/kit-docs/issues"
   },
   "scripts": {
-    "build": "run-s build:node build:node:types build:client build:styles",
+    "build": "run-s build:node kit:sync build:node:types build:client build:styles",
     "build:app": "run-s build:node kit:sync kit:build",
     "build:client": "svelte-kit package && run-s build:client:types clean:client",
     "build:client:types": "api-extractor run && rimraf temp client/**/*.d.ts",
