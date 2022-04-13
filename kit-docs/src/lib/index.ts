@@ -1,6 +1,6 @@
 // Actions
-export * from './actions/dialogManager';
-export * from './actions/prefetchLink';
+export * from './actions/dialogManager.js';
+export * from './actions/prefetchLink.js';
 
 // Components
 export { default as Algolia } from './components/algolia/Algolia.svelte';
@@ -15,10 +15,10 @@ export { default as Select } from './components/base/Select.svelte';
 export { default as SocialLink } from './components/social/SocialLink.svelte';
 
 // Loaders
-export * from './loaders';
+export * from './loaders/index.js';
 
 // Layout
-export * from './components/layout/contexts';
+export * from './components/layout/contexts.js';
 export { default as Footer } from './components/layout/Footer.svelte';
 export { default as KitDocs } from './components/layout/KitDocs.svelte';
 export { default as KitDocsLayout } from './components/layout/KitDocsLayout.svelte';
@@ -26,7 +26,7 @@ export { default as Navbar } from './components/layout/Navbar.svelte';
 export { default as NavLink } from './components/layout/NavLink.svelte';
 export { default as OnThisPage } from './components/layout/OnThisPage.svelte';
 export { default as Sidebar } from './components/layout/Sidebar.svelte';
-export { useActiveHeaderLinks } from './components/layout/useActiveHeaderLinks';
+export { useActiveHeaderLinks } from './components/layout/useActiveHeaderLinks.js';
 
 // Markdown (Block)
 export { default as CodeFence } from './components/markdown/block/CodeFence.svelte';
@@ -47,10 +47,10 @@ export { default as TableOfContents } from './components/markdown/custom/TableOf
 export { default as Yes } from './components/markdown/custom/Yes.svelte';
 
 // Stores
-export * from './stores/colorScheme';
-export * from './stores/isLargeScreen';
-export * from './stores/kitDocs';
+export * from './stores/colorScheme.js';
+export * from './stores/isLargeScreen.js';
+export * from './stores/kitDocs.js';
 
 // Utils
-export * from './utils/scroll';
-export * from './utils/string';
+export * from './utils/scroll.js';
+export * from './utils/string.js';

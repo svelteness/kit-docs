@@ -1,8 +1,8 @@
 import { onMount, tick } from 'svelte';
 
 import { goto } from '$app/navigation';
-import { kitDocs } from '$lib/stores/kitDocs';
-import { createDisposalBin } from '$lib/utils/events';
+import { kitDocs } from '$lib/stores/kitDocs.js';
+import { createDisposalBin } from '$lib/utils/events.js';
 
 const NAVBAR_HEIGHT = 160;
 

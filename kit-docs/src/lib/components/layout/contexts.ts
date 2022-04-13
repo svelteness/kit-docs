@@ -2,8 +2,8 @@ import { getContext, setContext, SvelteComponent } from 'svelte';
 import { derived, type Readable, readable } from 'svelte/store';
 
 import { page } from '$app/stores';
-import { kebabToTitleCase, titleToKebabCase } from '$lib/utils/string';
-import { isRegExp, isString } from '$lib/utils/unit';
+import { kebabToTitleCase, titleToKebabCase } from '$lib/utils/string.js';
+import { isRegExp, isString } from '$lib/utils/unit.js';
 
 export const NAVBAR_CONTEXT_KEY = Symbol('');
 

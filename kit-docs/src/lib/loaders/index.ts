@@ -1,7 +1,7 @@
 import type { Load } from '@sveltejs/kit';
 
-import type { ResolvedSidebarConfig } from '$lib/components/layout/contexts';
-import type { MarkdownMeta } from '$lib/stores/kitDocs';
+import type { ResolvedSidebarConfig } from '$lib/components/layout/contexts.js';
+import type { MarkdownMeta } from '$lib/stores/kitDocs.js';
 
 export function getRootDirFromUrl(url: URL) {
   return url.pathname.split('/')[1];

@@ -1,4 +1,4 @@
-import { isWindow } from './unit';
+import { isWindow } from './unit.js';
 
 export function hideDocumentScrollbar(hidden: boolean) {
   window.requestAnimationFrame(() => {
