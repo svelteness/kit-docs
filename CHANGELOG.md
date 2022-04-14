@@ -1,3 +1,12 @@
+## [0.3.1](https://github.com/svelteness/kit-docs/compare/v0.3.0...v0.3.1) (2022-04-14)
+
+
+### Bug Fixes
+
+* default kitdocs components are not imported ([1298760](https://github.com/svelteness/kit-docs/commit/129876028ba65507ef8e80a99887f9e0ca040228))
+
+
+
 # [0.3.0](https://github.com/svelteness/kit-docs/compare/v0.2.6...v0.3.0) (2022-04-14)
 
 ### Features
