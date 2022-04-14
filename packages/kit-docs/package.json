@@ -41,7 +41,7 @@
     "build:client": "svelte-kit package && run-s build:client:types clean:client",
     "build:client:types": "api-extractor run && rimraf temp client/**/*.d.ts",
     "build:node": "pnpm build:node:ext -- --entry=src/node/index.ts --outdir=node --platform=node --bundle --requireshim",
-    "build:node:ext": "node ../.scripts/build.js --external=vite,@sveltejs,shiki,toml,@rollup/pluginutils",
+    "build:node:ext": "node ../../.scripts/build.js --external=vite,@sveltejs,shiki,toml,@rollup/pluginutils",
     "build:node:types": "tsc -p src/node && api-extractor run -c api-extractor.node.json && rimraf node-types",
     "build:node:watch": "pnpm build:node -- -w",
     "build:styles": "run-s build:styles:theme build:styles:docsearch",
@@ -55,8 +55,7 @@
     "kit:dev": "svelte-kit dev -p 3001",
     "kit:build": "svelte-kit build",
     "kit:preview": "sirv build -p 3001",
-    "kit:sync": "svelte-kit sync",
-    "release": "standard-version"
+    "kit:sync": "svelte-kit sync"
   },
   "dependencies": {
     "@rollup/pluginutils": "^4.2.0",
@@ -99,7 +98,6 @@
     "react-dom": "^17.0.2",
     "rimraf": "^3.0.2",
     "sirv-cli": "^2.0.2",
-    "standard-version": "^9.3.0",
     "svelte": "^3.46.4",
     "svelte-preprocess": "^4.10.4",
     "svelte2tsx": "^0.5.6",

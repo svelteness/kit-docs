@@ -1,0 +1,52 @@
+{
+  "name": "@svelteness/create-kit-docs",
+  "version": "0.2.6",
+  "description": "Quickly scaffold a KitDocs application.",
+  "license": "MIT",
+  "type": "module",
+  "main": "bin/create-kit-docs.js",
+  "bin": {
+    "create-kit-docs": "bin/create-kit-docs.js"
+  },
+  "engines": {
+    "node": ">=14.19.0"
+  },
+  "files": [
+    "bin/",
+    "template-*"
+  ],
+  "exports": {
+    ".": "./bin/create-kit-docs.js",
+    "./package.json": "./package.json"
+  },
+  "contributors": [
+    "Rahim Alwer <rahim.alwer@gmail.com>"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/svelteness/kit-docs.git"
+  },
+  "bugs": {
+    "url": "https://github.com/svelteness/kit-docs/issues"
+  },
+  "dependencies": {
+    "enquirer": "^2.3.6",
+    "kleur": "^4.1.4",
+    "minimist": "^1.2.5",
+    "upath": "^2.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^16.0.1"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "create",
+    "docs",
+    "documentation",
+    "kit-docs",
+    "svelte-kit",
+    "svelte"
+  ]
+}

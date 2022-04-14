@@ -6,10 +6,10 @@ dist/
 
 docs/build/
 
-kit-docs/build/
-kit-docs/client/
-kit-docs/node/
-kit-docs/node-types/
+packages/kit-docs/build/
+packages/kit-docs/client/
+packages/kit-docs/node/
+packages/kit-docs/node-types/
 
 *~
 *.sw[mnpcod]
