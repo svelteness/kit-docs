@@ -1,3 +1,12 @@
+## [0.3.3](https://github.com/svelteness/kit-docs/compare/v0.3.2...v0.3.3) (2022-04-14)
+
+
+### Bug Fixes
+
+* bundle toml ([c48a8af](https://github.com/svelteness/kit-docs/commit/c48a8af1541352c409b57027b64b8b3150902674))
+
+
+
 ## [0.3.2](https://github.com/svelteness/kit-docs/compare/v0.3.1...v0.3.2) (2022-04-14)
 
 
