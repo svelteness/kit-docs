@@ -41,7 +41,7 @@ export type MarkdownPluginOptions = MarkdownParserOptions & {
    * A glob pointing to Svelte component files that will be imported into every single
    * markdown file.
    *
-   * @defaultValue 'src/lib/components/markdown/**\/[^_]*.svelte'
+   * @defaultValue 'src/lib/kit-docs/**\/[^_]*.svelte'
    */
   globalComponents?: string;
   /**
@@ -55,7 +55,7 @@ export type MarkdownPluginOptions = MarkdownParserOptions & {
 
 const DEFAULT_INCLUDE_RE = /\.md($|\?)/;
 const DEFAULT_EXCLUDE_RE = null;
-const DEFAULT_GLOBAL_COMPONENTS = 'src/lib/components/markdown/**/[^_]*.svelte';
+const DEFAULT_GLOBAL_COMPONENTS = 'src/lib/kit-docs/**/[^_]*.svelte';
 
 export function kitDocsMarkdownPlugin(options: MarkdownPluginOptions = {}): Plugin {
   let baseUrl: string;

@@ -29,22 +29,22 @@ export { default as Sidebar } from './components/layout/Sidebar.svelte';
 export { useActiveHeaderLinks } from './components/layout/useActiveHeaderLinks.js';
 
 // Markdown (Block)
-export { default as CodeFence } from './components/markdown/block/CodeFence.svelte';
-export { default as Table } from './components/markdown/block/Table.svelte';
-export { default as TableWrapper } from './components/markdown/block/TableWrapper.svelte';
+export { default as CodeFence } from './kit-docs/block/CodeFence.svelte';
+export { default as Table } from './kit-docs/block/Table.svelte';
+export { default as TableWrapper } from './kit-docs/block/TableWrapper.svelte';
 
 // Markdown (Inline)
-export { default as CodeInline } from './components/markdown/inline/CodeInline.svelte';
-export { default as Link } from './components/markdown/inline/Link.svelte';
+export { default as CodeInline } from './kit-docs/inline/CodeInline.svelte';
+export { default as Link } from './kit-docs/inline/Link.svelte';
 
 // Markdown (Custom)
-export { default as Admonition } from './components/markdown/custom/Admonition.svelte';
-export { default as No } from './components/markdown/custom/No.svelte';
-export { default as Step } from './components/markdown/custom/Step.svelte';
-export { default as Steps } from './components/markdown/custom/Steps.svelte';
-export { default as TabbedLinks } from './components/markdown/custom/TabbedLinks.svelte';
-export { default as TableOfContents } from './components/markdown/custom/TableOfContents.svelte';
-export { default as Yes } from './components/markdown/custom/Yes.svelte';
+export { default as Admonition } from './kit-docs/custom/Admonition.svelte';
+export { default as No } from './kit-docs/custom/No.svelte';
+export { default as Step } from './kit-docs/custom/Step.svelte';
+export { default as Steps } from './kit-docs/custom/Steps.svelte';
+export { default as TabbedLinks } from './kit-docs/custom/TabbedLinks.svelte';
+export { default as TableOfContents } from './kit-docs/custom/TableOfContents.svelte';
+export { default as Yes } from './kit-docs/custom/Yes.svelte';
 
 // Stores
 export * from './stores/colorScheme.js';
