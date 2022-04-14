@@ -119,7 +119,7 @@ export function kitDocsMarkdownPlugin(options: MarkdownPluginOptions = {}): Plug
   addMarkdownComponents(absGlobalComponentPaths);
 
   try {
-    const root = resolve(__dirname, '../../client/components/markdown');
+    const root = resolve(__dirname, '../../client/kit-docs');
     const paths = globbySync('**/*.svelte', { cwd: root }).map(normalizePath);
     const absPaths = paths.map((path) => resolve(root, path)).map(normalizePath);
     addMarkdownComponents(absPaths);
