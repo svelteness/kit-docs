@@ -1,3 +1,13 @@
+# [0.3.0](https://github.com/svelteness/kit-docs/compare/v0.2.6...v0.3.0) (2022-04-14)
+
+
+### Features
+
+* add `create-kit-docs` package ([1ec297e](https://github.com/svelteness/kit-docs/commit/1ec297e7ecd38bbae74819ab0551a83fc4b1e453))
+* global components dir moved to `lib/kit-docs` ([e003ab7](https://github.com/svelteness/kit-docs/commit/e003ab7d84b4609edda135cf72161aaa1f8c6e06))
+
+
+
 # Changelog
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.

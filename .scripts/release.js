@@ -1,7 +1,7 @@
 import kleur from 'kleur';
 import { createRequire } from 'module';
 import { fileURLToPath } from 'url';
-import execa from 'execa';
+import { execa } from 'execa';
 import fs from 'fs';
 import minimist from 'minimist';
 import path from 'path';
@@ -39,7 +39,6 @@ function inc(i) {
 }
 
 async function run(bin, args, opts = {}) {
-  // @ts-ignore
   return execa(bin, args, { stdio: 'inherit', ...opts });
 }
 
