@@ -4,6 +4,7 @@
   "description": "Documentation integration for SvelteKit.",
   "license": "MIT",
   "type": "module",
+  "svelte": "./client/index.js",
   "sideEffects": [
     "./client/polyfills/index.js"
   ],
