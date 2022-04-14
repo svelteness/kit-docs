@@ -1,3 +1,12 @@
+## [0.3.2](https://github.com/svelteness/kit-docs/compare/v0.3.1...v0.3.2) (2022-04-14)
+
+
+### Bug Fixes
+
+* missing peer deps in create script ([0503704](https://github.com/svelteness/kit-docs/commit/0503704462e0b728f072e1994e988c60306400ef))
+
+
+
 ## [0.3.1](https://github.com/svelteness/kit-docs/compare/v0.3.0...v0.3.1) (2022-04-14)
 
 
