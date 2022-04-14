@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.6](https://github.com/svelteness/kit-docs/compare/v0.2.5...v0.2.6) (2022-04-14)
+
+
+### Bug Fixes
+
+* add `svelte` entry field to `package.json` ([53c1ab4](https://github.com/svelteness/kit-docs/commit/53c1ab4b6ffe146ed48ad35a169b6f0027e4e3b2))
+
 ### [0.2.5](https://github.com/svelteness/kit-docs/compare/v0.2.4...v0.2.5) (2022-04-13)
 
 
