@@ -67,9 +67,11 @@ async function main() {
   const pkg = JSON.parse(fs.readFileSync(pkgPath).toString());
 
   pkg.devDependencies = {
+    '@iconify-json/ri': '^1.1.1',
     '@sveltejs/adapter-auto': 'next',
     '@sveltejs/kit': 'next',
     '@svelteness/kit-docs': `^${version}`,
+    clsx: '^1.1.1',
     'unplugin-icons': '^0.13.4',
     svelte: '^3.44.0',
   };
