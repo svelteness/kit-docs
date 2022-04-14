@@ -41,7 +41,7 @@
     "build:client": "svelte-kit package && run-s build:client:types clean:client",
     "build:client:types": "api-extractor run && rimraf temp client/**/*.d.ts",
     "build:node": "pnpm build:node:ext -- --entry=src/node/index.ts --outdir=node --platform=node --bundle --requireshim",
-    "build:node:ext": "node ../../.scripts/build.js --external=vite,@sveltejs,shiki,toml,@rollup/pluginutils",
+    "build:node:ext": "node ../../.scripts/build.js --external=vite,@sveltejs,shiki,@rollup/pluginutils",
     "build:node:types": "tsc -p src/node && api-extractor run -c api-extractor.node.json && rimraf node-types",
     "build:node:watch": "pnpm build:node -- -w",
     "build:styles": "run-s build:styles:theme build:styles:docsearch",
@@ -64,8 +64,7 @@
     "clsx": "^1.1.1",
     "kleur": "^4.1.4",
     "shiki": "^0.10.1",
-    "svelte-class-transition": "^1.0.4",
-    "toml": "^3.0.0"
+    "svelte-class-transition": "^1.0.4"
   },
   "peerDependencies": {
     "@iconify-json/ri": "^1.1.1",
@@ -102,6 +101,7 @@
     "svelte-preprocess": "^4.10.4",
     "svelte2tsx": "^0.5.6",
     "tailwindcss": "^3.0.23",
+    "toml": "^3.0.0",
     "tslib": "^2.3.0",
     "typescript": "^4.5.4",
     "unplugin-icons": "^0.13.4",
