@@ -15,7 +15,7 @@
   export let style = '';
 </script>
 
-{#if $kitDocs.meta.hasHeaders}
+{#if $kitDocs.meta?.hasHeaders}
   <div class={clsx('on-this-page', __class)} {style}>
     <h5 class="font-semibold w-full text-left text-gray-inverse text-lg">On this page</h5>
     <ul class="space-y-4 mt-4">
