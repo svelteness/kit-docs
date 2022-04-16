@@ -1,3 +1,19 @@
+# [0.4.0](https://github.com/svelteness/kit-docs/compare/v0.3.3...v0.4.0) (2022-04-16)
+
+
+### Bug Fixes
+
+* externalize deps correctly so builds work ([88dd93d](https://github.com/svelteness/kit-docs/commit/88dd93decc9b3bbcc9a011534aae0d9e207a432e)), closes [#5](https://github.com/svelteness/kit-docs/issues/5)
+* normalize paths in loader ([2f431b6](https://github.com/svelteness/kit-docs/commit/2f431b69d445864de0143218cc02281a802c3272))
+* reading `null` meta value error in `OnThisPage` component ([bb13ceb](https://github.com/svelteness/kit-docs/commit/bb13ceb727e4eeec7f096a09066da88866f02318))
+
+
+### Features
+
+* include `/docs` redirect in quick install ([be052e1](https://github.com/svelteness/kit-docs/commit/be052e13030988495a6f0bb186b06657d8d67998))
+
+
+
 ## [0.3.3](https://github.com/svelteness/kit-docs/compare/v0.3.2...v0.3.3) (2022-04-14)
 
 
