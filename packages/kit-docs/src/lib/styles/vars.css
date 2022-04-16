@@ -1,6 +1,12 @@
 :root {
   font-size: 16px;
-  scroll-padding-top: 8rem;
+  scroll-padding-top: 12rem;
+}
+
+@media screen and (min-width: 992px) {
+  :root {
+    scroll-padding-top: 8rem;
+  }
 }
 
 :root {
