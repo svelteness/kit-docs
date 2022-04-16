@@ -97,11 +97,9 @@ body {
   .kit-docs h3:hover .header-anchor,
   .kit-docs h4:hover .header-anchor {
     opacity: 1;
-    margin-left: 0;
   }
 }
 
 .kit-docs .header-anchor:focus-visible {
   opacity: 1;
-  margin-left: 0;
 }
