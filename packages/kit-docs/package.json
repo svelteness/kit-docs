@@ -21,6 +21,7 @@
   "exports": {
     ".": "./client/index.js",
     "./client/*": "./client/*",
+    "./client/algolia": "./client/algolia/index.js",
     "./node": "./node/index.js",
     "./package.json": "./package.json",
     "./tailwind.config.cjs": "./tailwind.config.cjs"

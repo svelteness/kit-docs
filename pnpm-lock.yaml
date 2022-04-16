@@ -60,17 +60,12 @@ importers:
 
   docs:
     specifiers:
-      '@algolia/client-search': ^4.13.0
-      '@docsearch/css': ^3.0.0
-      '@docsearch/js': ^3.0.0
       '@iconify-json/ri': ^1.1.1
       '@sveltejs/adapter-auto': next
+      '@sveltejs/adapter-static': next
       '@sveltejs/kit': next
       '@svelteness/kit-docs': workspace:*
-      '@types/react': ^17.0.39
       clsx: ^1.1.1
-      react: ^17.0.2
-      react-dom: ^17.0.2
       svelte: ^3.44.0
       svelte-check: ^2.2.6
       svelte-preprocess: ^4.10.1
@@ -80,16 +75,11 @@ importers:
     dependencies:
       clsx: 1.1.1
     devDependencies:
-      '@algolia/client-search': 4.13.0
-      '@docsearch/css': 3.0.0
-      '@docsearch/js': 3.0.0_5377e26b52c02809078cfcbfa66845b0
       '@iconify-json/ri': 1.1.1
       '@sveltejs/adapter-auto': 1.0.0-next.34
-      '@sveltejs/kit': 1.0.0-next.312_svelte@3.47.0
+      '@sveltejs/adapter-static': 1.0.0-next.29
+      '@sveltejs/kit': 1.0.0-next.314_svelte@3.47.0
       '@svelteness/kit-docs': link:../packages/kit-docs
-      '@types/react': 17.0.44
-      react: 17.0.2
-      react-dom: 17.0.2_react@17.0.2
       svelte: 3.47.0
       svelte-check: 2.6.0_svelte@3.47.0
       svelte-preprocess: 4.10.5_svelte@3.47.0+typescript@4.6.3
@@ -581,6 +571,25 @@ packages:
 
   /@sveltejs/kit/1.0.0-next.312_svelte@3.47.0:
     resolution: {integrity: sha512-l07ct0FJQnt+y3/NSEBvHKDKVE/7syYQnFhCVZ6H+4LEYRtTNybFxUTC8jA3xpZwPqJLZz1X+Tt+Sa8ZMuVzDg==}
+    engines: {node: '>=14.13'}
+    hasBin: true
+    peerDependencies:
+      svelte: ^3.44.0
+    dependencies:
+      '@sveltejs/vite-plugin-svelte': 1.0.0-next.41_svelte@3.47.0+vite@2.9.4
+      sade: 1.8.1
+      svelte: 3.47.0
+      vite: 2.9.4
+    transitivePeerDependencies:
+      - diff-match-patch
+      - less
+      - sass
+      - stylus
+      - supports-color
+    dev: true
+
+  /@sveltejs/kit/1.0.0-next.314_svelte@3.47.0:
+    resolution: {integrity: sha512-EkXjEd30XO8+AydBLARxAtI6Ak8V0KFSEJ07sNsrkGq9J70sWPL7yGenhGaeq6S852XZAqeyWd6uGQZmQLR4Wg==}
     engines: {node: '>=14.13'}
     hasBin: true
     peerDependencies:

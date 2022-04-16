@@ -3,7 +3,6 @@ export * from './actions/dialogManager.js';
 export * from './actions/prefetchLink.js';
 
 // Components
-export { default as Algolia } from './components/algolia/Algolia.svelte';
 export { default as Button } from './components/base/Button.svelte';
 export { default as Chip } from './components/base/Chip.svelte';
 export { default as ColorSchemeMenu } from './components/base/ColorSchemeMenu.svelte';

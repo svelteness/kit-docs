@@ -25,6 +25,11 @@ function corePlugin(): Plugin {
         optimizeDeps: {
           exclude: ['@svelteness/kit-docs'],
         },
+        build: {
+          rollupOptions: {
+            external: ['@svelteness/kit-docs/node'],
+          },
+        },
       };
     },
   };
