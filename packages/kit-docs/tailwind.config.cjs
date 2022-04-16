@@ -199,6 +199,18 @@ function kitDocsTypography(theme) {
         'tbody code': {
           fontSize: theme('fontSize.sm')[0],
         },
+        'thead th:first-child': {
+          paddingLeft: '0.5714286em',
+        },
+        'thead th:last-child': {
+          paddingRight: '0.5714286em',
+        },
+        'tbody td:first-child': {
+          paddingLeft: '0.5714286em',
+        },
+        'tbody td:last-child': {
+          paddingRight: '0.5714286em',
+        },
         'tbody tr td:first-child code': {
           color: theme('colors.indigo.500'),
           paddingLeft: '8px',
