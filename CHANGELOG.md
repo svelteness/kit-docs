@@ -1,3 +1,19 @@
+# [0.5.0](https://github.com/svelteness/kit-docs/compare/v0.4.0...v0.5.0) (2022-04-16)
+
+
+### Bug Fixes
+
+* dont cache markdown results when building for prod ([410bce8](https://github.com/svelteness/kit-docs/commit/410bce8a9726aa399e80ccac657a7bdd219d56f7))
+* improve heading anchors on mobile ([26ea587](https://github.com/svelteness/kit-docs/commit/26ea587fb5a61da25cf0ddc404ab95da5e01c89e))
+* prevent headings jumping on hover when showing hash ([2306661](https://github.com/svelteness/kit-docs/commit/23066617616fe56612ca600cd9bb78b284b196fa))
+
+
+### Features
+
+* collapse navbar on mobile when scrolling ([fe8407a](https://github.com/svelteness/kit-docs/commit/fe8407ad74f3fefb614a0bc8cf9994f36c348138))
+
+
+
 # [0.4.0](https://github.com/svelteness/kit-docs/compare/v0.3.3...v0.4.0) (2022-04-16)
 
 
