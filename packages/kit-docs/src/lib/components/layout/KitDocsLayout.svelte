@@ -20,6 +20,8 @@
     type SidebarConfig,
   } from './contexts';
   import { writable } from 'svelte/store';
+  import { isLargeScreen } from '$lib/stores/isLargeScreen';
+  import { scrollDirection, scrollTop } from '$lib/stores/scroll';
 
   export let navbar: NavbarConfig | false;
   export let sidebar: SidebarConfig;
@@ -40,19 +42,22 @@
   setSidebarContext(createSidebarContext(sidebarConfig));
 
   const { activeCategory, activeLink, nextLink, previousLink } = getSidebarContext();
+
+  $: collapseNavbar = $isLargeScreen ? false : $scrollTop > 60 && $scrollDirection === 'down';
 </script>
 
 <div
-  class="kit-docs bg-gray-body min-h-full min-w-full h-full"
-  style="font-family: var(--kd-font-family-sans, inherit);"
+  class="kit-docs bg-gray-body min-h-full min-w-full h-full transition-transform duration-150 ease-out"
+  style={clsx('font-family: var(--kd-font-family-sans, inherit);')}
 >
   {#if navbar}
     <div
       class={clsx(
-        'border-gray-divider fixed top-0 z-30 w-full flex-none border-b',
+        'border-gray-divider fixed top-0 z-30 w-full flex-none border-b transform-gpu transition-transform duration-150 ease-out',
         isNavPopoverOpen
           ? 'bg-gray-100 dark:bg-gray-800'
           : 'supports-backdrop-blur:bg-white/60 bg-gray-200/95 backdrop-blur dark:bg-gray-800/60',
+        collapseNavbar ? '-translate-y-[5rem]' : 'translate-y-0',
       )}
     >
       <Navbar
@@ -79,7 +84,7 @@
         </svelte:fragment>
 
         <svelte:fragment slot="bottom">
-          <div class="border-gray-divider 992:hidden mt-4 flex w-full items-center border-t pt-4">
+          <div class="border-gray-divider 992:hidden flex w-full items-center mt-4 pt-4 border-t">
             <button
               id="main-sidebar-button"
               type="button"

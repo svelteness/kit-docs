@@ -3,6 +3,7 @@ import { onMount, tick } from 'svelte';
 import { goto } from '$app/navigation';
 import { kitDocs } from '$lib/stores/kitDocs.js';
 import { createDisposalBin } from '$lib/utils/events.js';
+import { throttleAndDebounce } from '$lib/utils/timing';
 
 const NAVBAR_HEIGHT = 160;
 
@@ -105,25 +106,4 @@ export function useActiveHeaderLinks() {
       disposal.dispose();
     };
   });
-}
-
-function throttleAndDebounce(fn: () => void, delay: number): () => void {
-  let timeout: number;
-  let called = false;
-
-  return () => {
-    if (timeout) {
-      window.clearTimeout(timeout);
-    }
-
-    if (!called) {
-      fn();
-      called = true;
-      window.setTimeout(() => {
-        called = false;
-      }, delay);
-    } else {
-      timeout = window.setTimeout(fn, delay);
-    }
-  };
 }
