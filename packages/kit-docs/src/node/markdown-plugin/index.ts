@@ -58,6 +58,7 @@ const DEFAULT_EXCLUDE_RE = null;
 const DEFAULT_GLOBAL_COMPONENTS = 'src/lib/kit-docs/**/[^_]*.svelte';
 
 export function kitDocsMarkdownPlugin(options: MarkdownPluginOptions = {}): Plugin {
+  let mode: string;
   let baseUrl: string;
   let parser: MarkdownParser;
   let isBuild: boolean;
@@ -82,6 +83,7 @@ export function kitDocsMarkdownPlugin(options: MarkdownPluginOptions = {}): Plug
   const globalComponentFiles = globbySync(globalComponents).map(normalizePath);
 
   const parseOptions = (): ParseMarkdownOptions => ({
+    mode,
     baseUrl,
     escapeConstants: isBuild,
     define,
@@ -133,6 +135,7 @@ export function kitDocsMarkdownPlugin(options: MarkdownPluginOptions = {}): Plug
     enforce: 'pre' as const,
     async configResolved(config) {
       baseUrl = config.base;
+      mode = config.mode;
       isBuild = config.command === 'build';
       define = config.define;
       parser = await createMarkdownParser({

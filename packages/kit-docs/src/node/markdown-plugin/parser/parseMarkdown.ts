@@ -42,9 +42,10 @@ export function parseMarkdownToSvelte(
   filePath: string,
   options: ParseMarkdownOptions = {},
 ): ParseMarkdownToSvelteResult {
-  const cacheKey = hashString(filePath + source);
+  const isProd = options.mode === 'production';
+  const cacheKey = !isProd ? hashString(filePath + source) : '';
 
-  if (svelteCache.has(cacheKey)) return svelteCache.get(cacheKey)!;
+  if (!isProd && svelteCache.has(cacheKey)) return svelteCache.get(cacheKey)!;
 
   const {
     html,
@@ -117,9 +118,10 @@ export function parseMarkdown(
   filePath: string,
   options: ParseMarkdownOptions = {},
 ): ParsedMarkdownResult {
-  const cacheKey = hashString(filePath + source);
+  const isProd = options.mode === 'production';
+  const cacheKey = !isProd ? hashString(filePath + source) : '';
 
-  if (mdCache.has(cacheKey)) return mdCache.get(cacheKey)!;
+  if (!isProd && mdCache.has(cacheKey)) return mdCache.get(cacheKey)!;
 
   const {
     data: frontmatter,

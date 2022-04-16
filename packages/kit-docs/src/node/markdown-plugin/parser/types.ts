@@ -4,6 +4,7 @@ import type Token from 'markdown-it/lib/token';
 export type MarkdownParser = MarkdownIt;
 
 export type ParseMarkdownOptions = {
+  mode?: string;
   baseUrl?: string;
   escapeConstants?: boolean;
   define?: Record<string, unknown>;
