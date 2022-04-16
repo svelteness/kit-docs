@@ -8,7 +8,11 @@ export function getRootDirFromUrl(url: URL) {
 }
 
 export function slugToRequestParam(slug: string) {
-  return slug.replace(/\//g, '_');
+  return normalizePath(slug).replace(/\//g, '_');
+}
+
+export function normalizePath(path: string) {
+  return path.replace(/^\//, '').replace(/\/$/, '');
 }
 
 /**
@@ -20,9 +24,7 @@ export async function loadKitDocsMeta(
   slug: string,
   fetch: (info: RequestInfo, init?: RequestInit) => Promise<Response>,
 ): Promise<MarkdownMeta> {
-  const res = await fetch(
-    `/kit-docs/${slugToRequestParam(slug.replace(/^\//, '').replace(/\.html$/, ''))}.meta.json`,
-  );
+  const res = await fetch(`/kit-docs/${slugToRequestParam(slug.replace(/\.html$/, ''))}.meta.json`);
   return res.json();
 }
 
@@ -35,7 +37,7 @@ export async function loadKitDocsSidebar(
   path: string,
   fetch: (info: RequestInfo, init?: RequestInit) => Promise<Response>,
 ): Promise<ResolvedSidebarConfig> {
-  const res = await fetch(`/kit-docs/${slugToRequestParam(path.replace(/^\//, ''))}.sidebar.json`);
+  const res = await fetch(`/kit-docs/${slugToRequestParam(path)}.sidebar.json`);
   return res.json();
 }
 
