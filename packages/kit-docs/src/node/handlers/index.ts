@@ -88,6 +88,7 @@ export function createSidebarRequestHandler(): RequestHandler {
 
         const relativePath = relative(dirPath, file);
         const unorderedPath = relativePath.replace(orderedPathTokenRE, '');
+        const cleanPath = unorderedPath.replace(layoutNameRE, '');
         const content = readFileSync(file).toString();
         const frontmatter = getFrontmatter(content);
         const category = dirname(unorderedPath);
@@ -96,11 +97,9 @@ export function createSidebarRequestHandler(): RequestHandler {
           frontmatter.sidebar_title ??
           frontmatter.title ??
           content.match(headingRE)?.[1] ??
-          kebabToTitleCase(basename(unorderedPath, extname(unorderedPath)));
+          kebabToTitleCase(basename(cleanPath, extname(cleanPath)));
 
-        const slug = `/${directory}/${unorderedPath
-          .replace(orderedPathTokenRE, '')
-          .replace(extname(unorderedPath), '')}`;
+        const slug = `/${directory}/${cleanPath.replace(extname(cleanPath), '')}`;
 
         (links[category] ??= []).push({ title, slug });
       }

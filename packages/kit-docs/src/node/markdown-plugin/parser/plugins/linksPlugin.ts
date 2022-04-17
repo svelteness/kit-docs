@@ -6,6 +6,8 @@ import { isLinkExternal } from '../utils/isLink';
 
 const ROUTES_DIR = resolve(process.cwd(), 'src/routes');
 
+const orderedPathTokenRE = /\[\.\.\.\d+\]/g;
+
 /**
  * Resolves link URLs.
  */
@@ -33,7 +35,7 @@ export const linksPlugin: PluginSimple = (parser) => {
           token.attrSet(key, val);
         });
       } else if (internalLinkMatch) {
-        const rawPath = internalLinkMatch?.[1];
+        const rawPath = decodeURI(internalLinkMatch?.[1]);
         const rawHash = internalLinkMatch?.[2] ?? '';
 
         const { filePath } = env;
@@ -42,12 +44,13 @@ export const linksPlugin: PluginSimple = (parser) => {
           ? '.' + rawPath
           : resolve(lstatSync(filePath).isDirectory() ? filePath : dirname(filePath), rawPath);
 
-        const route = relative(ROUTES_DIR, absolutePath)
+        const slug = relative(ROUTES_DIR, absolutePath)
+          .replace(orderedPathTokenRE, '')
           .replace(/\/index/, '')
           .replace(/\.(md|html)/, '');
 
         // Set new path.
-        hrefAttr![1] = '/' + route + rawHash;
+        hrefAttr![1] = '/' + slug + rawHash;
 
         const links = env.links || (env.links = []);
         links.push(hrefAttr![1]);
