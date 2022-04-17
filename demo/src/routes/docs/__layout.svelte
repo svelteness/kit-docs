@@ -11,60 +11,66 @@
   import '@svelteness/kit-docs/client/styles/theme.css';
   import '@svelteness/kit-docs/client/styles/vars.css';
 
-  import { page } from '$app/stores';
-
-  import kitDocsLogo from '$lib/img/kit-docs-logo.svg?raw';
-  import socialCardLarge from '$lib/img/social-card-large.jpg';
+  import SvelteLogo from '../../lib/img/svelte-horizontal.svg?raw';
 
   import {
+    createKitDocsLoader,
     KitDocs,
     KitDocsLayout,
     Button,
     SocialLink,
-    createKitDocsLoader,
     createSidebarContext,
+    kebabToTitleCase,
   } from '@svelteness/kit-docs';
 
   /** @type {import('@svelteness/kit-docs').MarkdownMeta} */
   export let meta;
 
-  /** @type {import('@svelteness/kit-docs').ResolvedSidebarConfig} */
+  /** @type {import('@svelteness/kit-docs').SidebarConfig} */
   export let sidebar;
 
   /** @type {import('@svelteness/kit-docs').NavbarConfig} */
   const navbar = {
-    links: [{ title: 'Documentation', slug: '/docs', match: /\/docs/ }],
+    links: [
+      { title: 'Docs', slug: '/docs', match: /\/docs/ },
+      { title: 'Tutorials', slug: 'https://svelte.dev/tutorial' },
+      { title: 'Examples', slug: 'https://svelte.dev/examples' },
+      { title: 'REPL', slug: 'https://svelte.dev/repl' },
+      { title: 'Blog', slug: 'https://svelte.dev/blog' },
+      { title: 'FAQ', slug: 'https://svelte.dev/faq' },
+    ],
   };
 
-  const { activeCategory } = createSidebarContext(sidebar);
+  /** @type {import('@svelteness/kit-docs').SidebarConfig} */
+  const _sidebar = {
+    ...sidebar,
+    formatCategory: (category) => kebabToTitleCase(category).replace('Api', 'API'),
+  };
+
+  const { activeCategory } = createSidebarContext(_sidebar);
 </script>
 
 <svelte:head>
-  <title>{$activeCategory}: {meta.title} | KitDocs</title>
+  <title>{$activeCategory}: {meta.title} | Svelte</title>
   <meta name="description" content={meta.description} />
   <meta name="twitter:description" content={meta.description} />
   <meta name="og:description" content={meta.description} />
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:site" content="@mihar_22" />
-  <meta name="twitter:image" content={`https://kit-docs.svelteness.dev${socialCardLarge}`} />
-  <meta name="twitter:creator" content="@mihar_22" />
-  <meta property="og:url" content={`https://kit-docs.svelteness.dev${$page.url.pathname}`} />
-  <meta property="og:type" content="article" />
-  <meta name="og:image" content={`https://kit-docs.svelteness.dev${socialCardLarge}`} />
 </svelte:head>
 
 <KitDocs {meta}>
-  <KitDocsLayout {navbar} {sidebar}>
+  <KitDocsLayout {navbar} sidebar={_sidebar}>
     <div slot="navbar-left">
       <div class="logo">
-        <Button href="/docs">
-          {@html kitDocsLogo}
+        <Button href="/">
+          {@html SvelteLogo}
         </Button>
       </div>
     </div>
 
     <div class="socials" slot="navbar-right-alt">
-      <SocialLink type="gitHub" href="https://github.com/svelteness/kit-docs" />
+      <SocialLink type="twitter" href="https://twitter.com/sveltejs" />
+      <SocialLink type="discord" href="https://discord.com/invite/yy75DKs" />
+      <SocialLink type="gitHub" href="https://github.com/sveltejs/svelte" />
     </div>
 
     <slot />
@@ -72,22 +78,15 @@
 </KitDocs>
 
 <style>
-  :global(:root) {
-    --kd-color-brand-rgb: 233, 127, 6;
-  }
-
-  :global(:root.dark) {
-    --kd-color-brand-rgb: 213, 149, 76;
-  }
-
   .logo :global(a) {
-    margin-left: 0.5rem;
     display: flex;
     align-items: center;
+    justify-content: center;
   }
 
   .logo :global(svg) {
-    width: 26px;
+    height: 36px;
+    overflow: hidden;
   }
 
   .socials {
@@ -97,5 +96,13 @@
 
   .socials > :global(a) {
     padding: 0 0.5rem;
+  }
+
+  :global(:root) {
+    --kd-color-brand-rgb: 209, 59, 18;
+  }
+
+  :global(:root.dark) {
+    --kd-color-brand-rgb: 227, 105, 70;
   }
 </style>

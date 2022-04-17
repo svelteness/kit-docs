@@ -4,7 +4,7 @@ turbo-graph*
 dist/
 .svelte-kit/
 
-docs/build/
+demo/build/
 
 packages/kit-docs/build/
 packages/kit-docs/client/

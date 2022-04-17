@@ -1,74 +1,70 @@
-<script lang="ts" context="module">
+<script context="module">
   export const prerender = true;
 
   export const load = createKitDocsLoader({ sidebar: '/docs' });
 </script>
 
-<script lang="ts">
-  import '$lib/polyfills';
+<script>
+  import '$lib/polyfills/index';
   import '$lib/styles/normalize.css';
   import '$lib/styles/fonts.css';
   import '$lib/styles/theme.css';
   import '$lib/styles/vars.css';
 
-  import SvelteLogo from '../../img/svelte-horizontal.svg?raw';
+  import { page } from '$app/stores';
+
+  import kitDocsLogo from '$img/kit-docs-logo.svg?raw';
+  import socialCardLarge from '$img/social-card-large.jpg';
 
   import {
-    createKitDocsLoader,
-    type MarkdownMeta,
-    type NavbarConfig,
-    type SidebarConfig,
     KitDocs,
     KitDocsLayout,
     Button,
     SocialLink,
+    createKitDocsLoader,
     createSidebarContext,
-    kebabToTitleCase,
   } from '$lib';
 
-  export let meta: MarkdownMeta;
-  export let sidebar: SidebarConfig;
+  /** @type {import('$lib').MarkdownMeta} */
+  export let meta;
 
-  const navbar: NavbarConfig = {
-    links: [
-      { title: 'Docs', slug: '/docs', match: /\/docs/ },
-      { title: 'Tutorials', slug: 'https://svelte.dev/tutorial' },
-      { title: 'Examples', slug: 'https://svelte.dev/examples' },
-      { title: 'REPL', slug: 'https://svelte.dev/repl' },
-      { title: 'Blog', slug: 'https://svelte.dev/blog' },
-      { title: 'FAQ', slug: 'https://svelte.dev/faq' },
-    ],
+  /** @type {import('$lib').ResolvedSidebarConfig} */
+  export let sidebar;
+
+  /** @type {import('$lib').NavbarConfig} */
+  const navbar = {
+    links: [{ title: 'Documentation', slug: '/docs', match: /\/docs/ }],
   };
 
-  const _sidebar: SidebarConfig = {
-    ...sidebar,
-    formatCategory: (category) => kebabToTitleCase(category).replace('Api', 'API'),
-  };
-
-  const { activeCategory } = createSidebarContext(_sidebar);
+  const { activeCategory } = createSidebarContext(sidebar);
 </script>
 
 <svelte:head>
-  <title>{$activeCategory}: {meta.title} | Svelte</title>
+  <title>{$activeCategory}: {meta.title} | KitDocs</title>
   <meta name="description" content={meta.description} />
   <meta name="twitter:description" content={meta.description} />
   <meta name="og:description" content={meta.description} />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@mihar_22" />
+  <meta name="twitter:image" content={`https://kit-docs.svelteness.dev${socialCardLarge}`} />
+  <meta name="twitter:creator" content="@mihar_22" />
+  <meta property="og:url" content={`https://kit-docs.svelteness.dev${$page.url.pathname}`} />
+  <meta property="og:type" content="article" />
+  <meta name="og:image" content={`https://kit-docs.svelteness.dev${socialCardLarge}`} />
 </svelte:head>
 
 <KitDocs {meta}>
-  <KitDocsLayout {navbar} sidebar={_sidebar}>
+  <KitDocsLayout {navbar} {sidebar}>
     <div slot="navbar-left">
       <div class="logo">
-        <Button href="/">
-          {@html SvelteLogo}
+        <Button href="/docs">
+          {@html kitDocsLogo}
         </Button>
       </div>
     </div>
 
     <div class="socials" slot="navbar-right-alt">
-      <SocialLink type="twitter" href="https://twitter.com/sveltejs" />
-      <SocialLink type="discord" href="https://discord.com/invite/yy75DKs" />
-      <SocialLink type="gitHub" href="https://github.com/sveltejs/svelte" />
+      <SocialLink type="gitHub" href="https://github.com/svelteness/kit-docs" />
     </div>
 
     <slot />
@@ -76,15 +72,22 @@
 </KitDocs>
 
 <style>
+  :global(:root) {
+    --kd-color-brand-rgb: 233, 127, 6;
+  }
+
+  :global(:root.dark) {
+    --kd-color-brand-rgb: 213, 149, 76;
+  }
+
   .logo :global(a) {
+    margin-left: 0.5rem;
     display: flex;
     align-items: center;
-    justify-content: center;
   }
 
   .logo :global(svg) {
-    height: 36px;
-    overflow: hidden;
+    width: 26px;
   }
 
   .socials {
@@ -94,13 +97,5 @@
 
   .socials > :global(a) {
     padding: 0 0.5rem;
-  }
-
-  :global(:root) {
-    --kd-color-brand-rgb: 209, 59, 18;
-  }
-
-  :global(:root.dark) {
-    --kd-color-brand-rgb: 227, 105, 70;
   }
 </style>

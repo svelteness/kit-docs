@@ -48,7 +48,7 @@ module.exports = {
       typescript: {
         project: [
           'tsconfig.json',
-          'docs/tsconfig.json',
+          'demo/tsconfig.json',
           'packages/kit-docs/tsconfig.json',
           'packages/kit-docs/src/node/tsconfig.json',
         ],

@@ -1,4 +1,4 @@
-import { derived, readable } from 'svelte/store';
+import { readable } from 'svelte/store';
 
 import { browser } from '$app/env';
 import { throttleAndDebounce } from '$lib/utils/timing';

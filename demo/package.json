@@ -1,10 +1,9 @@
 {
-  "name": "docs",
+  "name": "demo",
   "type": "module",
   "scripts": {
     "dev": "svelte-kit dev -p 3002",
-    "build": "svelte-kit build",
-    "build:app": "run-s sync build",
+    "build": "pnpm sync && svelte-kit build",
     "package": "svelte-kit package",
     "preview": "svelte-kit preview -p 3002",
     "sync": "svelte-kit sync",

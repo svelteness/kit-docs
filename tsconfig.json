@@ -21,9 +21,9 @@
   "include": ["**/*.ts", "**/*.js", "**/*.cjs"],
   "exclude": [
     "node_modules",
-    "kit-docs/client",
-    "kit-docs/node",
-    "kit-docs/globals.d.ts",
-    "kit-docs/index.d.ts"
+    "packages/kit-docs/client",
+    "packages/kit-docs/node",
+    "packages/kit-docs/globals.d.ts",
+    "packages/kit-docs/index.d.ts"
   ]
 }
