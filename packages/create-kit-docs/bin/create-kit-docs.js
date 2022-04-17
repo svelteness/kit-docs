@@ -73,7 +73,7 @@ async function main() {
     const { ok: routes } = await enquirer.prompt({
       type: 'confirm',
       name: 'ok',
-      message: `Overwrite \`routes/\` directory?`,
+      message: `Overwrite files if needed in \`routes/\` directory?`,
       initial: false,
     });
 

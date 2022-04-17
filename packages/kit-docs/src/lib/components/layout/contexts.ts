@@ -122,9 +122,10 @@ export type SidebarContext = {
 };
 
 export function createSidebarContext(
-  config: SidebarConfig | Readable<SidebarConfig>,
+  config: SidebarConfig | null | Readable<SidebarConfig | null>,
 ): SidebarContext {
-  const configStore = 'subscribe' in config ? config : readable(config);
+  const configStore =
+    config && 'subscribe' in config ? config : readable(config as SidebarConfig | null);
 
   const normalizedConfig = derived(configStore, ($config) => normalizeSidebarConfig($config));
 

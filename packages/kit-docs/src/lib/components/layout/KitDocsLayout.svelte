@@ -22,6 +22,7 @@
   import { writable } from 'svelte/store';
   import { isLargeScreen } from '$lib/stores/isLargeScreen';
   import { scrollDirection, scrollTop } from '$lib/stores/scroll';
+  import { kitDocs } from '$lib/stores/kitDocs';
 
   export let navbar: NavbarConfig | false;
   export let sidebar: SidebarConfig;
@@ -41,9 +42,17 @@
   $: $sidebarConfig = sidebar;
   setSidebarContext(createSidebarContext(sidebarConfig));
 
-  const { activeCategory, activeLink, nextLink, previousLink } = getSidebarContext();
+  const {
+    activeCategory,
+    allLinks: sidebarLinks,
+    activeLink,
+    nextLink,
+    previousLink,
+  } = getSidebarContext();
 
   $: collapseNavbar = $isLargeScreen ? false : $scrollTop > 60 && $scrollDirection === 'down';
+  $: showSidebar = $sidebarLinks.length > 0;
+  $: showBottomNav = showSidebar || $activeLink;
 </script>
 
 <div
@@ -84,47 +93,53 @@
         </svelte:fragment>
 
         <svelte:fragment slot="bottom">
-          <div class="border-gray-divider 992:hidden flex w-full items-center mt-4 pt-4 border-t">
-            <button
-              id="main-sidebar-button"
-              type="button"
-              class="text-gray-soft hover:text-gray-inverse -ml-3 inline-flex justify-center rounded-md px-4 py-2 text-sm font-medium"
-              aria-controls="main-sidebar"
-              aria-expanded={ariaBool(isSidebarOpen)}
-              aria-haspopup="true"
-              use:dialogManager={{
-                closeOnSelectSelectors: ['a'],
-                onOpen: () => {
-                  isSidebarOpen = true;
-                  hideDocumentScrollbar(true);
-                },
-                onClose: () => {
-                  isSidebarOpen = false;
-                  hideDocumentScrollbar(false);
-                },
-                close: (cb) => {
-                  closeSidebar = cb;
-                },
-              }}
-            >
-              <span class="sr-only">Open main sidebar</span>
-              <MenuUnfoldIcon width="28" height="28" />
-            </button>
-
-            <ol
-              class="text-md text-gray-soft mt-px ml-1 flex items-center whitespace-nowrap leading-6"
-            >
-              {#if $activeCategory !== '.'}
-                <li class="flex items-center">
-                  {$activeCategory}
-                  <RightArrowIcon class="mx-1" width="16" height="16" />
-                </li>
+          {#if showBottomNav}
+            <div class="border-gray-divider 992:hidden flex w-full items-center mt-4 pt-4 border-t">
+              {#if showSidebar}
+                <button
+                  id="main-sidebar-button"
+                  type="button"
+                  class="text-gray-soft hover:text-gray-inverse -ml-3 inline-flex justify-center rounded-md px-4 py-2 text-sm font-medium"
+                  aria-controls="main-sidebar"
+                  aria-expanded={ariaBool(isSidebarOpen)}
+                  aria-haspopup="true"
+                  use:dialogManager={{
+                    closeOnSelectSelectors: ['a'],
+                    onOpen: () => {
+                      isSidebarOpen = true;
+                      hideDocumentScrollbar(true);
+                    },
+                    onClose: () => {
+                      isSidebarOpen = false;
+                      hideDocumentScrollbar(false);
+                    },
+                    close: (cb) => {
+                      closeSidebar = cb;
+                    },
+                  }}
+                >
+                  <span class="sr-only">Open main sidebar</span>
+                  <MenuUnfoldIcon width="28" height="28" />
+                </button>
               {/if}
-              <li class="truncate font-semibold text-slate-900 dark:text-slate-200">
-                {$activeLink?.title}
-              </li>
-            </ol>
-          </div>
+
+              {#if $activeLink || $kitDocs.meta?.title}
+                <ol
+                  class="text-md text-gray-soft mt-px ml-1 flex items-center whitespace-nowrap leading-6"
+                >
+                  {#if $activeCategory && $activeCategory !== '.'}
+                    <li class="flex items-center">
+                      {$activeCategory}
+                      <RightArrowIcon class="mx-1" width="16" height="16" />
+                    </li>
+                  {/if}
+                  <li class="truncate font-semibold text-slate-900 dark:text-slate-200">
+                    {$activeLink?.title || $kitDocs.meta?.title}
+                  </li>
+                </ol>
+              {/if}
+            </div>
+          {/if}
 
           <slot name="navbar-bottom" />
         </svelte:fragment>
@@ -148,46 +163,52 @@
   <div
     class={clsx(
       'mx-auto w-full max-w-[1440px] flex flex-row min-h-full',
-      navbar && 'pt-40 992:pt-20 z-20',
+      navbar && '992:pt-20 z-20',
+      navbar && showBottomNav ? 'pt-40' : 'pt-20',
     )}
   >
-    <Sidebar
-      {search}
-      class={({ open }) =>
-        clsx(
-          'self-start fixed top-0 left-0 transform bg-gray-body z-50 border-gray-divider border-r pb-8 px-7',
-          '-translate-x-full transform transition-transform duration-200 ease-out will-change-transform',
-          'min-w-[90vw] 768:min-w-[70vw] max-w-screen max-h-screen min-h-screen',
-          ' 992:px-5 992:translate-x-0 922:block 992:sticky 992:z-0 992:w-[17rem] 992:min-w-[17rem] overflow-y-auto 1460:pl-0.5',
-          open && 'translate-x-0',
-          navbar
-            ? '992:top-20 992:min-h-[calc(100vh-5rem)] 992:max-h-[calc(100vh-5rem)]'
-            : '992:top-0 min-h-screen max-h-screen',
-        )}
-      open={isSidebarOpen}
-      on:close={(e) => closeSidebar(e.detail)}
-    >
-      <svelte:fragment slot="top">
-        <slot name="sidebar-top" />
-      </svelte:fragment>
-      <svelte:fragment slot="bottom">
-        <slot name="sidebar-bottom" />
-      </svelte:fragment>
-      <svelte:fragment slot="search">
-        <slot name="search" />
-      </svelte:fragment>
-    </Sidebar>
+    {#if showSidebar}
+      <Sidebar
+        {search}
+        class={({ open }) =>
+          clsx(
+            'self-start fixed top-0 left-0 transform bg-gray-body z-50 border-gray-divider border-r pb-8 px-7',
+            '-translate-x-full transform transition-transform duration-200 ease-out will-change-transform',
+            'min-w-[90vw] 768:min-w-[70vw] max-w-screen max-h-screen min-h-screen',
+            ' 992:px-5 992:translate-x-0 922:block 992:sticky 992:z-0 992:w-[17rem] 992:min-w-[17rem] overflow-y-auto 1460:pl-0.5',
+            open && 'translate-x-0',
+            navbar
+              ? '992:top-20 992:min-h-[calc(100vh-5rem)] 992:max-h-[calc(100vh-5rem)]'
+              : '992:top-0 min-h-screen max-h-screen',
+          )}
+        open={isSidebarOpen}
+        on:close={(e) => closeSidebar(e.detail)}
+      >
+        <svelte:fragment slot="top">
+          <slot name="sidebar-top" />
+        </svelte:fragment>
+        <svelte:fragment slot="bottom">
+          <slot name="sidebar-bottom" />
+        </svelte:fragment>
+        <svelte:fragment slot="search">
+          <slot name="search" />
+        </svelte:fragment>
+      </Sidebar>
+    {/if}
 
     <main
       class={clsx(
-        'pt-10 w-full max-w-[85ch] overflow-x-hidden px-8 992:px-16',
-        navbar ? 'min-h-[calc(100vh-10rem)] 992:min-h-[calc(100vh-5rem)]' : 'min-h-screen',
+        'w-full overflow-x-hidden',
+        navbar ? `992:min-h-[calc(100vh-5rem)]` : 'min-h-screen',
+        navbar && showBottomNav ? 'min-h-[calc(100vh-10rem)]' : 'min-h-[calc(100vh-5rem)]',
+        showSidebar ? 'px-8 992:px-16 max-w-[85ch]' : 'px-8 1280:pl-6 1460:pl-0 max-w-5xl',
+        navbar || showBottomNav ? 'pt-10' : '',
       )}
     >
       <slot name="main-top" />
 
       <article class="markdown prose dark:prose-invert z-10">
-        {#if $activeCategory !== '.'}
+        {#if $activeCategory && $activeCategory !== '.'}
           <p class="text-brand mb-3.5 text-[15px] font-semibold leading-6">
             {$activeCategory}
           </p>
@@ -233,12 +254,12 @@
       <slot name="main-bottom" />
     </main>
 
-    <div class="flex-1" />
+    <div class="992:flex-1" />
 
     <OnThisPage
       class={clsx(
-        'pt-10 pb-8 hidden overflow-auto max-h-[calc(100vh-5rem)] min-w-[160px] sticky right-4 1440:right-6 1440:pr-4 1280:block',
-        navbar ? 'top-20' : 'top-0',
+        'pt-10 pb-8 hidden overflow-auto min-w-[160px] sticky right-4 1440:right-6 1440:pr-4 1280:block',
+        navbar ? 'top-20 max-h-[calc(100vh-5rem)]' : 'top-0 max-h-screen',
       )}
     />
   </div>

@@ -25,11 +25,11 @@
     createSidebarContext,
   } from '$lib';
 
-  /** @type {import('$lib').MarkdownMeta} */
-  export let meta;
+  /** @type {import('$lib').MarkdownMeta | null} */
+  export let meta = null;
 
-  /** @type {import('$lib').ResolvedSidebarConfig} */
-  export let sidebar;
+  /** @type {import('$lib').ResolvedSidebarConfig | null} */
+  export let sidebar = null;
 
   /** @type {import('$lib').NavbarConfig} */
   const navbar = {
@@ -40,10 +40,14 @@
 </script>
 
 <svelte:head>
-  <title>{$activeCategory}: {meta.title} | KitDocs</title>
-  <meta name="description" content={meta.description} />
-  <meta name="twitter:description" content={meta.description} />
-  <meta name="og:description" content={meta.description} />
+  {#if meta?.title}
+    <title>{$activeCategory ? `${$activeCategory}: ` : ''}{meta.title} | KitDocs</title>
+  {/if}
+  {#if meta?.description}
+    <meta name="description" content={meta.description} />
+    <meta name="twitter:description" content={meta.description} />
+    <meta name="og:description" content={meta.description} />
+  {/if}
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:site" content="@mihar_22" />
   <meta name="twitter:image" content={`https://kit-docs.svelteness.dev${socialCardLarge}`} />

@@ -1,4 +1,4 @@
-# KitDocs
+# `kit-docs`
 
 ## Global Components
 

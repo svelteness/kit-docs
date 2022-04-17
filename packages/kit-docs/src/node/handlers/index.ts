@@ -17,6 +17,7 @@ const CWD = process.cwd();
 const ROUTES_DIR = resolve(CWD, 'src/routes');
 
 const orderedPathTokenRE = /\[\.\.\.\d+\]/g;
+const layoutNameRE = /@.+/g;
 
 let parser: MarkdownParser;
 
@@ -29,14 +30,18 @@ export function createMetaRequestHandler(): RequestHandler {
     try {
       const glob = `src/routes/${slug
         .split('/')
-        .map((s) => `*${s}`)
+        .map((s) => `*${s}*`)
         .join('/')}.md`;
 
       const file = globbySync(glob)[0];
 
       const filePath = resolve(CWD, file);
 
-      const matchedSlug = file.replace(orderedPathTokenRE, '').replace(extname(file), '');
+      const matchedSlug = file
+        .replace(orderedPathTokenRE, '')
+        .replace(layoutNameRE, '')
+        .replace(extname(file), '');
+
       if (matchedSlug !== `src/routes/${slug}`) {
         throw Error('Could not find file.');
       }
@@ -57,7 +62,7 @@ export function createMetaRequestHandler(): RequestHandler {
     }
 
     return {
-      body: {},
+      body: null,
     };
   };
 }
@@ -110,9 +115,7 @@ export function createSidebarRequestHandler(): RequestHandler {
     }
 
     return {
-      body: {
-        links: [],
-      },
+      body: null,
     };
   };
 }

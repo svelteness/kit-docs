@@ -21,13 +21,13 @@ export type MarkdownMeta = {
 };
 
 export type KitDocsStuff = {
-  meta: MarkdownMeta;
+  meta: MarkdownMeta | null;
 };
 
 /** @internal */
-export const __kitDocs = writable<KitDocsStuff | null>(null);
+export const __kitDocs = writable<KitDocsStuff>({ meta: null });
 
-export const kitDocs: Readable<KitDocsStuff | null> = {
+export const kitDocs: Readable<KitDocsStuff> = {
   subscribe: __kitDocs.subscribe,
 };
 
