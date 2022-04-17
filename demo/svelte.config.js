@@ -16,14 +16,6 @@ const config = {
     },
 
     vite: {
-      resolve: {
-        alias: {
-          $fonts: resolve(process.cwd(), 'src/fonts'),
-          $img: resolve(process.cwd(), 'src/img'),
-          $kitDocs: resolve(process.cwd(), 'src/kit-docs'),
-        },
-      },
-
       plugins: [Icons({ compiler: 'svelte' }), kitDocsPlugin()],
     },
   },
