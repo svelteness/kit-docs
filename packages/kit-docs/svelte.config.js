@@ -28,7 +28,9 @@ const config = {
     vite: {
       resolve: {
         alias: {
+          $fonts: resolve(process.cwd(), 'src/lib/fonts'),
           $img: resolve(process.cwd(), 'src/img'),
+          $kitDocs: resolve(process.cwd(), 'src/lib/kit-docs'),
         },
       },
 

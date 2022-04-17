@@ -11,7 +11,7 @@
   import '@svelteness/kit-docs/client/styles/theme.css';
   import '@svelteness/kit-docs/client/styles/vars.css';
 
-  import SvelteLogo from '$lib/img/svelte-horizontal.svg?raw';
+  import SvelteLogo from '$img/svelte-horizontal.svg?raw';
 
   import {
     Button,
