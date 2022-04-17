@@ -1,7 +1,12 @@
 <script context="module">
   export const prerender = true;
 
-  export const load = createKitDocsLoader({ sidebar: '/docs' });
+  export const load = createKitDocsLoader({
+    sidebar: {
+      '/': null,
+      '/docs': '/docs',
+    },
+  });
 </script>
 
 <script>
