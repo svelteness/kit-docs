@@ -6,7 +6,7 @@ to `index@kit-docs.svelte`.
 ## Redirecting
 
 You might want the home page to be the first page of your documentation. If this is the case,
-rename this file to `index@kit-docs.svelte` and replace the content of this file with the following:
+rename this file to `index.svelte` and replace the content of this file with the following:
 
 ```svelte copy
 <script context="module">

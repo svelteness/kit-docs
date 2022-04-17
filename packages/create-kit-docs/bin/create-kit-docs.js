@@ -254,7 +254,7 @@ function copyDir(src, dest, { overwrite }) {
       fs.mkdirSync(destDir, { recursive: true });
     }
 
-    if (!fs.existsSync(filePath) || overwrite.some((o) => o.test(filePath))) {
+    if (!fs.existsSync(destPath) || overwrite.some((o) => o.test(destPath))) {
       fs.writeFileSync(destPath, fs.readFileSync(filePath));
     }
   }
