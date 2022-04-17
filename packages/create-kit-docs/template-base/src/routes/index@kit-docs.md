@@ -1,3 +1,5 @@
+<div style="max-width: 992px; margin: 0 auto;">
+
 # Welcome to KitDocs
 
 This your home page. Feel free to change it to a Svelte file by renaming it
@@ -21,3 +23,5 @@ rename this file to `index.svelte` and replace the content of this file with the
   }
 </script>
 ```
+
+</div>

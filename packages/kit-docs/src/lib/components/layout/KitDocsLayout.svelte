@@ -201,7 +201,7 @@
         'w-full overflow-x-hidden',
         navbar ? `992:min-h-[calc(100vh-5rem)]` : 'min-h-screen',
         navbar && showBottomNav ? 'min-h-[calc(100vh-10rem)]' : 'min-h-[calc(100vh-5rem)]',
-        showSidebar ? 'px-8 992:px-16 max-w-[85ch]' : 'px-8 1280:pl-6 1460:pl-0 max-w-5xl',
+        showSidebar ? 'px-8 992:px-16 max-w-[85ch]' : 'px-8 1280:pl-6 1460:pl-0',
         navbar || showBottomNav ? 'pt-10' : '',
       )}
     >
