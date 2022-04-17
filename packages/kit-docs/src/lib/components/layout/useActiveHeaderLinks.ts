@@ -1,6 +1,7 @@
 import { onMount, tick } from 'svelte';
 
 import { goto } from '$app/navigation';
+import { isExtraLargeScreen } from '$lib/stores/isLargeScreen';
 import { kitDocs } from '$lib/stores/kitDocs.js';
 import { createDisposalBin } from '$lib/utils/events.js';
 import { throttleAndDebounce } from '$lib/utils/timing';
@@ -88,6 +89,7 @@ export function useActiveHeaderLinks() {
     () =>
       tick().then(() =>
         window.requestAnimationFrame(() => {
+          console.log('yes');
           setActiveRouteHash();
         }),
       ),
@@ -95,14 +97,27 @@ export function useActiveHeaderLinks() {
   );
 
   onMount(() => {
+    let unsub: () => void;
+
     setTimeout(() => {
-      onScroll();
-      window.addEventListener('scroll', onScroll);
-      disposal.add(() => window.removeEventListener('scroll', onScroll));
-      disposal.add(kitDocs.subscribe(onScroll));
+      function init() {
+        onScroll();
+        window.addEventListener('scroll', onScroll);
+        disposal.add(() => window.removeEventListener('scroll', onScroll));
+        disposal.add(kitDocs.subscribe(onScroll));
+      }
+
+      unsub = isExtraLargeScreen.subscribe(($is) => {
+        if ($is) {
+          init();
+        } else {
+          disposal.dispose();
+        }
+      });
     }, 300);
 
     return () => {
+      unsub?.();
       disposal.dispose();
     };
   });
