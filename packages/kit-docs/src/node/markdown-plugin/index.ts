@@ -4,6 +4,7 @@ import { resolve } from 'path';
 import { fileURLToPath } from 'url';
 import { type Plugin } from 'vite';
 
+import { isLocalEnv } from '../utils/env';
 import { getFileNameFromPath } from '../utils/path';
 import {
   AddTopLevelHtmlTags,
@@ -19,8 +20,7 @@ import {
 
 const PLUGIN_NAME = '@svelteness/markdown' as const;
 
-const CWD = process.cwd();
-
+const __cwd = process.cwd();
 // @ts-ignore
 const __dirname = fileURLToPath(import.meta.url);
 
@@ -116,14 +116,18 @@ export function kitDocsMarkdownPlugin(options: MarkdownPluginOptions = {}): Plug
   }
 
   const absGlobalComponentPaths = globalComponentFiles
-    .map((path) => resolve(CWD, path))
+    .map((path) => resolve(__cwd, path))
     .map(normalizePath);
   addMarkdownComponents(absGlobalComponentPaths);
 
   try {
-    const root = resolve(__dirname, '../../client/kit-docs');
+    const root = isLocalEnv()
+      ? resolve(__cwd, 'src/lib/kit-docs')
+      : resolve(__dirname, '../../client/kit-docs');
+
     const paths = globbySync('**/*.svelte', { cwd: root }).map(normalizePath);
     const absPaths = paths.map((path) => resolve(root, path)).map(normalizePath);
+
     addMarkdownComponents(absPaths);
     addGlobalComponents(absPaths);
   } catch (e) {

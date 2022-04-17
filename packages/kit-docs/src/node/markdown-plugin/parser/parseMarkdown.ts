@@ -4,6 +4,7 @@ import LRUCache from 'lru-cache';
 import { resolve } from 'path';
 import toml from 'toml';
 
+import { isLocalEnv } from '../../utils/env';
 import { getFileNameFromPath } from '../../utils/path';
 import { hashString } from '../../utils/string';
 import type {
@@ -17,18 +18,7 @@ import type {
 import { commentOutTemplateTags, uncommentTemplateTags } from './utils/htmlEscape';
 import { preventViteReplace } from './utils/preventViteReplace';
 
-let kitDocsImportPath = '@svelteness/kit-docs';
-try {
-  const pkgPath = resolve(process.cwd(), 'package.json');
-  if (pkgPath.endsWith('kit-docs/package.json')) {
-    const pkg = readFileSync(pkgPath).toString();
-    if (/"name": "@svelteness\/kit-docs"/.test(pkg)) {
-      kitDocsImportPath = '$lib';
-    }
-  }
-} catch (e) {
-  //  no-op
-}
+const kitDocsImportPath = isLocalEnv() ? '$lib' : '@svelteness/kit-docs';
 
 export type ParseMarkdownToSvelteResult = {
   component: string;
