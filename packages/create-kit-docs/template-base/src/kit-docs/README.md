@@ -2,17 +2,16 @@
 
 ## Global Components
 
-You can create Svelte components that are global by placing them in this directory. Global components are imported into
-every single Markdown file. In addition, they're automatically mapped to Markdown
-containers, on which you can pass in props and dynamic slot elements.
+You can create Svelte components that are global by placing them in this directory. Global
+components are imported into every single Markdown file. In addition, they're automatically
+mapped to Markdown containers, on which you can pass in props and dynamic slot elements.
 
 First, create a component in this directory:
 
 ```
 src
-└─ lib
-   └─ kit-docs
-      ├─ Button.svelte <-
+└─ kit-docs
+   ├─ Button.svelte <-
 ```
 
 Now, inside your markdown files you can use the `<Button>` component like so:
@@ -95,9 +94,8 @@ For example, you can override `CodeFence` by creating it in this directory like 
 
 ```
 src
-└─ lib
-   └─ kit-docs
-      ├─ CodeFence.svelte <-
+└─ kit-docs
+   ├─ CodeFence.svelte <-
 ```
 
 Finally, you can use the following minimal boilerplate and style the component as desired:
