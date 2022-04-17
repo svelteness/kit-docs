@@ -1,3 +1,24 @@
+# [0.6.0](https://github.com/svelteness/kit-docs/compare/v0.5.0...v0.6.0) (2022-04-17)
+
+
+### Bug Fixes
+
+* move global components dir to `src/kit-docs` ([beb4b2f](https://github.com/svelteness/kit-docs/commit/beb4b2faacb0a75c24348b481be2448e54d86dc9))
+* prevent jitter on mobile when updating url hashes ([c3200ef](https://github.com/svelteness/kit-docs/commit/c3200efcfcf9acc3b4bf8f2f1e2c024985ad3d08))
+* quick install not copying over certain assets ([7a581de](https://github.com/svelteness/kit-docs/commit/7a581de4ac10fa41a6331be2365c7e9d8e4619ca))
+* remove max width when no sidebar is present ([5cd720b](https://github.com/svelteness/kit-docs/commit/5cd720bf176436cb1b2c9842dea760fc26a7d8a7))
+
+
+### Features
+
+* add kit-docs aliases automatically ([45c4a81](https://github.com/svelteness/kit-docs/commit/45c4a818770d150ce7fd9afea09e762ee345cab5))
+* improve quick install and allow it to be run in current dir ([c70bba9](https://github.com/svelteness/kit-docs/commit/c70bba94a019522a5f43769fe0db1b51e4299cc1))
+* sidebar loader can now accept multi-path config object ([eef364b](https://github.com/svelteness/kit-docs/commit/eef364b6762c64dd4b8da26717542851f5441e67))
+* use `$fonts` alias for font files ([b3c2594](https://github.com/svelteness/kit-docs/commit/b3c25941e54eb4caa94abf1d8d18cf85ee188cb2))
+* use named layouts to clean up quick install ([008a7c3](https://github.com/svelteness/kit-docs/commit/008a7c325f6b78379718285c4eb08d4dce7ee73b))
+
+
+
 # [0.5.0](https://github.com/svelteness/kit-docs/compare/v0.4.0...v0.5.0) (2022-04-16)
 
 
