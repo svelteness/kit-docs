@@ -28,19 +28,30 @@ const layoutNameRE = /@.+/g;
 export async function handleMetaRequest(slugParam: string) {
   const slug = paramToSlug(slugParam);
 
-  const glob = `src/routes/${slug
+  const fileGlob = slug
     .split('/')
     .map((s) => `*${s}*`)
-    .join('/')}.md`;
+    .join('/');
 
-  const file = globbySync(glob)[0];
+  const glob = `src/routes/${fileGlob}.md`;
+  let file = globbySync(glob)[0];
+
+  if (!file) {
+    const glob = `src/routes/${fileGlob}/*index.md`;
+    file = globbySync(glob)[0];
+  }
+
+  if (!file) {
+    throw Error('Could not find file.');
+  }
 
   const filePath = resolve(CWD, file);
 
   const matchedSlug = file
     .replace(restParamsRE, '')
     .replace(layoutNameRE, '')
-    .replace(extname(file), '');
+    .replace(extname(file), '')
+    .replace(/\/index$/, '');
 
   if (matchedSlug !== `src/routes/${slug}`) {
     throw Error('Could not find file.');
@@ -115,7 +126,9 @@ export async function handleSidebarRequest(
       content.match(headingRE)?.[1] ??
       kebabToTitleCase(basename(normalPath, extname(normalPath)));
 
-    const slug = `/${directory}/${normalPath.replace(extname(normalPath), '')}`;
+    const slug = `/${directory}/${normalPath
+      .replace(extname(normalPath), '')
+      .replace(/\/index$/, '')}`;
 
     const match = props.includes('deep') ? 'deep' : undefined;
 
