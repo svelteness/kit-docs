@@ -47,6 +47,7 @@ function corePlugin(): Plugin {
 
       return {
         optimizeDeps: {
+          include: ['shiki'],
           exclude: ['@svelteness/kit-docs'],
         },
         resolve: {
