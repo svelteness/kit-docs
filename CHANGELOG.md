@@ -1,3 +1,13 @@
+## [0.6.1](https://github.com/svelteness/kit-docs/compare/v0.6.0...v0.6.1) (2022-04-18)
+
+
+### Bug Fixes
+
+* remove peer dep requirement ([3e50f4a](https://github.com/svelteness/kit-docs/commit/3e50f4af9fc43cb05630fc63acc23ea82adf8cc3))
+* typo in kit-docs layout comment ([340c148](https://github.com/svelteness/kit-docs/commit/340c1485abae272b26766fd293818d1c1b3dc0f8))
+
+
+
 # [0.6.0](https://github.com/svelteness/kit-docs/compare/v0.5.0...v0.6.0) (2022-04-17)
 
 
