@@ -83,6 +83,7 @@ const headingRE = /#\s(.*?)($|\n|\r)/;
 
 export type HandleSidebarRequestOptions = {
   filter?: (file: string) => boolean;
+  formatCategoryName?: (dirname: string) => string;
 };
 
 /**
@@ -92,6 +93,8 @@ export async function handleSidebarRequest(
   dirParam: string,
   options: HandleSidebarRequestOptions = {},
 ) {
+  const { filter, formatCategoryName } = options;
+
   const directory = paramToDir(dirParam);
 
   const dirPath = resolve(ROUTES_DIR, directory);
@@ -102,11 +105,7 @@ export async function handleSidebarRequest(
   for (const file of files) {
     const filename = basename(file);
 
-    if (
-      filename.startsWith('_') ||
-      filename.startsWith('.') ||
-      !(options.filter?.(filename) ?? true)
-    ) {
+    if (filename.startsWith('_') || filename.startsWith('.') || !(filter?.(filename) ?? true)) {
       continue;
     }
 
@@ -116,7 +115,9 @@ export async function handleSidebarRequest(
     const frontmatter = getFrontmatter(content);
     const cleanPath = relativePath.replace(restParamsRE, '');
     const index = /index(\.md)?$/.test(cleanPath);
-    const category = dirname(cleanPath).split('/').reverse()[index ? 1 : 0];
+    const category = (formatCategoryName ?? kebabToTitleCase)(
+      dirname(cleanPath).split('/').reverse()[index ? 1 : 0],
+    );
 
     const props =
       (index ? dirname(relativePath).split('/').reverse()[0] : basename(relativePath))
@@ -145,16 +146,23 @@ export async function handleSidebarRequest(
 export type CreateSidebarRequestHandlerOptions = {
   include?: FilterPattern;
   exclude?: FilterPattern;
+  formatCategoryName?: (dirname: string) => string;
 };
 
 export function createSidebarRequestHandler(
   options: CreateSidebarRequestHandlerOptions = {},
 ): RequestHandler {
-  const filter = createFilter(options.include ?? /\.md($|\?)/, options.exclude);
+  const { include, exclude, formatCategoryName } = options;
+
+  const filter = createFilter(include ?? /\.md($|\?)/, exclude);
 
   return async ({ params }) => {
     try {
-      const { links } = await handleSidebarRequest(params.dir, { filter });
+      const { links } = await handleSidebarRequest(params.dir, {
+        filter,
+        formatCategoryName,
+      });
+
       return { body: { links } };
     } catch (e) {
       // no-op

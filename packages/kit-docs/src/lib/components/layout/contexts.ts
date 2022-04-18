@@ -54,13 +54,11 @@ export type SidebarSimpleLinks = {
 export type SidebarConfig = {
   baseUrl?: string;
   links: SidebarLinks | SidebarSimpleLinks;
-  formatCategory?: (category: string) => string;
 };
 
 export type ResolvedSidebarConfig = {
   baseUrl?: string;
   links: SidebarLinks;
-  formatCategory?: (category: string) => string;
 };
 
 export function normalizeSidebarConfig(config?: SidebarConfig): ResolvedSidebarConfig {
@@ -73,7 +71,10 @@ export function normalizeSidebarConfig(config?: SidebarConfig): ResolvedSidebarC
   for (const category of Object.keys(config.links)) {
     const categoryLinks = config.links[category];
     const categorySlug = titleToKebabCase(category);
-    const categoryName = config.formatCategory?.(category) ?? kebabToTitleCase(category);
+
+    const categoryName = isString(config.links[category][0])
+      ? kebabToTitleCase(category)
+      : category;
 
     for (const categoryLink of categoryLinks) {
       const link: SidebarLink = isString(categoryLink)

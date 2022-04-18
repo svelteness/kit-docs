@@ -25,7 +25,6 @@
     Button,
     SocialLink,
     createSidebarContext,
-    kebabToTitleCase,
   } from '@svelteness/kit-docs';
 
   /** @type {import('@svelteness/kit-docs').MarkdownMeta} */
@@ -46,13 +45,7 @@
     ],
   };
 
-  /** @type {import('@svelteness/kit-docs').SidebarConfig} */
-  const _sidebar = {
-    ...sidebar,
-    formatCategory: (category) => kebabToTitleCase(category).replace('Api', 'API'),
-  };
-
-  const { activeCategory } = createSidebarContext(_sidebar);
+  const { activeCategory } = createSidebarContext(sidebar);
 </script>
 
 <svelte:head>
@@ -63,7 +56,7 @@
 </svelte:head>
 
 <KitDocs {meta}>
-  <KitDocsLayout {navbar} sidebar={_sidebar}>
+  <KitDocsLayout {navbar} {sidebar}>
     <div slot="navbar-left">
       <div class="logo">
         <Button href="/">

@@ -3,3 +3,4 @@ export * from './highlight-plugin';
 export * from './kit-docs-plugin';
 export * from './markdown-plugin';
 export * from './markdown-plugin/parser';
+export { kebabToTitleCase } from './utils/string';
