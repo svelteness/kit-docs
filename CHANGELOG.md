@@ -1,3 +1,20 @@
+# [0.8.0](https://github.com/svelteness/kit-docs/compare/v0.7.3...v0.8.0) (2022-04-18)
+
+
+### Bug Fixes
+
+* if `index` match sidebar props on dirname ([1a12c42](https://github.com/svelteness/kit-docs/commit/1a12c42595d0acc5598a9e575dec7af77360c65e))
+* remove accidentally left `console.log` statement ([8f1dd3d](https://github.com/svelteness/kit-docs/commit/8f1dd3d374649c962ff4fbb70de6e6fb4888b679))
+
+
+### Features
+
+* `createSidebarRequestHandler` now accepts `include` and `exclude` options ([ad187e4](https://github.com/svelteness/kit-docs/commit/ad187e43016b4834fd82ca297a8868b534144e0b))
+* add deep path match option `[...1_deep]filename.md` ([6b13bb1](https://github.com/svelteness/kit-docs/commit/6b13bb191e2f4e62d3bbc99bc8be373d317821b4))
+* support meta matching `dir/index` ([2531782](https://github.com/svelteness/kit-docs/commit/2531782c7f580e75a9c1317c60f5c3c5c5218445))
+
+
+
 ## [0.7.3](https://github.com/svelteness/kit-docs/compare/v0.7.2...v0.7.3) (2022-04-18)
 
 
