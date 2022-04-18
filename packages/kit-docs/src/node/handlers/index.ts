@@ -92,7 +92,7 @@ export async function handleSidebarRequest(
   dirParam: string,
   options: HandleSidebarRequestOptions = {},
 ) {
-  const directory = paramToSlug(dirParam);
+  const directory = paramToDir(dirParam);
 
   const dirPath = resolve(ROUTES_DIR, directory);
 
@@ -166,4 +166,8 @@ export function createSidebarRequestHandler(
 
 export function paramToSlug(param: string) {
   return param.replace(/_/g, '/').replace(/\.html/, '');
+}
+
+export function paramToDir(param: string) {
+  return paramToSlug(param);
 }
