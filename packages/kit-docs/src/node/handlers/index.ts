@@ -114,11 +114,14 @@ export async function handleSidebarRequest(
     const normalPath = relativePath.replace(restParamsRE, '').replace(layoutNameRE, '');
     const content = readFileSync(file).toString();
     const frontmatter = getFrontmatter(content);
-    const props = basename(relativePath).match(restPropsRE)?.[1]?.split('_') ?? [];
     const cleanPath = relativePath.replace(restParamsRE, '');
-    const category = dirname(cleanPath).split('/').reverse()[
-      /index(\.md)?$/.test(cleanPath) ? 1 : 0
-    ];
+    const index = /index(\.md)?$/.test(cleanPath);
+    const category = dirname(cleanPath).split('/').reverse()[index ? 1 : 0];
+
+    const props =
+      (index ? dirname(relativePath).split('/').reverse()[0] : basename(relativePath))
+        .match(restPropsRE)?.[1]
+        ?.split('_') ?? [];
 
     const title =
       frontmatter.sidebar_title ??
@@ -126,7 +129,8 @@ export async function handleSidebarRequest(
       content.match(headingRE)?.[1] ??
       kebabToTitleCase(basename(normalPath, extname(normalPath)));
 
-    const slug = `/${directory}/${normalPath
+    const slug = `/${relative(ROUTES_DIR, file)
+      .replace(restParamsRE, '')
       .replace(extname(normalPath), '')
       .replace(/\/index$/, '')}`;
 
