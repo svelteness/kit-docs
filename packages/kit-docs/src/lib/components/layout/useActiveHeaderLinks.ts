@@ -89,7 +89,6 @@ export function useActiveHeaderLinks() {
     () =>
       tick().then(() =>
         window.requestAnimationFrame(() => {
-          console.log('yes');
           setActiveRouteHash();
         }),
       ),
