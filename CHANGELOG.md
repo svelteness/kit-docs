@@ -1,3 +1,12 @@
+## [0.7.3](https://github.com/svelteness/kit-docs/compare/v0.7.2...v0.7.3) (2022-04-18)
+
+
+### Bug Fixes
+
+* require `shiki` to be installed at top-level for `pnpm` users ([e7c2f63](https://github.com/svelteness/kit-docs/commit/e7c2f639277b8b4597129d26b0e7aecb183fcb83))
+
+
+
 ## [0.7.2](https://github.com/svelteness/kit-docs/compare/v0.7.1...v0.7.2) (2022-04-18)
 
 
