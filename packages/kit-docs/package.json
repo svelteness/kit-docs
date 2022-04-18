@@ -66,10 +66,6 @@
     "shiki": "^0.10.1",
     "svelte-class-transition": "^1.0.4"
   },
-  "peerDependencies": {
-    "@iconify-json/ri": "^1.1.1",
-    "unplugin-icons": "^0.13.4"
-  },
   "devDependencies": {
     "@algolia/client-search": "^4.13.0",
     "@docsearch/css": "^3.0.0",
