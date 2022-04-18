@@ -23,47 +23,46 @@ let parser: MarkdownParser;
 
 export type MarkdownMetaResponse = MarkdownMeta;
 
+export async function handleMetaRequest(slugParam: string) {
+  const slug = paramToSlug(slugParam);
+
+  const glob = `src/routes/${slug
+    .split('/')
+    .map((s) => `*${s}*`)
+    .join('/')}.md`;
+
+  const file = globbySync(glob)[0];
+
+  const filePath = resolve(CWD, file);
+
+  const matchedSlug = file
+    .replace(orderedPathTokenRE, '')
+    .replace(layoutNameRE, '')
+    .replace(extname(file), '');
+
+  if (matchedSlug !== `src/routes/${slug}`) {
+    throw Error('Could not find file.');
+  }
+
+  const content = readFileSync(filePath).toString();
+
+  if (!parser) {
+    parser = await createMarkdownParser();
+  }
+
+  return parseMarkdown(parser, content, filePath);
+}
+
 export function createMetaRequestHandler(): RequestHandler {
   return async ({ params }) => {
-    const slug = paramToSlug(params.slug);
-
     try {
-      const glob = `src/routes/${slug
-        .split('/')
-        .map((s) => `*${s}*`)
-        .join('/')}.md`;
-
-      const file = globbySync(glob)[0];
-
-      const filePath = resolve(CWD, file);
-
-      const matchedSlug = file
-        .replace(orderedPathTokenRE, '')
-        .replace(layoutNameRE, '')
-        .replace(extname(file), '');
-
-      if (matchedSlug !== `src/routes/${slug}`) {
-        throw Error('Could not find file.');
-      }
-
-      const content = readFileSync(filePath).toString();
-
-      if (!parser) {
-        parser = await createMarkdownParser();
-      }
-
-      const { meta } = parseMarkdown(parser, content, filePath);
-
-      return {
-        body: meta as any,
-      };
+      const { meta } = await handleMetaRequest(params.slug);
+      return { body: meta as any };
     } catch (e) {
       // no-op
     }
 
-    return {
-      body: null,
-    };
+    return { body: null };
   };
 }
 
