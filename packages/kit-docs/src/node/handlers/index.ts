@@ -6,7 +6,6 @@ import { basename, dirname, extname, relative, resolve } from 'path';
 import {
   createMarkdownParser,
   getFrontmatter,
-  MarkdownMeta,
   type MarkdownParser,
   parseMarkdown,
 } from '../markdown-plugin/parser';
@@ -16,13 +15,14 @@ import { kebabToTitleCase } from '../utils/string';
 const CWD = process.cwd();
 const ROUTES_DIR = resolve(CWD, 'src/routes');
 
+let parser: MarkdownParser;
+
 const orderedPathTokenRE = /\[\.\.\.\d+\]/g;
 const layoutNameRE = /@.+/g;
 
-let parser: MarkdownParser;
-
-export type MarkdownMetaResponse = MarkdownMeta;
-
+/**
+ * Careful this function will throw if it can't match the `slug` param to a file.
+ */
 export async function handleMetaRequest(slugParam: string) {
   const slug = paramToSlug(slugParam);
 
@@ -66,55 +66,57 @@ export function createMetaRequestHandler(): RequestHandler {
   };
 }
 
+const headingRE = /#\s(.*?)($|\n|\r)/;
+
+/**
+ * Careful this function will throw if it can't match the `dir` param to a directory.
+ */
+export async function handleSidebarRequest(dirParam: string) {
+  const directory = paramToSlug(dirParam);
+
+  const dirPath = resolve(ROUTES_DIR, directory);
+
+  const files = readDirDeepSync(dirPath);
+  const links: Record<string, { title: string; slug: string }[]> = {};
+
+  for (const file of files) {
+    const filename = basename(file);
+
+    if (filename.startsWith('_') || filename.startsWith('.') || !filename.endsWith('.md')) {
+      continue;
+    }
+
+    const relativePath = relative(dirPath, file);
+    const unorderedPath = relativePath.replace(orderedPathTokenRE, '');
+    const cleanPath = unorderedPath.replace(layoutNameRE, '');
+    const content = readFileSync(file).toString();
+    const frontmatter = getFrontmatter(content);
+    const category = dirname(unorderedPath);
+
+    const title =
+      frontmatter.sidebar_title ??
+      frontmatter.title ??
+      content.match(headingRE)?.[1] ??
+      kebabToTitleCase(basename(cleanPath, extname(cleanPath)));
+
+    const slug = `/${directory}/${cleanPath.replace(extname(cleanPath), '')}`;
+
+    (links[category] ??= []).push({ title, slug });
+  }
+
+  return { links };
+}
+
 export function createSidebarRequestHandler(): RequestHandler {
-  const headingRE = /#\s(.*?)($|\n|\r)/;
-
   return async ({ params }) => {
-    const directory = paramToSlug(params.dir);
-
     try {
-      const dirPath = resolve(ROUTES_DIR, directory);
-
-      const files = readDirDeepSync(dirPath);
-      const links: Record<string, { title: string; slug: string }[]> = {};
-
-      for (const file of files) {
-        const filename = basename(file);
-
-        if (filename.startsWith('_') || filename.startsWith('.') || !filename.endsWith('.md')) {
-          continue;
-        }
-
-        const relativePath = relative(dirPath, file);
-        const unorderedPath = relativePath.replace(orderedPathTokenRE, '');
-        const cleanPath = unorderedPath.replace(layoutNameRE, '');
-        const content = readFileSync(file).toString();
-        const frontmatter = getFrontmatter(content);
-        const category = dirname(unorderedPath);
-
-        const title =
-          frontmatter.sidebar_title ??
-          frontmatter.title ??
-          content.match(headingRE)?.[1] ??
-          kebabToTitleCase(basename(cleanPath, extname(cleanPath)));
-
-        const slug = `/${directory}/${cleanPath.replace(extname(cleanPath), '')}`;
-
-        (links[category] ??= []).push({ title, slug });
-      }
-
-      return {
-        body: {
-          links,
-        },
-      };
+      const { links } = await handleSidebarRequest(params.dir);
+      return { body: { links } };
     } catch (e) {
       // no-op
     }
 
-    return {
-      body: null,
-    };
+    return { body: null };
   };
 }
 
