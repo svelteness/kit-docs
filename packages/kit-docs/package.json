@@ -41,7 +41,7 @@
     "build:client": "svelte-kit package && run-s build:client:types clean:client",
     "build:client:types": "api-extractor run && rimraf temp client/**/*.d.ts",
     "build:node": "pnpm build:node:ext -- --entry=src/node/index.ts --outdir=node --platform=node --bundle --requireshim",
-    "build:node:ext": "node ../../.scripts/build.js --external=vite,@sveltejs,shiki,@rollup/pluginutils",
+    "build:node:ext": "node ../../.scripts/build.js --external=vite,@sveltejs,shiki",
     "build:node:types": "tsc -p src/node && api-extractor run -c api-extractor.node.json && rimraf node-types",
     "build:node:watch": "pnpm build:node -- -w",
     "build:styles": "run-s build:styles:theme build:styles:docsearch",
@@ -58,7 +58,6 @@
     "kit:sync": "svelte-kit sync"
   },
   "dependencies": {
-    "@rollup/pluginutils": "^4.2.0",
     "@types/lru-cache": "^7.4.0",
     "@types/markdown-it": "^12.2.3",
     "clsx": "^1.1.1",
@@ -72,6 +71,7 @@
     "@docsearch/js": "^3.0.0",
     "@iconify-json/ri": "^1.1.1",
     "@microsoft/api-extractor": "^7.20.0",
+    "@rollup/pluginutils": "^4.2.0",
     "@sveltejs/adapter-auto": "^1.0.0-next.30",
     "@sveltejs/adapter-static": "^1.0.0-next.29",
     "@sveltejs/kit": "^1.0.0-next.288",
@@ -88,6 +88,7 @@
     "markdown-it-container": "^3.0.0",
     "markdown-it-emoji": "^2.0.0",
     "npm-run-all": "^4.1.5",
+    "picomatch": "^2.3.1",
     "postcss": "^8.4.12",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
