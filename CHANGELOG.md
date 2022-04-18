@@ -1,3 +1,12 @@
+## [0.7.1](https://github.com/svelteness/kit-docs/compare/v0.7.0...v0.7.1) (2022-04-18)
+
+
+### Bug Fixes
+
+* bundle picomatch to avoid import issues ([01a52b2](https://github.com/svelteness/kit-docs/commit/01a52b201f736e7c26d0108508c903f9b3148a5f))
+
+
+
 # [0.7.0](https://github.com/svelteness/kit-docs/compare/v0.6.1...v0.7.0) (2022-04-18)
 
 
