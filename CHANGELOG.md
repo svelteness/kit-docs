@@ -1,3 +1,12 @@
+## [0.7.2](https://github.com/svelteness/kit-docs/compare/v0.7.1...v0.7.2) (2022-04-18)
+
+
+### Bug Fixes
+
+* include `shiki` in dep optimization ([1f44b17](https://github.com/svelteness/kit-docs/commit/1f44b176d5e4df4dbced83bd7222046a9240c871))
+
+
+
 ## [0.7.1](https://github.com/svelteness/kit-docs/compare/v0.7.0...v0.7.1) (2022-04-18)
 
 
