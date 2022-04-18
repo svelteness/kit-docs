@@ -1,3 +1,12 @@
+# [0.9.0](https://github.com/svelteness/kit-docs/compare/v0.8.0...v0.9.0) (2022-04-18)
+
+
+### Features
+
+* new `formatCategoryName` option on `createSidebarRequestHandler` ([602c88b](https://github.com/svelteness/kit-docs/commit/602c88b3e9d2599b53021e1c0da51dd399e2dd4c))
+
+
+
 # [0.8.0](https://github.com/svelteness/kit-docs/compare/v0.7.3...v0.8.0) (2022-04-18)
 
 
