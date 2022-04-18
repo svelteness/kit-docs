@@ -1,3 +1,13 @@
+# [0.7.0](https://github.com/svelteness/kit-docs/compare/v0.6.1...v0.7.0) (2022-04-18)
+
+
+### Features
+
+* export `handleMetaRequest` function from node dist ([b187a7f](https://github.com/svelteness/kit-docs/commit/b187a7f9cec2bbc4a35426b78d9751e9fa929ce0))
+* export `handleSidebarRequest` from node dist ([4206c56](https://github.com/svelteness/kit-docs/commit/4206c566cd10506f4d6954c9ee52917fe5c4420d))
+
+
+
 ## [0.6.1](https://github.com/svelteness/kit-docs/compare/v0.6.0...v0.6.1) (2022-04-18)
 
 
