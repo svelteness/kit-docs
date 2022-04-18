@@ -17,7 +17,8 @@ const ROUTES_DIR = resolve(CWD, 'src/routes');
 
 let parser: MarkdownParser;
 
-const orderedPathTokenRE = /\[\.\.\.\d+\]/g;
+const restParamsRE = /\[\.\.\.(.*?)\]/g;
+const restPropsRE = /\[\.\.\.(.*?)\]/;
 const layoutNameRE = /@.+/g;
 
 /**
@@ -36,7 +37,7 @@ export async function handleMetaRequest(slugParam: string) {
   const filePath = resolve(CWD, file);
 
   const matchedSlug = file
-    .replace(orderedPathTokenRE, '')
+    .replace(restParamsRE, '')
     .replace(layoutNameRE, '')
     .replace(extname(file), '');
 
@@ -77,7 +78,7 @@ export async function handleSidebarRequest(dirParam: string) {
   const dirPath = resolve(ROUTES_DIR, directory);
 
   const files = readDirDeepSync(dirPath);
-  const links: Record<string, { title: string; slug: string }[]> = {};
+  const links: Record<string, { title: string; slug: string; match?: 'deep' }[]> = {};
 
   for (const file of files) {
     const filename = basename(file);
@@ -87,21 +88,23 @@ export async function handleSidebarRequest(dirParam: string) {
     }
 
     const relativePath = relative(dirPath, file);
-    const unorderedPath = relativePath.replace(orderedPathTokenRE, '');
-    const cleanPath = unorderedPath.replace(layoutNameRE, '');
+    const normalPath = relativePath.replace(restParamsRE, '').replace(layoutNameRE, '');
     const content = readFileSync(file).toString();
     const frontmatter = getFrontmatter(content);
-    const category = dirname(unorderedPath);
+    const props = basename(relativePath).match(restPropsRE)?.[1]?.split('_') ?? [];
+    const category = dirname(relativePath.replace(restParamsRE, ''));
 
     const title =
       frontmatter.sidebar_title ??
       frontmatter.title ??
       content.match(headingRE)?.[1] ??
-      kebabToTitleCase(basename(cleanPath, extname(cleanPath)));
+      kebabToTitleCase(basename(normalPath, extname(normalPath)));
 
-    const slug = `/${directory}/${cleanPath.replace(extname(cleanPath), '')}`;
+    const slug = `/${directory}/${normalPath.replace(extname(normalPath), '')}`;
 
-    (links[category] ??= []).push({ title, slug });
+    const match = props.includes('deep') ? 'deep' : undefined;
+
+    (links[category] ??= []).push({ title, slug, match });
   }
 
   return { links };

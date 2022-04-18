@@ -6,7 +6,7 @@ import { isLinkExternal } from '../utils/isLink';
 
 const ROUTES_DIR = resolve(process.cwd(), 'src/routes');
 
-const orderedPathTokenRE = /\[\.\.\.\d+\]/g;
+const restParamsRe = /\[\.\.\..*?\]/g;
 
 /**
  * Resolves link URLs.
@@ -45,7 +45,7 @@ export const linksPlugin: PluginSimple = (parser) => {
           : resolve(lstatSync(filePath).isDirectory() ? filePath : dirname(filePath), rawPath);
 
         const slug = relative(ROUTES_DIR, absolutePath)
-          .replace(orderedPathTokenRE, '')
+          .replace(restParamsRe, '')
           .replace(/\/index/, '')
           .replace(/\.(md|html)/, '');
 
