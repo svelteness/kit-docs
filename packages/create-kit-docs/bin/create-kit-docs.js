@@ -92,6 +92,7 @@ async function main() {
     '@svelteness/kit-docs': `^${version}`,
     clsx: '^1.1.1',
     'unplugin-icons': '^0.13.4',
+    shiki: '^0.10.1',
     svelte: '^3.44.0',
   };
 
