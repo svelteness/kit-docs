@@ -1,3 +1,4 @@
+import { createFilter, type FilterPattern } from '@rollup/pluginutils';
 import type { RequestHandler } from '@sveltejs/kit';
 import { readFileSync } from 'fs';
 import { globbySync } from 'globby';
@@ -69,10 +70,17 @@ export function createMetaRequestHandler(): RequestHandler {
 
 const headingRE = /#\s(.*?)($|\n|\r)/;
 
+export type HandleSidebarRequestOptions = {
+  filter?: (file: string) => boolean;
+};
+
 /**
  * Careful this function will throw if it can't match the `dir` param to a directory.
  */
-export async function handleSidebarRequest(dirParam: string) {
+export async function handleSidebarRequest(
+  dirParam: string,
+  options: HandleSidebarRequestOptions = {},
+) {
   const directory = paramToSlug(dirParam);
 
   const dirPath = resolve(ROUTES_DIR, directory);
@@ -83,7 +91,11 @@ export async function handleSidebarRequest(dirParam: string) {
   for (const file of files) {
     const filename = basename(file);
 
-    if (filename.startsWith('_') || filename.startsWith('.') || !filename.endsWith('.md')) {
+    if (
+      filename.startsWith('_') ||
+      filename.startsWith('.') ||
+      !(options.filter?.(filename) ?? true)
+    ) {
       continue;
     }
 
@@ -92,7 +104,10 @@ export async function handleSidebarRequest(dirParam: string) {
     const content = readFileSync(file).toString();
     const frontmatter = getFrontmatter(content);
     const props = basename(relativePath).match(restPropsRE)?.[1]?.split('_') ?? [];
-    const category = dirname(relativePath.replace(restParamsRE, ''));
+    const cleanPath = relativePath.replace(restParamsRE, '');
+    const category = dirname(cleanPath).split('/').reverse()[
+      /index(\.md)?$/.test(cleanPath) ? 1 : 0
+    ];
 
     const title =
       frontmatter.sidebar_title ??
@@ -110,10 +125,19 @@ export async function handleSidebarRequest(dirParam: string) {
   return { links };
 }
 
-export function createSidebarRequestHandler(): RequestHandler {
+export type CreateSidebarRequestHandlerOptions = {
+  include?: FilterPattern;
+  exclude?: FilterPattern;
+};
+
+export function createSidebarRequestHandler(
+  options: CreateSidebarRequestHandlerOptions = {},
+): RequestHandler {
+  const filter = createFilter(options.include ?? /\.md($|\?)/, options.exclude);
+
   return async ({ params }) => {
     try {
-      const { links } = await handleSidebarRequest(params.dir);
+      const { links } = await handleSidebarRequest(params.dir, { filter });
       return { body: { links } };
     } catch (e) {
       // no-op
