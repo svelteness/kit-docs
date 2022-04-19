@@ -219,37 +219,37 @@
 
       {#if $previousLink || $nextLink}
         <hr class="border-gray-divider mt-20" />
+
+        <div class="992:text-xl flex items-center pt-12 pb-20 text-lg font-semibold text-gray-300">
+          {#if $previousLink}
+            <div class="mb-4 flex flex-col items-start">
+              <span class="text-gray-inverse ml-3 mb-4 inline-block">Previous</span>
+              <Button
+                arrow="left"
+                href={$previousLink.slug}
+                class="hover:text-gray-inverse"
+                sveltekit:prefetch
+              >
+                {$previousLink.title}
+              </Button>
+            </div>
+          {/if}
+
+          {#if $nextLink}
+            <div class="ml-auto mb-4 flex flex-col items-end">
+              <span class="text-gray-inverse mr-3 mb-4 inline-block">Next</span>
+              <Button
+                arrow="right"
+                href={$nextLink.slug}
+                class="hover:text-gray-inverse"
+                sveltekit:prefetch
+              >
+                {$nextLink.title}
+              </Button>
+            </div>
+          {/if}
+        </div>
       {/if}
-
-      <div class="992:text-xl flex items-center pt-12 pb-20 text-lg font-semibold text-gray-300">
-        {#if $previousLink}
-          <div class="mb-4 flex flex-col items-start">
-            <span class="text-gray-inverse ml-3 mb-4 inline-block">Previous</span>
-            <Button
-              arrow="left"
-              href={$previousLink.slug}
-              class="hover:text-gray-inverse"
-              sveltekit:prefetch
-            >
-              {$previousLink.title}
-            </Button>
-          </div>
-        {/if}
-
-        {#if $nextLink}
-          <div class="ml-auto mb-4 flex flex-col items-end">
-            <span class="text-gray-inverse mr-3 mb-4 inline-block">Next</span>
-            <Button
-              arrow="right"
-              href={$nextLink.slug}
-              class="hover:text-gray-inverse"
-              sveltekit:prefetch
-            >
-              {$nextLink.title}
-            </Button>
-          </div>
-        {/if}
-      </div>
 
       <slot name="main-bottom" />
     </main>
