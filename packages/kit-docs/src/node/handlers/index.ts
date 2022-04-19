@@ -30,17 +30,18 @@ const layoutNameRE = /@.+/g;
 export async function handleMetaRequest(slugParam: string) {
   const slug = paramToSlug(slugParam);
 
-  const fileGlob = slug
+  const fileGlobBase = `src/routes/${slug
     .split('/')
-    .map((s) => `*${s}*`)
-    .join('/');
+    .slice(0, -1)
+    .map((s) => `*${s}`)
+    .join('/')}`;
 
-  const glob = `src/routes/${fileGlob}.{md,svelte}`;
-  let file = globbySync(glob)[0];
+  const glob = `${fileGlobBase}/${basename(slug)}*.{md,svelte}`;
+  let file = globbySync(glob)?.[0];
 
   if (!file) {
-    const glob = `src/routes/${fileGlob}/*index.{md,svelte}`;
-    file = globbySync(glob)[0];
+    const glob = `${fileGlobBase}/*${basename(slug)}/*index*.{md,svelte}`;
+    file = globbySync(glob)?.[0];
   }
 
   if (!file) {
@@ -127,8 +128,8 @@ export async function handleSidebarRequest(
     const deepMatch = deepMatchDir >= 0;
     const validDeepMatch = deepMatch
       ? globbySync(
-          `${ROUTES_DIR}/${cleanDirs.slice(0, deepMatchDir + 1).join('*/*')}*/**/index.md`,
-        )?.[0] === file
+          `src/routes/*${cleanDirs.slice(0, deepMatchDir + 1).join('/*')}/**/*index*.{md,svelte}`,
+        )?.[0] === `src/routes/${relativePath}`
       : false;
 
     if (
