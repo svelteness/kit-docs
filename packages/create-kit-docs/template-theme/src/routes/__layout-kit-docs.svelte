@@ -16,6 +16,7 @@
   import '@svelteness/kit-docs/client/styles/theme.css';
   import '@svelteness/kit-docs/client/styles/vars.css';
 
+  import { page } from '$app/stores';
   import SvelteLogo from '$img/svelte-horizontal.svg?raw';
 
   import {
@@ -41,12 +42,14 @@
 </script>
 
 <svelte:head>
-  {#if meta?.title}
-    <title>{$activeCategory ? `${$activeCategory}: ` : ''}{meta.title} | KitDocs</title>
-  {/if}
-  {#if meta?.description}
-    <meta name="description" content={meta.description} />
-  {/if}
+  {#key $page.url.pathname}
+    {#if meta?.title}
+      <title>{$activeCategory ? `${$activeCategory}: ` : ''}{meta.title} | KitDocs</title>
+    {/if}
+    {#if meta?.description}
+      <meta name="description" content={meta.description} />
+    {/if}
+  {/key}
 </svelte:head>
 
 <KitDocs {meta}>

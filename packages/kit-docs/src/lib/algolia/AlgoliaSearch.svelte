@@ -31,7 +31,9 @@
 </script>
 
 <svelte:head>
-  <link rel="preconnect" href={`https://${appId}-dsn.algolia.net`} crossorigin="" />
+  {#key appId}
+    <link rel="preconnect" href={`https://${appId}-dsn.algolia.net`} crossorigin="" />
+  {/key}
 </svelte:head>
 
 <div class="contents" bind:this={container} />

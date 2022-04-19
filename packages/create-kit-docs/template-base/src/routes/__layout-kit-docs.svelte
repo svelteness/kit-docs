@@ -10,6 +10,8 @@
 </script>
 
 <script>
+  import { page } from '$app/stores';
+
   import { KitDocs, createKitDocsLoader, createSidebarContext } from '@svelteness/kit-docs';
 
   /** @type {import('@svelteness/kit-docs').MarkdownMeta | null} */
@@ -22,12 +24,14 @@
 </script>
 
 <svelte:head>
-  {#if meta?.title}
-    <title>{$activeCategory ? `${$activeCategory}: ` : ''}{meta.title} | KitDocs</title>
-  {/if}
-  {#if meta?.description}
-    <meta name="description" content={meta.description} />
-  {/if}
+  {#key $page.url.pathname}
+    {#if meta?.title}
+      <title>{$activeCategory ? `${$activeCategory}: ` : ''}{meta.title} | KitDocs</title>
+    {/if}
+    {#if meta?.description}
+      <meta name="description" content={meta.description} />
+    {/if}
+  {/key}
 </svelte:head>
 
 <KitDocs {meta}>

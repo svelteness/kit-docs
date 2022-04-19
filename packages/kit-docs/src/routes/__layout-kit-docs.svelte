@@ -17,7 +17,6 @@
   import '$lib/styles/vars.css';
 
   import { page } from '$app/stores';
-
   import kitDocsLogo from '$img/kit-docs-logo.svg?raw';
   import socialCardLarge from '$img/social-card-large.jpg';
 
@@ -45,21 +44,23 @@
 </script>
 
 <svelte:head>
-  {#if meta?.title}
-    <title>{$activeCategory ? `${$activeCategory}: ` : ''}{meta.title} | KitDocs</title>
-  {/if}
-  {#if meta?.description}
-    <meta name="description" content={meta.description} />
-    <meta name="twitter:description" content={meta.description} />
-    <meta name="og:description" content={meta.description} />
-  {/if}
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:site" content="@mihar_22" />
-  <meta name="twitter:image" content={`https://kit-docs.svelteness.dev${socialCardLarge}`} />
-  <meta name="twitter:creator" content="@mihar_22" />
-  <meta property="og:url" content={`https://kit-docs.svelteness.dev${$page.url.pathname}`} />
-  <meta property="og:type" content="article" />
-  <meta name="og:image" content={`https://kit-docs.svelteness.dev${socialCardLarge}`} />
+  {#key $page.url.pathname}
+    {#if meta?.title}
+      <title>{$activeCategory ? `${$activeCategory}: ` : ''}{meta.title} | KitDocs</title>
+    {/if}
+    {#if meta?.description}
+      <meta name="description" content={meta.description} />
+      <meta name="twitter:description" content={meta.description} />
+      <meta name="og:description" content={meta.description} />
+    {/if}
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@mihar_22" />
+    <meta name="twitter:image" content={`https://kit-docs.svelteness.dev${socialCardLarge}`} />
+    <meta name="twitter:creator" content="@mihar_22" />
+    <meta property="og:url" content={`https://kit-docs.svelteness.dev${$page.url.pathname}`} />
+    <meta property="og:type" content="article" />
+    <meta name="og:image" content={`https://kit-docs.svelteness.dev${socialCardLarge}`} />
+  {/key}
 </svelte:head>
 
 <KitDocs {meta}>

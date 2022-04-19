@@ -18,6 +18,8 @@
 
   import SvelteLogo from '$img/svelte-horizontal.svg?raw';
 
+  import { page } from '$app/stores';
+
   import {
     createKitDocsLoader,
     KitDocs,
@@ -49,10 +51,12 @@
 </script>
 
 <svelte:head>
-  <title>{$activeCategory}: {meta.title} | Svelte</title>
-  <meta name="description" content={meta.description} />
-  <meta name="twitter:description" content={meta.description} />
-  <meta name="og:description" content={meta.description} />
+  {#key $page.url.pathname}
+    <title>{$activeCategory}: {meta.title} | Svelte</title>
+    <meta name="description" content={meta.description} />
+    <meta name="twitter:description" content={meta.description} />
+    <meta name="og:description" content={meta.description} />
+  {/key}
 </svelte:head>
 
 <KitDocs {meta}>
