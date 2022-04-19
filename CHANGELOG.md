@@ -1,3 +1,14 @@
+## [0.10.1](https://github.com/svelteness/kit-docs/compare/v0.10.0...v0.10.1) (2022-04-19)
+
+
+### Bug Fixes
+
+* dont render code highlights if there are none ([0670712](https://github.com/svelteness/kit-docs/commit/0670712390a9a820327b6f0412e1e9d376bd946d))
+* improve index and deep path matching ([7511197](https://github.com/svelteness/kit-docs/commit/7511197d0973fd8fbca3deba82266ac3f60017e8))
+* only deep match the closest index file ([f18c57f](https://github.com/svelteness/kit-docs/commit/f18c57ffdc385c70c625a19ec7efd0cdda4ebc00))
+
+
+
 # [0.10.0](https://github.com/svelteness/kit-docs/compare/v0.9.4...v0.10.0) (2022-04-19)
 
 
