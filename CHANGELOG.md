@@ -1,3 +1,18 @@
+# [0.11.0](https://github.com/svelteness/kit-docs/compare/v0.10.1...v0.11.0) (2022-04-19)
+
+
+### Bug Fixes
+
+* actively update head tags ([781b14d](https://github.com/svelteness/kit-docs/commit/781b14dfe0fe1abfa7eb18dc7c5f7227c80d1b8b))
+* meta file matching failing ([bf276ae](https://github.com/svelteness/kit-docs/commit/bf276ae295bf5d70aee9b7c600b8e93446b64709))
+
+
+### Features
+
+* allow one level down deep matching ([4acd00e](https://github.com/svelteness/kit-docs/commit/4acd00ec897bd23bd904e72f81278aa16d7049c9))
+
+
+
 ## [0.10.1](https://github.com/svelteness/kit-docs/compare/v0.10.0...v0.10.1) (2022-04-19)
 
 
