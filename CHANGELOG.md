@@ -1,3 +1,12 @@
+## [0.11.1](https://github.com/svelteness/kit-docs/compare/v0.11.0...v0.11.1) (2022-04-19)
+
+
+### Bug Fixes
+
+* code fence slots not extracted correctly ([cd6e3ba](https://github.com/svelteness/kit-docs/commit/cd6e3ba4aed21512d470df699fd2dadc4178ecbd))
+
+
+
 # [0.11.0](https://github.com/svelteness/kit-docs/compare/v0.10.1...v0.11.0) (2022-04-19)
 
 
