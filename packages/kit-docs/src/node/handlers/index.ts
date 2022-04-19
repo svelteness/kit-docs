@@ -36,7 +36,7 @@ export async function handleMetaRequest(slugParam: string) {
     .map((s) => `*${s}`)
     .join('/')}`;
 
-  const glob = `${fileGlobBase}/${basename(slug)}*.{md,svelte}`;
+  const glob = `${fileGlobBase}/*${basename(slug)}*.{md,svelte}`;
   let file = globbySync(glob)?.[0];
 
   if (!file) {
