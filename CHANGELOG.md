@@ -1,3 +1,12 @@
+## [0.9.2](https://github.com/svelteness/kit-docs/compare/v0.9.1...v0.9.2) (2022-04-19)
+
+
+### Bug Fixes
+
+* add debug option to request handlers ([66c5ae6](https://github.com/svelteness/kit-docs/commit/66c5ae6f5ced8a19cf58ce1dd61563d68bcbb5c0))
+
+
+
 ## [0.9.1](https://github.com/svelteness/kit-docs/compare/v0.9.0...v0.9.1) (2022-04-19)
 
 
