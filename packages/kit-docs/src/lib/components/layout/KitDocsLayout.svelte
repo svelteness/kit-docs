@@ -72,7 +72,6 @@
     >
       <Navbar
         {search}
-        contain
         on:open-popover={() => {
           isNavPopoverOpen = true;
         }}
@@ -163,10 +162,11 @@
 
   <div
     class={clsx(
-      'mx-auto w-full max-w-[1440px] flex flex-row min-h-full',
+      'mx-auto w-full flex flex-row min-h-full',
       navbar && '992:pt-20 z-20',
       navbar && showBottomNav ? 'pt-40' : 'pt-20',
     )}
+    style="max-width: var(--kd-content-max-width, 1440px);"
   >
     {#if showSidebar}
       <Sidebar

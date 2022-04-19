@@ -34,6 +34,11 @@
   --kd-terminal-line-pointer: var(--kd-color-brand);
   --kd-code-highlight-border: var(--kd-color-brand);
   --kd-code-highlight-color: rgba(var(--kd-color-brand-rgb), 0.05);
+
+  /* Values are the current defaults. */
+  /* --kd-navbar-max-width: 1440px; */
+  /* --kd-content-max-width: 1440px; */
+  /* --kd-navbar-border-bottom: 1px solid var(--kd-color-gray-divider); */
 }
 
 :root.dark {

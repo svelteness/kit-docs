@@ -13,7 +13,6 @@
   import NavLinkItem from './NavLink.svelte';
   import { getNavbarContext } from './contexts';
 
-  export let contain = false;
   export let search = false;
 
   const dispatch = createEventDispatcher();
@@ -30,8 +29,11 @@
   $: navLinks = $context.links;
 </script>
 
-<div class="1200:py-5 flex w-full flex-col items-center justify-center px-5 py-4 992:min-h-[5rem]">
-  <div class={clsx('flex w-full items-center', contain && 'max-w-[1440px] mx-auto')}>
+<div
+  class="1200:py-5 flex w-full flex-col items-center justify-center px-5 py-4 992:min-h-[5rem] mx-auto"
+  style="max-width: var(--kd-navbar-max-width, 1440px);"
+>
+  <div class={clsx('flex w-full items-center')}>
     <slot name="left" />
 
     <div class="flex-1" />
