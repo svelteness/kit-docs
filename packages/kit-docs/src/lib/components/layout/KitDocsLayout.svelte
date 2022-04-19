@@ -62,12 +62,13 @@
   {#if navbar}
     <div
       class={clsx(
-        'border-gray-divider fixed top-0 z-30 w-full flex-none border-b transform-gpu transition-transform duration-150 ease-out',
+        'fixed top-0 z-30 w-full flex-none transform-gpu transition-transform duration-150 ease-out',
         isNavPopoverOpen
           ? 'bg-gray-100 dark:bg-gray-800'
           : 'supports-backdrop-blur:bg-white/60 bg-gray-200/95 backdrop-blur dark:bg-gray-800/60',
         collapseNavbar ? '-translate-y-[5rem]' : 'translate-y-0',
       )}
+      style="border-bottom: var(--kd-navbar-border-bottom, 1px solid var(--kd-color-gray-divider));"
     >
       <Navbar
         {search}
