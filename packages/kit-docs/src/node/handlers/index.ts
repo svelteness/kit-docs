@@ -21,6 +21,7 @@ let parser: MarkdownParser;
 
 const restParamsRE = /\[\.\.\.(.*?)\]/g;
 const restPropsRE = /\[\.\.\.(.*?)\]/;
+const deepMatchRE = /\[\.\.\..*?_deep\]/;
 const layoutNameRE = /@.+/g;
 
 /**
@@ -118,10 +119,15 @@ export async function handleSidebarRequest(
     const filename = basename(file);
     const relativePath = relative(ROUTES_DIR, file);
     const cleanPath = relativePath.replace(restParamsRE, '').replace(layoutNameRE, extname(file));
+    const cleanDirs = dirname(cleanPath).split('/');
+    const cleanDirsReversed = cleanDirs.slice().reverse();
+    const index = /\/index\./.test(cleanPath);
+    const deepMatch = deepMatchRE.test(dirname(relativePath));
 
     if (
       filename.startsWith('_') ||
       filename.startsWith('.') ||
+      (!index && deepMatch) ||
       !(filter?.(`/${cleanPath}`) ?? true)
     ) {
       continue;
@@ -129,22 +135,14 @@ export async function handleSidebarRequest(
 
     const content = readFileSync(file).toString();
     const frontmatter = getFrontmatter(content);
-    const index = /\/index\./.test(cleanPath);
 
-    const props =
-      (index ? dirname(relativePath).split('/').reverse()[0] : basename(relativePath))
-        .match(restPropsRE)?.[1]
-        ?.split('_') ?? [];
-
-    const deepMatch = props.includes('deep');
-
-    const category = (formatCategoryName ?? kebabToTitleCase)(
-      dirname(cleanPath).split('/').reverse()[index && deepMatch ? 1 : 0],
-    );
+    const categoryFormatter = formatCategoryName ?? kebabToTitleCase;
+    const category = categoryFormatter(cleanDirsReversed[index && deepMatch ? 1 : 0]);
 
     const title =
       frontmatter.sidebar_title ??
       frontmatter.title ??
+      (deepMatch ? categoryFormatter(cleanDirsReversed[0]) : null) ??
       content.match(headingRE)?.[1] ??
       kebabToTitleCase(basename(cleanPath, extname(cleanPath)));
 
