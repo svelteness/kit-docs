@@ -207,15 +207,19 @@
     >
       <slot name="main-top" />
 
-      <article class="markdown prose dark:prose-invert z-10">
-        {#if $activeCategory && $activeCategory !== '.'}
-          <p class="text-brand mb-3.5 text-[15px] font-semibold leading-6">
-            {$activeCategory}
-          </p>
-        {/if}
+      {#if $kitDocs.meta}
+        <article class="markdown prose dark:prose-invert z-10">
+          {#if $activeCategory && $activeCategory !== '.'}
+            <p class="text-brand mb-3.5 text-[15px] font-semibold leading-6">
+              {$activeCategory}
+            </p>
+          {/if}
 
+          <slot />
+        </article>
+      {:else}
         <slot />
-      </article>
+      {/if}
 
       {#if $previousLink || $nextLink}
         <hr class="border-gray-divider mt-20" />
