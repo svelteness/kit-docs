@@ -125,7 +125,7 @@ export async function handleSidebarRequest(
 
     const content = readFileSync(file).toString();
     const frontmatter = getFrontmatter(content);
-    const index = /index\.md$/.test(cleanPath);
+    const index = /\/index\./.test(cleanPath);
     const category = (formatCategoryName ?? kebabToTitleCase)(
       dirname(cleanPath).split('/').reverse()[index ? 1 : 0],
     );
