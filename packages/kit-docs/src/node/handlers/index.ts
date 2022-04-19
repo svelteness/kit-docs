@@ -118,17 +118,24 @@ export async function handleSidebarRequest(
   for (const file of files) {
     const filename = basename(file);
     const relativePath = relative(ROUTES_DIR, file);
+    const dirs = dirname(relativePath).split('/');
     const cleanPath = relativePath.replace(restParamsRE, '').replace(layoutNameRE, extname(file));
     const cleanDirs = dirname(cleanPath).split('/');
     const cleanDirsReversed = cleanDirs.slice().reverse();
     const index = /\/index\./.test(cleanPath);
-    const deepMatch = deepMatchRE.test(dirname(relativePath));
+    const deepMatchDir = dirs.findIndex((dir) => deepMatchRE.test(dir));
+    const deepMatch = deepMatchDir >= 0;
+    const validDeepMatch = deepMatch
+      ? globbySync(
+          `${ROUTES_DIR}/${cleanDirs.slice(0, deepMatchDir + 1).join('*/*')}*/**/index.md`,
+        )?.[0] === file
+      : false;
 
     if (
       filename.startsWith('_') ||
       filename.startsWith('.') ||
       cleanDirs.length == 1 ||
-      (!index && deepMatch) ||
+      (deepMatch && !validDeepMatch) ||
       !(filter?.(`/${cleanPath}`) ?? true)
     ) {
       continue;
