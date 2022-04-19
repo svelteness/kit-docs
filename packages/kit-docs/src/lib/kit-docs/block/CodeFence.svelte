@@ -132,22 +132,24 @@
 		</pre>
     {/if}
 
-    <div
-      class="pointer-events-none absolute inset-0 mt-[0.7em] h-full w-full leading-[27px]"
-      aria-hidden="true"
-    >
-      {#each lines as lineNumber}
-        {#if isHighlightLine(lineNumber, currentHighlightedLines)}
-          <div
-            class="w-full border-l-[5px] font-mono text-transparent"
-            style="border-color: var(--kd-code-highlight-border); background-color: var(--kd-code-highlight-color);"
-          >
-            &nbsp;
-          </div>
-        {:else}
-          <br />
-        {/if}
-      {/each}
-    </div>
+    {#if currentHighlightedLines.length > 0}
+      <div
+        class="pointer-events-none absolute inset-0 mt-[0.7em] h-full w-full leading-[27px]"
+        aria-hidden="true"
+      >
+        {#each lines as lineNumber}
+          {#if isHighlightLine(lineNumber, currentHighlightedLines)}
+            <div
+              class="w-full border-l-[5px] font-mono text-transparent"
+              style="border-color: var(--kd-code-highlight-border); background-color: var(--kd-code-highlight-color);"
+            >
+              &nbsp;
+            </div>
+          {:else}
+            <br />
+          {/if}
+        {/each}
+      </div>
+    {/if}
   </div>
 </div>
