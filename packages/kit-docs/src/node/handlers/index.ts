@@ -2,6 +2,7 @@ import { createFilter, type FilterPattern } from '@rollup/pluginutils';
 import type { RequestHandler } from '@sveltejs/kit';
 import { readFileSync } from 'fs';
 import { globbySync } from 'globby';
+import kleur from 'kleur';
 import { basename, dirname, extname, relative, resolve } from 'path';
 
 import {
@@ -66,13 +67,24 @@ export async function handleMetaRequest(slugParam: string) {
   return parseMarkdown(parser, content, filePath);
 }
 
-export function createMetaRequestHandler(): RequestHandler {
+export type CreateMetaRequestHandlerOptions = {
+  debug?: boolean;
+};
+
+export function createMetaRequestHandler(
+  options: CreateMetaRequestHandlerOptions = {},
+): RequestHandler {
+  const { debug } = options;
+
   return async ({ params }) => {
     try {
       const { meta } = await handleMetaRequest(params.slug);
       return { body: meta as any };
     } catch (e) {
-      // no-op
+      if (debug) {
+        console.log(kleur.bold(kleur.red(`\n[kit-docs]: failed to handle meta request.`)));
+        console.log(`\n\n${e}\n`);
+      }
     }
 
     return { body: null };
@@ -146,13 +158,14 @@ export async function handleSidebarRequest(
 export type CreateSidebarRequestHandlerOptions = {
   include?: FilterPattern;
   exclude?: FilterPattern;
+  debug?: boolean;
   formatCategoryName?: (dirname: string) => string;
 };
 
 export function createSidebarRequestHandler(
   options: CreateSidebarRequestHandlerOptions = {},
 ): RequestHandler {
-  const { include, exclude, formatCategoryName } = options;
+  const { include, debug, exclude, formatCategoryName } = options;
 
   const filter = createFilter(include ?? /\.md($|\?)/, exclude);
 
@@ -165,7 +178,10 @@ export function createSidebarRequestHandler(
 
       return { body: { links } };
     } catch (e) {
-      // no-op
+      if (debug) {
+        console.log(kleur.bold(kleur.red(`\n[kit-docs]: failed to handle sidebar request.`)));
+        console.log(`\n\n${e}\n`);
+      }
     }
 
     return { body: null };
