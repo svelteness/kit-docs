@@ -35,11 +35,11 @@ export async function handleMetaRequest(slugParam: string) {
     .map((s) => `*${s}*`)
     .join('/');
 
-  const glob = `src/routes/${fileGlob}.md`;
+  const glob = `src/routes/${fileGlob}.{md,svelte}`;
   let file = globbySync(glob)[0];
 
   if (!file) {
-    const glob = `src/routes/${fileGlob}/*index.md`;
+    const glob = `src/routes/${fileGlob}/*index.{md,svelte}`;
     file = globbySync(glob)[0];
   }
 
@@ -127,6 +127,7 @@ export async function handleSidebarRequest(
     if (
       filename.startsWith('_') ||
       filename.startsWith('.') ||
+      cleanDirs.length == 1 ||
       (!index && deepMatch) ||
       !(filter?.(`/${cleanPath}`) ?? true)
     ) {
@@ -167,7 +168,7 @@ export function createSidebarRequestHandler(
 ): RequestHandler {
   const { include, debug, exclude, formatCategoryName } = options;
 
-  const filter = createFilter(include ?? /\.md($|\?)/, exclude);
+  const filter = createFilter(include ?? /\.(md|svelte)($|\?)/, exclude);
 
   return async ({ params }) => {
     try {
