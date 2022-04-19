@@ -1,3 +1,14 @@
+## [0.9.1](https://github.com/svelteness/kit-docs/compare/v0.9.0...v0.9.1) (2022-04-19)
+
+
+### Bug Fixes
+
+* `sidebar` prop on `KitDocsLayout` type can be `null` ([95a1003](https://github.com/svelteness/kit-docs/commit/95a10037462926dd9b6c0e9e7fc99578d384edfa))
+* log error when quick install fails to create app ([b96a59a](https://github.com/svelteness/kit-docs/commit/b96a59a969144ecb55f0d764c39e0eb6890aab5f))
+* remove default SvelteKit `index.svelte` on quick install ([b73d217](https://github.com/svelteness/kit-docs/commit/b73d21704978d755ed2bed9431e7c3e48a279614))
+
+
+
 # [0.9.0](https://github.com/svelteness/kit-docs/compare/v0.8.0...v0.9.0) (2022-04-18)
 
 
