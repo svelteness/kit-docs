@@ -119,21 +119,28 @@ export async function handleSidebarRequest(
     const relativePath = relative(ROUTES_DIR, file);
     const cleanPath = relativePath.replace(restParamsRE, '').replace(layoutNameRE, extname(file));
 
-    if (filename.startsWith('_') || filename.startsWith('.') || !(filter?.(cleanPath) ?? true)) {
+    if (
+      filename.startsWith('_') ||
+      filename.startsWith('.') ||
+      !(filter?.(`/${cleanPath}`) ?? true)
+    ) {
       continue;
     }
 
     const content = readFileSync(file).toString();
     const frontmatter = getFrontmatter(content);
     const index = /\/index\./.test(cleanPath);
-    const category = (formatCategoryName ?? kebabToTitleCase)(
-      dirname(cleanPath).split('/').reverse()[index ? 1 : 0],
-    );
 
     const props =
       (index ? dirname(relativePath).split('/').reverse()[0] : basename(relativePath))
         .match(restPropsRE)?.[1]
         ?.split('_') ?? [];
+
+    const deepMatch = props.includes('deep');
+
+    const category = (formatCategoryName ?? kebabToTitleCase)(
+      dirname(cleanPath).split('/').reverse()[index && deepMatch ? 1 : 0],
+    );
 
     const title =
       frontmatter.sidebar_title ??
@@ -142,7 +149,7 @@ export async function handleSidebarRequest(
       kebabToTitleCase(basename(cleanPath, extname(cleanPath)));
 
     const slug = `/${cleanPath.replace(extname(cleanPath), '').replace(/\/index$/, '')}`;
-    const match = props.includes('deep') ? 'deep' : undefined;
+    const match = deepMatch ? 'deep' : undefined;
 
     (links[category] ??= []).push({ title, slug, match });
   }
