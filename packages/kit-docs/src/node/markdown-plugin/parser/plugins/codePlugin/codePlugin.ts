@@ -43,12 +43,13 @@ export const codePlugin: PluginSimple = (parser) => {
       ?.map((range) => `[${range[0]}, ${range[1]}]`)
       .join(',')}]`;
 
-    const title = info.match(/\|?title=(.*?)(\||{|$)/)?.[1];
+    const title = info.match(/\|?title="?(.*?)"?(\||{|$)/)?.[1];
     const useLineNumbers = /\|?lineNumbers/.test(info);
     const showCopyCode = /\|?copy/.test(info);
     const copyHighlightOnly = /\|?copyHighlight/.test(info);
     const copySteps = /\|?copySteps/.test(info);
-    const slot = info.match(/:\|?slot=(.*?)(\||{|$)/)?.[1] ?? (/:slot/.test(info) && language.ext);
+    const slot =
+      info.match(/\|?slot="?(.*?)"?(\||{|$)/)?.[1] ?? (/\|?slot/.test(info) && language.ext);
 
     const props = [
       title && `title="${title}"`,
@@ -62,7 +63,7 @@ export const codePlugin: PluginSimple = (parser) => {
       copyHighlightOnly && `copyHighlightOnly`,
       copySteps && 'copySteps',
       `code={${JSON.stringify(html)}}`,
-      slot && `slot=${slot}`,
+      slot && `slot="${slot}"`,
     ]
       .filter(Boolean)
       .join(' ');
