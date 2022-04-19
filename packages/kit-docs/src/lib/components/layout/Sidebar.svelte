@@ -50,10 +50,13 @@
   bind:this={sidebar}
   {style}
 >
-  <div class="992:hidden sticky top-0 left-0 flex items-center -mx-5">
+  <div class="992:hidden sticky top-0 left-0 flex items-center">
     <div class="flex-1" />
     <button
-      class={clsx('text-gray-soft hover:text-gray-inverse p-4', !open && 'pointer-events-none')}
+      class={clsx(
+        'text-gray-soft hover:text-gray-inverse p-4 -mx-6',
+        !open && 'pointer-events-none',
+      )}
       on:pointerdown={() => dispatch('close')}
       on:keydown={(e) => wasEnterKeyPressed(e) && dispatch('close', true)}
     >
@@ -75,7 +78,7 @@
 
     <slot name="top" />
 
-    <ul class={clsx(!search && 'mt-8')}>
+    <ul class={clsx(!search && 'mt-8', 'pb-28 992:pb-0')}>
       {#each Object.keys($config.links) as category (category)}
         {@const links = $config.links[category]}
         <li class="992:mt-10 mt-12 first:mt-0">

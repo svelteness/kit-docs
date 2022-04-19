@@ -52,7 +52,7 @@
     "dev": "pnpm build:node && run-p \"kit:dev\" \"build:node -- -w\"",
     "lint:eslint": "eslint src --fix",
     "lint:prettier": "prettier src --write --loglevel warn",
-    "kit:dev": "svelte-kit dev -p 3001",
+    "kit:dev": "svelte-kit dev -p 3001 --host",
     "kit:build": "run-s build:node kit:sync && svelte-kit build",
     "kit:preview": "sirv build -p 3001",
     "kit:sync": "svelte-kit sync"
