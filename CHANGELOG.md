@@ -1,3 +1,25 @@
+# [0.10.0](https://github.com/svelteness/kit-docs/compare/v0.9.4...v0.10.0) (2022-04-19)
+
+
+### Bug Fixes
+
+* bottom sidebar items not visible on mobile ([60cfc18](https://github.com/svelteness/kit-docs/commit/60cfc183376239216eb5c1dabc1ab97ecc76f29b))
+* button text size incorrect ([3562db1](https://github.com/svelteness/kit-docs/commit/3562db18b65dbd313c6018b982ae5e212e6ddc4f))
+* glob matching on sidebar filter wont work unless path starts with `/` ([0fc46fd](https://github.com/svelteness/kit-docs/commit/0fc46fdddb0450937467c36523aab5f49f02f396))
+* hide next/prev links container when there is none ([6412eaf](https://github.com/svelteness/kit-docs/commit/6412eafba0174fe14212ffdea6aa24d57d15e4bb))
+* improve sidebar deep matching ([083df87](https://github.com/svelteness/kit-docs/commit/083df874bf048e8c8e9f831172a362027af303a2))
+* only use markdown article when meta is present ([f58d331](https://github.com/svelteness/kit-docs/commit/f58d331b592b421e8cee5e67f6786b535d208ed2))
+* raised button should be rounded ([e80d24b](https://github.com/svelteness/kit-docs/commit/e80d24b68c9a05503335afed836f2c2b68703575))
+
+
+### Features
+
+* add css variable to remove navbar bottom border ([91a29f8](https://github.com/svelteness/kit-docs/commit/91a29f87838d29d7592cd353c0c8f0a5fbff99a7))
+* new `--kd-content-max-width` and `--kd-navbar-max-width` css props ([6b9fb2b](https://github.com/svelteness/kit-docs/commit/6b9fb2baf02ccd48f42c04998e9911952e5cd147))
+* support `.svelte` files in sidebar handler ([47804ba](https://github.com/svelteness/kit-docs/commit/47804ba3b5b1904b90538d9adb57e07673a8a6df))
+
+
+
 ## [0.9.4](https://github.com/svelteness/kit-docs/compare/v0.9.3...v0.9.4) (2022-04-19)
 
 
