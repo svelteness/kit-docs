@@ -1,3 +1,12 @@
+## [0.9.3](https://github.com/svelteness/kit-docs/compare/v0.9.2...v0.9.3) (2022-04-19)
+
+
+### Bug Fixes
+
+* filter sidebar using clean paths ([66a1f94](https://github.com/svelteness/kit-docs/commit/66a1f94980f911d21028312c51b23a5b22cb5bc3))
+
+
+
 ## [0.9.2](https://github.com/svelteness/kit-docs/compare/v0.9.1...v0.9.2) (2022-04-19)
 
 
