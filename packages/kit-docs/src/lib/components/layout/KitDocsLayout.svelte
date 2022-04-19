@@ -25,7 +25,7 @@
   import { kitDocs } from '$lib/stores/kitDocs';
 
   export let navbar: NavbarConfig | false;
-  export let sidebar: SidebarConfig;
+  export let sidebar: SidebarConfig | null;
 
   export let isSidebarOpen = false;
   export let isNavPopoverOpen = false;
@@ -38,7 +38,7 @@
   $: $navbarContext = navbar ? navbar : { links: [] };
   setNavbarContext(navbarContext);
 
-  const sidebarConfig = writable<SidebarConfig>();
+  const sidebarConfig = writable<SidebarConfig | null>();
   $: $sidebarConfig = sidebar;
   setSidebarContext(createSidebarContext(sidebarConfig));
 
