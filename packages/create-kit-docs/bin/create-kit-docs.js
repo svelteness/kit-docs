@@ -4,7 +4,7 @@
 
 import { spawn } from 'child_process';
 import enquirer from 'enquirer';
-import fs from 'fs';
+import fs, { rmSync } from 'fs';
 import kleur from 'kleur';
 import minimist from 'minimist';
 import path from 'upath';
@@ -53,6 +53,8 @@ async function main() {
       console.log(`\n\n${e}\n`);
       return;
     }
+
+    await rmSync(path.resolve(targetDir, 'src/routes/index.svelte'));
   }
 
   if (!validateDirectory(targetDir)) {
