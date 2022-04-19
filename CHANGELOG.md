@@ -1,3 +1,12 @@
+## [0.9.4](https://github.com/svelteness/kit-docs/compare/v0.9.3...v0.9.4) (2022-04-19)
+
+
+### Bug Fixes
+
+* detect index file against any file type ([81c8c53](https://github.com/svelteness/kit-docs/commit/81c8c5306860bb80940ec8daef87db80aa83e112))
+
+
+
 ## [0.9.3](https://github.com/svelteness/kit-docs/compare/v0.9.2...v0.9.3) (2022-04-19)
 
 
