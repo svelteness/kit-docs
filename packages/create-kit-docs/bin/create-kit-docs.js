@@ -49,6 +49,8 @@ async function main() {
         });
       });
     } catch (e) {
+      console.log(kleur.bold(kleur.red(`[kit-docs]: failed to create new app.`)));
+      console.log(`\n\n${e}\n`);
       return;
     }
   }
