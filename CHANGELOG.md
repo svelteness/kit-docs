@@ -1,3 +1,12 @@
+# [0.12.0](https://github.com/svelteness/kit-docs/compare/v0.11.2...v0.12.0) (2022-04-20)
+
+
+### Features
+
+* new `include` and `exclude` filter options for `createMetaRequestHandler` ([253340b](https://github.com/svelteness/kit-docs/commit/253340b2836c6cf045c36fbcfad26d2be079f474))
+
+
+
 ## [0.11.2](https://github.com/svelteness/kit-docs/compare/v0.11.1...v0.11.2) (2022-04-20)
 
 
