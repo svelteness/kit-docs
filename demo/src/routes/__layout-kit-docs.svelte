@@ -58,13 +58,9 @@
   {#key $page.url.pathname}
     {#if title}
       <title>{title}</title>
-      <meta property="og:title" content={title} />
-      <meta name="twitter:title" content={title} />
     {/if}
     {#if description}
       <meta name="description" content={description} />
-      <meta name="twitter:description" content={description} />
-      <meta name="og:description" content={description} />
     {/if}
   {/key}
 </svelte:head>
