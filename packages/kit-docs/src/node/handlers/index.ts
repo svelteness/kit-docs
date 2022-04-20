@@ -3,7 +3,7 @@ import type { RequestHandler } from '@sveltejs/kit';
 import { readFileSync } from 'fs';
 import { globbySync } from 'globby';
 import kleur from 'kleur';
-import { basename, dirname, extname, relative, resolve } from 'path';
+import path from 'path';
 
 import {
   createMarkdownParser,
@@ -15,7 +15,7 @@ import { readDirDeepSync } from '../utils/fs';
 import { kebabToTitleCase } from '../utils/string';
 
 const CWD = process.cwd();
-const ROUTES_DIR = resolve(CWD, 'src/routes');
+const ROUTES_DIR = path.resolve(CWD, 'src/routes');
 
 let parser: MarkdownParser;
 
@@ -27,30 +27,23 @@ const defaultIncludeRE = /\.(md|svelte)($|\?)/;
 
 export type HandleMetaRequestOptions = {
   filter?: (file: string) => boolean;
+  resolve?: FileResolver;
 };
+
+export type FileResolver = (
+  slug: string,
+) => string | null | undefined | Promise<string | null | undefined>;
 
 /**
  * Careful this function will throw if it can't match the `slug` param to a file.
  */
 export async function handleMetaRequest(
   slugParam: string,
-  { filter }: HandleMetaRequestOptions = {},
+  { filter, resolve }: HandleMetaRequestOptions = {},
 ) {
   const slug = paramToSlug(slugParam);
 
-  const fileGlobBase = `src/routes/${slug
-    .split('/')
-    .slice(0, -1)
-    .map((s) => `*${s}`)
-    .join('/')}`;
-
-  const glob = `${fileGlobBase}/*${basename(slug)}*.{md,svelte}`;
-  let file = globbySync(glob)?.[0];
-
-  if (!file) {
-    const glob = `${fileGlobBase}/*${basename(slug)}/*index*.{md,svelte}`;
-    file = globbySync(glob)?.[0];
-  }
+  const file = (await resolve?.(slug)) ?? resolveSlug(slug);
 
   if (!file) {
     throw Error('Could not find file.');
@@ -60,12 +53,12 @@ export async function handleMetaRequest(
     return null;
   }
 
-  const filePath = resolve(CWD, file);
+  const filePath = path.isAbsolute(file) ? file : path.resolve(CWD, file);
 
   const matchedSlug = file
     .replace(restParamsRE, '')
     .replace(layoutNameRE, '')
-    .replace(extname(file), '')
+    .replace(path.extname(file), '')
     .replace(/\/index$/, slug === 'index' ? '/index' : '');
 
   if (matchedSlug !== `src/routes/${slug}` || !file.endsWith('.md')) {
@@ -84,19 +77,20 @@ export async function handleMetaRequest(
 export type CreateMetaRequestHandlerOptions = {
   include?: FilterPattern;
   exclude?: FilterPattern;
+  resolve?: FileResolver;
   debug?: boolean;
 };
 
 export function createMetaRequestHandler(
   options: CreateMetaRequestHandlerOptions = {},
 ): RequestHandler {
-  const { include, exclude, debug } = options;
+  const { include, exclude, debug, resolve } = options;
 
   const filter = createFilter(include ?? defaultIncludeRE, exclude);
 
   return async ({ params }) => {
     try {
-      const res = await handleMetaRequest(params.slug, { filter });
+      const res = await handleMetaRequest(params.slug, { filter, resolve });
 
       if (!res) {
         return { body: null };
@@ -132,17 +126,17 @@ export async function handleSidebarRequest(
 
   const directory = paramToDir(dirParam);
 
-  const dirPath = resolve(ROUTES_DIR, directory);
+  const dirPath = path.resolve(ROUTES_DIR, directory);
 
   const files = readDirDeepSync(dirPath);
   const links: Record<string, { title: string; slug: string; match?: 'deep' }[]> = {};
 
   for (const file of files) {
-    const filename = basename(file);
-    const relativePath = relative(ROUTES_DIR, file);
-    const dirs = dirname(relativePath).split('/');
+    const filename = path.basename(file);
+    const relativePath = path.relative(ROUTES_DIR, file);
+    const dirs = path.dirname(relativePath).split('/');
     const cleanPath = cleanFilePath(file);
-    const cleanDirs = dirname(cleanPath).split('/');
+    const cleanDirs = path.dirname(cleanPath).split('/');
     const cleanDirsReversed = cleanDirs.slice().reverse();
     const index = /\/index\./.test(cleanPath);
 
@@ -185,9 +179,9 @@ export async function handleSidebarRequest(
       frontmatter.title ??
       (deepMatch ? categoryFormatter(cleanDirsReversed[0]) : null) ??
       content.match(headingRE)?.[1] ??
-      kebabToTitleCase(basename(cleanPath, extname(cleanPath)));
+      kebabToTitleCase(path.basename(cleanPath, path.extname(cleanPath)));
 
-    const slug = `/${cleanPath.replace(extname(cleanPath), '').replace(/\/index$/, '')}`;
+    const slug = `/${cleanPath.replace(path.extname(cleanPath), '').replace(/\/index$/, '')}`;
     const match = deepMatch ? 'deep' : undefined;
 
     (links[category] ??= []).push({ title, slug, match });
@@ -229,9 +223,37 @@ export function createSidebarRequestHandler(
   };
 }
 
-export function cleanFilePath(file: string) {
-  const relativePath = relative(ROUTES_DIR, file);
-  return relativePath.replace(restParamsRE, '').replace(layoutNameRE, extname(file));
+/**
+ * Attempts to resolve the given slug to a file in the `routes` directory. This function returns
+ * a relative file path.
+ */
+export function resolveSlug(slug: string): string | null {
+  const fileGlobBase = `src/routes/${slug
+    .split('/')
+    .slice(0, -1)
+    .map((s) => `*${s}`)
+    .join('/')}`;
+
+  const glob = `${fileGlobBase}/*${path.basename(slug)}*.{md,svelte}`;
+  let file = globbySync(glob)?.[0];
+
+  if (!file) {
+    const glob = `${fileGlobBase}/*${path.basename(slug)}/*index*.{md,svelte}`;
+    file = globbySync(glob)?.[0];
+  }
+
+  return file ?? null;
+}
+
+/**
+ * Takes an absolute or relative file path and maps it to a relative path to `src/routes`, and
+ * strips out rest params and layout ids `{[...1]}index{@layout-id}.md`.
+ *
+ * @example `src/routes/docs/[...1getting-started]/[...1]intro.md` -> `src/routes/docs/getting-started/intro.md`
+ */
+export function cleanFilePath(filePath: string) {
+  const relativePath = path.isAbsolute(filePath) ? path.relative(ROUTES_DIR, filePath) : filePath;
+  return relativePath.replace(restParamsRE, '').replace(layoutNameRE, path.extname(filePath));
 }
 
 export function paramToSlug(param: string) {
