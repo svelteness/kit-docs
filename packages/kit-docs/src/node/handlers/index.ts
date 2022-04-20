@@ -23,11 +23,19 @@ const restParamsRE = /\[\.\.\.(.*?)\]/g;
 const restPropsRE = /\[\.\.\.(.*?)\]/;
 const deepMatchRE = /\[\.\.\..*?_deep\]/;
 const layoutNameRE = /@.+/g;
+const defaultIncludeRE = /\.(md|svelte)($|\?)/;
+
+export type HandleMetaRequestOptions = {
+  filter?: (file: string) => boolean;
+};
 
 /**
  * Careful this function will throw if it can't match the `slug` param to a file.
  */
-export async function handleMetaRequest(slugParam: string) {
+export async function handleMetaRequest(
+  slugParam: string,
+  { filter }: HandleMetaRequestOptions = {},
+) {
   const slug = paramToSlug(slugParam);
 
   const fileGlobBase = `src/routes/${slug
@@ -48,6 +56,10 @@ export async function handleMetaRequest(slugParam: string) {
     throw Error('Could not find file.');
   }
 
+  if (filter && !filter(`/${cleanFilePath(file)}`)) {
+    return null;
+  }
+
   const filePath = resolve(CWD, file);
 
   const matchedSlug = file
@@ -56,7 +68,7 @@ export async function handleMetaRequest(slugParam: string) {
     .replace(extname(file), '')
     .replace(/\/index$/, slug === 'index' ? '/index' : '');
 
-  if (matchedSlug !== `src/routes/${slug}`) {
+  if (matchedSlug !== `src/routes/${slug}` || !file.endsWith('.md')) {
     throw Error('Could not find file.');
   }
 
@@ -70,18 +82,27 @@ export async function handleMetaRequest(slugParam: string) {
 }
 
 export type CreateMetaRequestHandlerOptions = {
+  include?: FilterPattern;
+  exclude?: FilterPattern;
   debug?: boolean;
 };
 
 export function createMetaRequestHandler(
   options: CreateMetaRequestHandlerOptions = {},
 ): RequestHandler {
-  const { debug } = options;
+  const { include, exclude, debug } = options;
+
+  const filter = createFilter(include ?? defaultIncludeRE, exclude);
 
   return async ({ params }) => {
     try {
-      const { meta } = await handleMetaRequest(params.slug);
-      return { body: meta as any };
+      const res = await handleMetaRequest(params.slug, { filter });
+
+      if (!res) {
+        return { body: null };
+      }
+
+      return { body: res.meta as any };
     } catch (e) {
       if (debug) {
         console.log(kleur.bold(kleur.red(`\n[kit-docs]: failed to handle meta request.`)));
@@ -120,7 +141,7 @@ export async function handleSidebarRequest(
     const filename = basename(file);
     const relativePath = relative(ROUTES_DIR, file);
     const dirs = dirname(relativePath).split('/');
-    const cleanPath = relativePath.replace(restParamsRE, '').replace(layoutNameRE, extname(file));
+    const cleanPath = cleanFilePath(file);
     const cleanDirs = dirname(cleanPath).split('/');
     const cleanDirsReversed = cleanDirs.slice().reverse();
     const index = /\/index\./.test(cleanPath);
@@ -187,7 +208,7 @@ export function createSidebarRequestHandler(
 ): RequestHandler {
   const { include, debug, exclude, formatCategoryName } = options;
 
-  const filter = createFilter(include ?? /\.(md|svelte)($|\?)/, exclude);
+  const filter = createFilter(include ?? defaultIncludeRE, exclude);
 
   return async ({ params }) => {
     try {
@@ -206,6 +227,11 @@ export function createSidebarRequestHandler(
 
     return { body: null };
   };
+}
+
+export function cleanFilePath(file: string) {
+  const relativePath = relative(ROUTES_DIR, file);
+  return relativePath.replace(restParamsRE, '').replace(layoutNameRE, extname(file));
 }
 
 export function paramToSlug(param: string) {
