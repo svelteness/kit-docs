@@ -77,20 +77,19 @@ export async function handleMetaRequest(
 export type CreateMetaRequestHandlerOptions = {
   include?: FilterPattern;
   exclude?: FilterPattern;
-  resolve?: FileResolver;
   debug?: boolean;
-};
+} & HandleMetaRequestOptions;
 
 export function createMetaRequestHandler(
   options: CreateMetaRequestHandlerOptions = {},
 ): RequestHandler {
-  const { include, exclude, debug, resolve } = options;
+  const { include, exclude, debug, ...handlerOptions } = options;
 
   const filter = createFilter(include ?? defaultIncludeRE, exclude);
 
   return async ({ params }) => {
     try {
-      const res = await handleMetaRequest(params.slug, { filter, resolve });
+      const res = await handleMetaRequest(params.slug, { filter, ...handlerOptions });
 
       if (!res) {
         return { body: null };
@@ -113,7 +112,16 @@ const headingRE = /#\s(.*?)($|\n|\r)/;
 export type HandleSidebarRequestOptions = {
   filter?: (file: string) => boolean;
   formatCategoryName?: (dirname: string) => string;
+  resolveTitle?: SidebarMetaResolver;
 };
+
+export type SidebarMetaResolver = (data: {
+  filePath: string;
+  relativeFilePath: string;
+  cleanFilePath: string;
+  frontmatter: Record<string, any>;
+  content: string;
+}) => string | null | undefined | Promise<string | null | undefined>;
 
 /**
  * Careful this function will throw if it can't match the `dir` param to a directory.
@@ -122,27 +130,27 @@ export async function handleSidebarRequest(
   dirParam: string,
   options: HandleSidebarRequestOptions = {},
 ) {
-  const { filter, formatCategoryName } = options;
+  const { filter, formatCategoryName, resolveTitle } = options;
 
   const directory = paramToDir(dirParam);
 
   const dirPath = path.resolve(ROUTES_DIR, directory);
 
-  const files = readDirDeepSync(dirPath);
+  const filePaths = readDirDeepSync(dirPath);
   const links: Record<string, { title: string; slug: string; match?: 'deep' }[]> = {};
 
-  for (const file of files) {
-    const filename = path.basename(file);
-    const relativePath = path.relative(ROUTES_DIR, file);
-    const dirs = path.dirname(relativePath).split('/');
-    const cleanPath = cleanFilePath(file);
+  for (const filePath of filePaths) {
+    const filename = path.basename(filePath);
+    const relativeFilePath = path.relative(ROUTES_DIR, filePath);
+    const dirs = path.dirname(relativeFilePath).split('/');
+    const cleanPath = cleanFilePath(filePath);
     const cleanDirs = path.dirname(cleanPath).split('/');
     const cleanDirsReversed = cleanDirs.slice().reverse();
     const index = /\/index\./.test(cleanPath);
 
     let deepMatch = false;
     let validDeepMatch = false;
-    if (deepMatchRE.test(relativePath)) {
+    if (deepMatchRE.test(relativeFilePath)) {
       const deepMatchDir = dirs.findIndex((dir) => deepMatchRE.test(dir));
       deepMatch = deepMatchDir >= 0;
 
@@ -155,7 +163,7 @@ export async function handleSidebarRequest(
         file = deepMatch ? globbySync(glob(deepMatchDir + 2))?.[0] : null;
       }
 
-      validDeepMatch = deepMatch ? file === `src/routes/${relativePath}` : false;
+      validDeepMatch = deepMatch ? file === `src/routes/${relativeFilePath}` : false;
     }
 
     if (
@@ -168,13 +176,22 @@ export async function handleSidebarRequest(
       continue;
     }
 
-    const content = readFileSync(file).toString();
+    const content = readFileSync(filePath).toString();
     const frontmatter = getFrontmatter(content);
+
+    const resolverData = {
+      filePath,
+      relativeFilePath,
+      cleanFilePath: cleanPath,
+      frontmatter,
+      content,
+    };
 
     const categoryFormatter = formatCategoryName ?? kebabToTitleCase;
     const category = categoryFormatter(cleanDirsReversed[index && deepMatch ? 1 : 0]);
 
     const title =
+      (await resolveTitle?.(resolverData)) ??
       frontmatter.sidebar_title ??
       frontmatter.title ??
       (deepMatch ? categoryFormatter(cleanDirsReversed[0]) : null) ??
@@ -194,13 +211,12 @@ export type CreateSidebarRequestHandlerOptions = {
   include?: FilterPattern;
   exclude?: FilterPattern;
   debug?: boolean;
-  formatCategoryName?: (dirname: string) => string;
-};
+} & HandleSidebarRequestOptions;
 
 export function createSidebarRequestHandler(
   options: CreateSidebarRequestHandlerOptions = {},
 ): RequestHandler {
-  const { include, debug, exclude, formatCategoryName } = options;
+  const { include, debug, exclude, ...handlerOptions } = options;
 
   const filter = createFilter(include ?? defaultIncludeRE, exclude);
 
@@ -208,7 +224,7 @@ export function createSidebarRequestHandler(
     try {
       const { links } = await handleSidebarRequest(params.dir, {
         filter,
-        formatCategoryName,
+        ...handlerOptions,
       });
 
       return { body: { links } };
