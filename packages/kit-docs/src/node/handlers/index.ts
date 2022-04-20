@@ -12,7 +12,7 @@ import {
   type ParsedMarkdownResult,
   parseMarkdown,
 } from '../markdown-plugin/parser';
-import { readDirDeepSync } from '../utils/fs';
+import { readDirDeepSync, sortOrderedFiles } from '../utils/fs';
 import { kebabToTitleCase } from '../utils/string';
 import { isString } from '../utils/unit';
 
@@ -144,10 +144,10 @@ export async function handleSidebarRequest(
   const { filter, formatCategoryName, resolveTitle, resolveCategory, resolveSlug } = options;
 
   const directory = paramToDir(dirParam);
-
   const dirPath = path.resolve(ROUTES_DIR, directory);
 
-  const filePaths = readDirDeepSync(dirPath);
+  const filePaths = sortOrderedFiles(readDirDeepSync(dirPath));
+
   const links: Record<string, { title: string; slug: string; match?: 'deep' }[]> = {};
 
   for (const filePath of filePaths) {
