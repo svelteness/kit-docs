@@ -1,3 +1,12 @@
+## [0.15.2](https://github.com/svelteness/kit-docs/compare/v0.15.1...v0.15.2) (2022-04-20)
+
+
+### Bug Fixes
+
+* sort ordered pages ([dddec00](https://github.com/svelteness/kit-docs/commit/dddec00384c7e0e0d38cd889125f6b110a3b1a61))
+
+
+
 ## [0.15.1](https://github.com/svelteness/kit-docs/compare/v0.15.0...v0.15.1) (2022-04-20)
 
 
