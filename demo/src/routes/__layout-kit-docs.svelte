@@ -48,14 +48,24 @@
   };
 
   const { activeCategory } = createSidebarContext(sidebar);
+
+  $: category = $activeCategory ? `${$activeCategory}: ` : '';
+  $: title = meta ? `${category}${meta.title} | Svelte` : null;
+  $: description = meta?.description;
 </script>
 
 <svelte:head>
   {#key $page.url.pathname}
-    <title>{$activeCategory}: {meta.title} | Svelte</title>
-    <meta name="description" content={meta.description} />
-    <meta name="twitter:description" content={meta.description} />
-    <meta name="og:description" content={meta.description} />
+    {#if title}
+      <title>{title}</title>
+      <meta property="og:title" content={title} />
+      <meta name="twitter:title" content={title} />
+    {/if}
+    {#if description}
+      <meta name="description" content={description} />
+      <meta name="twitter:description" content={description} />
+      <meta name="og:description" content={description} />
+    {/if}
   {/key}
 </svelte:head>
 

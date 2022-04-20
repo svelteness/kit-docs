@@ -41,25 +41,33 @@
   };
 
   const { activeCategory } = createSidebarContext(sidebar);
+
+  $: category = $activeCategory ? `${$activeCategory}: ` : '';
+  $: title = meta ? `${category}${meta.title} | KitDocs` : null;
+  $: description = meta?.description;
 </script>
 
 <svelte:head>
   {#key $page.url.pathname}
-    {#if meta?.title}
-      <title>{$activeCategory ? `${$activeCategory}: ` : ''}{meta.title} | KitDocs</title>
+    {#if title}
+      <title>{title}</title>
+      <meta property="og:title" content={title} />
+      <meta name="twitter:title" content={title} />
     {/if}
-    {#if meta?.description}
-      <meta name="description" content={meta.description} />
-      <meta name="twitter:description" content={meta.description} />
-      <meta name="og:description" content={meta.description} />
+    {#if description}
+      <meta name="description" content={description} />
+      <meta name="twitter:description" content={description} />
+      <meta name="og:description" content={description} />
     {/if}
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@mihar_22" />
-    <meta name="twitter:image" content={`https://kit-docs.svelteness.dev${socialCardLarge}`} />
-    <meta name="twitter:creator" content="@mihar_22" />
-    <meta property="og:url" content={`https://kit-docs.svelteness.dev${$page.url.pathname}`} />
-    <meta property="og:type" content="article" />
-    <meta name="og:image" content={`https://kit-docs.svelteness.dev${socialCardLarge}`} />
+    {#if title && description}
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:site" content="@mihar_22" />
+      <meta name="twitter:image" content={`https://kit-docs.svelteness.dev${socialCardLarge}`} />
+      <meta name="twitter:creator" content="@mihar_22" />
+      <meta property="og:url" content={`https://kit-docs.svelteness.dev${$page.url.pathname}`} />
+      <meta property="og:type" content="article" />
+      <meta name="og:image" content={`https://kit-docs.svelteness.dev${socialCardLarge}`} />
+    {/if}
   {/key}
 </svelte:head>
 

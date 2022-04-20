@@ -21,15 +21,19 @@
   export let sidebar = null;
 
   const { activeCategory } = createSidebarContext(sidebar);
+
+  $: category = $activeCategory ? `${$activeCategory}: ` : '';
+  $: title = meta ? `${category}${meta.title} | KitDocs` : null;
+  $: description = meta?.description;
 </script>
 
 <svelte:head>
   {#key $page.url.pathname}
-    {#if meta?.title}
-      <title>{$activeCategory ? `${$activeCategory}: ` : ''}{meta.title} | KitDocs</title>
+    {#if title}
+      <title>{title}</title>
     {/if}
-    {#if meta?.description}
-      <meta name="description" content={meta.description} />
+    {#if description}
+      <meta name="description" content={description} />
     {/if}
   {/key}
 </svelte:head>
