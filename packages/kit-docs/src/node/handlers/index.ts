@@ -54,17 +54,6 @@ export async function handleMetaRequest(
   }
 
   const filePath = path.isAbsolute(file) ? file : path.resolve(CWD, file);
-
-  const matchedSlug = file
-    .replace(restParamsRE, '')
-    .replace(layoutNameRE, '')
-    .replace(path.extname(file), '')
-    .replace(/\/index$/, slug === 'index' ? '/index' : '');
-
-  if (matchedSlug !== `src/routes/${slug}` || !file.endsWith('.md')) {
-    throw Error('Could not find file.');
-  }
-
   const content = readFileSync(filePath).toString();
 
   if (!parser) {
@@ -265,7 +254,21 @@ export function resolveSlug(slug: string): string | null {
     file = globbySync(glob)?.[0];
   }
 
-  return file ?? null;
+  if (!file) {
+    return null;
+  }
+
+  const matchedSlug = file
+    .replace(restParamsRE, '')
+    .replace(layoutNameRE, '')
+    .replace(path.extname(file), '')
+    .replace(/\/index$/, slug === 'index' ? '/index' : '');
+
+  if (matchedSlug !== `src/routes/${slug}` || !file.endsWith('.md')) {
+    return null;
+  }
+
+  return file;
 }
 
 /**
