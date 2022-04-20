@@ -113,6 +113,7 @@ export type HandleSidebarRequestOptions = {
   filter?: (file: string) => boolean;
   formatCategoryName?: (dirname: string) => string;
   resolveTitle?: SidebarMetaResolver;
+  resolveCategory?: SidebarMetaResolver;
 };
 
 export type SidebarMetaResolver = (data: {
@@ -130,7 +131,7 @@ export async function handleSidebarRequest(
   dirParam: string,
   options: HandleSidebarRequestOptions = {},
 ) {
-  const { filter, formatCategoryName, resolveTitle } = options;
+  const { filter, formatCategoryName, resolveTitle, resolveCategory } = options;
 
   const directory = paramToDir(dirParam);
 
@@ -188,7 +189,9 @@ export async function handleSidebarRequest(
     };
 
     const categoryFormatter = formatCategoryName ?? kebabToTitleCase;
-    const category = categoryFormatter(cleanDirsReversed[index && deepMatch ? 1 : 0]);
+    const category = categoryFormatter(
+      (await resolveCategory?.(resolverData)) ?? cleanDirsReversed[index && deepMatch ? 1 : 0],
+    );
 
     const title =
       (await resolveTitle?.(resolverData)) ??
