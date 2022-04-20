@@ -272,7 +272,7 @@ export function resolveSlug(slug: string): string | null {
  * Takes an absolute or relative file path and maps it to a relative path to `src/routes`, and
  * strips out rest params and layout ids `{[...1]}index{@layout-id}.md`.
  *
- * @example `src/routes/docs/[...1getting-started]/[...1]intro.md` -> `src/routes/docs/getting-started/intro.md`
+ * @example `src/routes/docs/[...1getting-started]/[...1]intro.md` = `src/routes/docs/getting-started/intro.md`
  */
 export function cleanFilePath(filePath: string) {
   const relativePath = path.isAbsolute(filePath) ? path.relative(ROUTES_DIR, filePath) : filePath;

@@ -1,3 +1,15 @@
+# [0.13.0](https://github.com/svelteness/kit-docs/compare/v0.12.0...v0.13.0) (2022-04-20)
+
+
+### Features
+
+* new `resolve` option for `createMetaRequestHandler` ([2f0804d](https://github.com/svelteness/kit-docs/commit/2f0804d6ecd250e310f5f144475e0858dd785838))
+* new `resolveCategory` option for `createSidebarRequestHandler` ([623b147](https://github.com/svelteness/kit-docs/commit/623b147ecc0bfe448fee393801bd1d1aacc9f1f4))
+* new `resolveSlug` option for `createSidebarRequestHandler` ([21e94fb](https://github.com/svelteness/kit-docs/commit/21e94fb720570b45a9ab6055e7a732115cd77a97))
+* new `resolveTitle` option for `createSidebarRequestHandler` ([a59fb71](https://github.com/svelteness/kit-docs/commit/a59fb71ba92461e92a2b3987fc7a622e5b92af42))
+
+
+
 # [0.12.0](https://github.com/svelteness/kit-docs/compare/v0.11.2...v0.12.0) (2022-04-20)
 
 
