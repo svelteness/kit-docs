@@ -39,6 +39,7 @@ async function main() {
     try {
       const child = spawn('npm', ['init', 'svelte@next', rootDirName ?? '.'], {
         stdio: 'inherit',
+        shell: true,
       });
 
       await new Promise((resolve, reject) => {
