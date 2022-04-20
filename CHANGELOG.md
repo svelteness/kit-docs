@@ -1,3 +1,12 @@
+## [0.15.1](https://github.com/svelteness/kit-docs/compare/v0.15.0...v0.15.1) (2022-04-20)
+
+
+### Bug Fixes
+
+* clean up initial category/title/desc markup ([1aea7be](https://github.com/svelteness/kit-docs/commit/1aea7beb3f993aa1bb97f934506492ab21d5dc8e))
+
+
+
 # [0.15.0](https://github.com/svelteness/kit-docs/compare/v0.14.0...v0.15.0) (2022-04-20)
 
 
