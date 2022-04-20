@@ -68,7 +68,10 @@
     <div slot="navbar-left">
       <div class="logo">
         <Button href="/docs">
-          {@html kitDocsLogo}
+          <div class="logo-content">
+            {@html kitDocsLogo}
+            <span>kitdocs</span>
+          </div>
         </Button>
       </div>
     </div>
@@ -97,7 +100,19 @@
   }
 
   .logo :global(svg) {
-    width: 26px;
+    width: 20px;
+  }
+
+  .logo-content {
+    display: flex;
+    align-items: center;
+  }
+
+  .logo-content > span {
+    letter-spacing: 0.5px;
+    font-size: 24px;
+    font-weight: 500;
+    margin-left: 0.375rem;
   }
 
   .socials {
