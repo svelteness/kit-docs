@@ -32,7 +32,8 @@ export type HandleMetaRequestOptions = {
 
 export type FileResolver = (
   slug: string,
-) => string | null | undefined | Promise<string | null | undefined>;
+  helpers: { resolve: typeof resolveSlug },
+) => string | void | null | undefined | Promise<string | void | null | undefined>;
 
 /**
  * Careful this function will throw if it can't match the `slug` param to a file.
@@ -43,7 +44,7 @@ export async function handleMetaRequest(
 ) {
   const slug = paramToSlug(slugParam);
 
-  const file = (await resolve?.(slug)) ?? resolveSlug(slug);
+  const file = (await resolve?.(slug, { resolve: resolveSlug })) ?? resolveSlug(slug);
 
   if (!file) {
     throw Error('Could not find file.');
@@ -100,19 +101,22 @@ const headingRE = /#\s(.*?)($|\n|\r)/;
 
 export type HandleSidebarRequestOptions = {
   filter?: (file: string) => boolean;
-  formatCategoryName?: (dirname: string) => string;
   resolveTitle?: SidebarMetaResolver;
   resolveCategory?: SidebarMetaResolver;
   resolveSlug?: SidebarMetaResolver;
+  formatCategoryName?: (name: string, helpers: { format: (name: string) => string }) => string;
 };
 
 export type SidebarMetaResolver = (data: {
   filePath: string;
   relativeFilePath: string;
   cleanFilePath: string;
+  dirname: string;
+  cleanDirname: string;
   frontmatter: Record<string, any>;
-  content: string;
-}) => string | null | undefined | Promise<string | null | undefined>;
+  fileContent: string;
+  resolve: () => string;
+}) => string | void | null | undefined | Promise<string | void | null | undefined>;
 
 /**
  * Careful this function will throw if it can't match the `dir` param to a directory.
@@ -167,33 +171,48 @@ export async function handleSidebarRequest(
       continue;
     }
 
-    const content = readFileSync(filePath).toString();
-    const frontmatter = getFrontmatter(content);
+    const fileContent = readFileSync(filePath).toString();
+    const frontmatter = getFrontmatter(fileContent);
 
     const resolverData = {
       filePath,
       relativeFilePath,
       cleanFilePath: cleanPath,
       frontmatter,
-      content,
+      fileContent,
+      dirname: path.dirname(filePath),
+      cleanDirname: path.dirname(cleanPath),
     };
 
     const categoryFormatter = formatCategoryName ?? kebabToTitleCase;
-    const category = categoryFormatter(
-      (await resolveCategory?.(resolverData)) ?? cleanDirsReversed[index && deepMatch ? 1 : 0],
+
+    const formatCategory = (dirname: string) =>
+      categoryFormatter(dirname, { format: (name) => kebabToTitleCase(name) });
+
+    const resolveDefaultTitle = () =>
+      frontmatter.sidebar_title ??
+      frontmatter.title ??
+      (deepMatch ? formatCategory(cleanDirsReversed[0]) : null) ??
+      fileContent.match(headingRE)?.[1] ??
+      kebabToTitleCase(path.basename(cleanPath, path.extname(cleanPath)));
+
+    const resolveDefaultCategory = () => cleanDirsReversed[index && deepMatch ? 1 : 0];
+
+    const resolveDefaultSlug = () =>
+      `/${cleanPath.replace(path.extname(cleanPath), '').replace(/\/index$/, '')}`;
+
+    const category = formatCategory(
+      (await resolveCategory?.({ ...resolverData, resolve: resolveDefaultCategory })) ??
+        resolveDefaultCategory(),
     );
 
     const title =
-      (await resolveTitle?.(resolverData)) ??
-      frontmatter.sidebar_title ??
-      frontmatter.title ??
-      (deepMatch ? categoryFormatter(cleanDirsReversed[0]) : null) ??
-      content.match(headingRE)?.[1] ??
-      kebabToTitleCase(path.basename(cleanPath, path.extname(cleanPath)));
+      (await resolveTitle?.({ ...resolverData, resolve: resolveDefaultTitle })) ??
+      resolveDefaultTitle();
 
     const slug =
-      (await resolveSlug?.(resolverData)) ??
-      `/${cleanPath.replace(path.extname(cleanPath), '').replace(/\/index$/, '')}`;
+      (await resolveSlug?.({ ...resolverData, resolve: resolveDefaultSlug })) ??
+      resolveDefaultSlug();
 
     const match = deepMatch ? 'deep' : undefined;
 
