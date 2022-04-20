@@ -1,3 +1,17 @@
+# [0.15.0](https://github.com/svelteness/kit-docs/compare/v0.14.0...v0.15.0) (2022-04-20)
+
+
+### Bug Fixes
+
+* move checking for markdown headers client-side ([4f78b03](https://github.com/svelteness/kit-docs/commit/4f78b03df00cd3003dac30422b7f7b3445f4a74a))
+
+
+### Features
+
+* add new `transform` option to `createMetaRequestHandler` ([34d65c1](https://github.com/svelteness/kit-docs/commit/34d65c1dce50c0d91835820b156b253663d4abcc))
+
+
+
 # [0.14.0](https://github.com/svelteness/kit-docs/compare/v0.13.0...v0.14.0) (2022-04-20)
 
 
