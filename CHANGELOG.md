@@ -1,3 +1,17 @@
+# [0.14.0](https://github.com/svelteness/kit-docs/compare/v0.13.0...v0.14.0) (2022-04-20)
+
+
+### Bug Fixes
+
+* move slug resolver validation into function ([d6e8f4f](https://github.com/svelteness/kit-docs/commit/d6e8f4f0e36c7d1fe58fa317dffb9f0cf9eb8f52))
+
+
+### Features
+
+* pass default resolvers and formatters to respective functions ([2dfa67c](https://github.com/svelteness/kit-docs/commit/2dfa67cc417b648578fb6d39ebc53013ba84ddf1))
+
+
+
 # [0.13.0](https://github.com/svelteness/kit-docs/compare/v0.12.0...v0.13.0) (2022-04-20)
 
 
