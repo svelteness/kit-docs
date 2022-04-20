@@ -114,6 +114,7 @@ export type HandleSidebarRequestOptions = {
   formatCategoryName?: (dirname: string) => string;
   resolveTitle?: SidebarMetaResolver;
   resolveCategory?: SidebarMetaResolver;
+  resolveSlug?: SidebarMetaResolver;
 };
 
 export type SidebarMetaResolver = (data: {
@@ -131,7 +132,7 @@ export async function handleSidebarRequest(
   dirParam: string,
   options: HandleSidebarRequestOptions = {},
 ) {
-  const { filter, formatCategoryName, resolveTitle, resolveCategory } = options;
+  const { filter, formatCategoryName, resolveTitle, resolveCategory, resolveSlug } = options;
 
   const directory = paramToDir(dirParam);
 
@@ -201,7 +202,10 @@ export async function handleSidebarRequest(
       content.match(headingRE)?.[1] ??
       kebabToTitleCase(path.basename(cleanPath, path.extname(cleanPath)));
 
-    const slug = `/${cleanPath.replace(path.extname(cleanPath), '').replace(/\/index$/, '')}`;
+    const slug =
+      (await resolveSlug?.(resolverData)) ??
+      `/${cleanPath.replace(path.extname(cleanPath), '').replace(/\/index$/, '')}`;
+
     const match = deepMatch ? 'deep' : undefined;
 
     (links[category] ??= []).push({ title, slug, match });
