@@ -1,3 +1,14 @@
+## [0.11.2](https://github.com/svelteness/kit-docs/compare/v0.11.1...v0.11.2) (2022-04-20)
+
+
+### Bug Fixes
+
+* meta handler not matching root index file ([718cf42](https://github.com/svelteness/kit-docs/commit/718cf42b883e63860df6aff1845f2f2a610928c8))
+* npm init creates empty packages on windows ([57850c8](https://github.com/svelteness/kit-docs/commit/57850c845da1d1250b948814016d4819f0355887)), closes [#11](https://github.com/svelteness/kit-docs/issues/11)
+* sidebar is not aligned to container when >1440 ([f69c21e](https://github.com/svelteness/kit-docs/commit/f69c21e01645ba6a7ceffe47c75be162019d0cde))
+
+
+
 ## [0.11.1](https://github.com/svelteness/kit-docs/compare/v0.11.0...v0.11.1) (2022-04-19)
 
 
