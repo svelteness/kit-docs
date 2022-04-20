@@ -14,7 +14,6 @@ export type MarkdownMeta = {
   description: string;
   excerpt: string;
   headers: MarkdownHeader[];
-  hasHeaders: boolean;
   frontmatter: MarkdownFrontmatter;
   lastUpdated: number;
   slug: string;
@@ -32,3 +31,13 @@ export const kitDocs: Readable<KitDocsStuff> = {
 };
 
 export const frontmatter = derived(kitDocs, ($kitDocs) => $kitDocs?.meta.frontmatter);
+
+export function hasMarkdownHeaders(meta?: MarkdownMeta) {
+  if (!meta) return false;
+
+  const { headers } = meta;
+
+  return (
+    headers && [...headers.map((h) => h.title), ...headers.map((h) => h.children).flat()].length > 1
+  );
+}

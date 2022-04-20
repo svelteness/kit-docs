@@ -3,7 +3,7 @@
 
   import RightArrowIcon from '~icons/ri/arrow-drop-right-line';
 
-  import { kitDocs } from '$lib/stores/kitDocs';
+  import { hasMarkdownHeaders, kitDocs } from '$lib/stores/kitDocs';
   import { page } from '$app/stores';
   import { useActiveHeaderLinks } from './useActiveHeaderLinks';
 
@@ -15,7 +15,7 @@
   export let style = '';
 </script>
 
-{#if $kitDocs.meta?.hasHeaders}
+{#if hasMarkdownHeaders($kitDocs.meta)}
   <div class={clsx('on-this-page', __class)} {style}>
     <h5 class="font-semibold w-full text-left text-gray-inverse text-lg">On this page</h5>
     <ul class="space-y-4 mt-4">

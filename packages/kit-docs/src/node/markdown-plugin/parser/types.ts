@@ -64,7 +64,6 @@ export type MarkdownMeta = {
   description: string;
   excerpt: string;
   headers: MarkdownHeader[];
-  hasHeaders: boolean;
   frontmatter: MarkdownFrontmatter;
   lastUpdated: number;
 };

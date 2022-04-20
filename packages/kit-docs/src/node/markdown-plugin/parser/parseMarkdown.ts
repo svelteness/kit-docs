@@ -154,7 +154,6 @@ export function parseMarkdown(
       title: _title,
       description,
       frontmatter,
-      hasHeaders: hasMarkdownHeaders(headers) ?? false,
       lastUpdated: Math.round(fs.statSync(filePath).mtimeMs),
     },
   };
@@ -199,12 +198,6 @@ function dedupeHoistedTags(tags: string[] = []): string[] {
   });
 
   return Array.from(dedupe.values());
-}
-
-function hasMarkdownHeaders(headers?: MarkdownHeader[]) {
-  return (
-    headers && [...headers.map((h) => h.title), ...headers.map((h) => h.children).flat()].length > 1
-  );
 }
 
 export function clearMarkdownCaches() {
