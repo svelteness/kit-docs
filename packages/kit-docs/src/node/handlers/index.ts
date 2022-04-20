@@ -9,10 +9,12 @@ import {
   createMarkdownParser,
   getFrontmatter,
   type MarkdownParser,
+  type ParsedMarkdownResult,
   parseMarkdown,
 } from '../markdown-plugin/parser';
 import { readDirDeepSync } from '../utils/fs';
 import { kebabToTitleCase } from '../utils/string';
+import { isString } from '../utils/unit';
 
 const CWD = process.cwd();
 const ROUTES_DIR = path.resolve(CWD, 'src/routes');
@@ -28,40 +30,54 @@ const defaultIncludeRE = /\.(md|svelte)($|\?)/;
 export type HandleMetaRequestOptions = {
   filter?: (file: string) => boolean;
   resolve?: FileResolver;
+  transform?: MetaTransform;
 };
 
 export type FileResolver = (
   slug: string,
   helpers: { resolve: typeof resolveSlug },
-) => string | void | null | undefined | Promise<string | void | null | undefined>;
+) =>
+  | string
+  | void
+  | null
+  | undefined
+  | { file: string; transform: MetaTransform }
+  | Promise<string | void | null | undefined | { file: string; transform: MetaTransform }>;
+
+export type MetaTransform = (
+  data: { slug: string; filePath: string } & ParsedMarkdownResult,
+) => void | Promise<void>;
 
 /**
  * Careful this function will throw if it can't match the `slug` param to a file.
  */
-export async function handleMetaRequest(
-  slugParam: string,
-  { filter, resolve }: HandleMetaRequestOptions = {},
-) {
+export async function handleMetaRequest(slugParam: string, options: HandleMetaRequestOptions = {}) {
+  const { filter, resolve, transform } = options;
+
   const slug = paramToSlug(slugParam);
+  const resolution = (await resolve?.(slug, { resolve: resolveSlug })) ?? resolveSlug(slug);
 
-  const file = (await resolve?.(slug, { resolve: resolveSlug })) ?? resolveSlug(slug);
+  const resolvedFile = isString(resolution) ? resolution : resolution?.file;
+  const resolvedTransform = isString(resolution) ? null : resolution?.transform;
 
-  if (!file) {
+  if (!resolvedFile) {
     throw Error('Could not find file.');
   }
 
-  if (filter && !filter(`/${cleanFilePath(file)}`)) {
+  if (filter && !filter(`/${cleanFilePath(resolvedFile)}`)) {
     return null;
   }
 
-  const filePath = path.isAbsolute(file) ? file : path.resolve(CWD, file);
+  const filePath = path.isAbsolute(resolvedFile) ? resolvedFile : path.resolve(CWD, resolvedFile);
   const content = readFileSync(filePath).toString();
 
   if (!parser) {
     parser = await createMarkdownParser();
   }
 
-  return parseMarkdown(parser, content, filePath);
+  const result = parseMarkdown(parser, content, filePath);
+  await (resolvedTransform ?? transform)?.({ slug, filePath, ...result });
+  return result;
 }
 
 export type CreateMetaRequestHandlerOptions = {
