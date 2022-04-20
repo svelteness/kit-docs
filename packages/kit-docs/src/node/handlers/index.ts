@@ -54,7 +54,7 @@ export async function handleMetaRequest(slugParam: string) {
     .replace(restParamsRE, '')
     .replace(layoutNameRE, '')
     .replace(extname(file), '')
-    .replace(/\/index$/, '');
+    .replace(/\/index$/, slug === 'index' ? '/index' : '');
 
   if (matchedSlug !== `src/routes/${slug}`) {
     throw Error('Could not find file.');

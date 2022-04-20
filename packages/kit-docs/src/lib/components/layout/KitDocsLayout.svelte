@@ -176,7 +176,7 @@
             'self-start fixed top-0 left-0 transform bg-gray-body z-50 border-gray-divider border-r pb-8 px-7',
             '-translate-x-full transform transition-transform duration-200 ease-out will-change-transform',
             'min-w-[90vw] 768:min-w-[70vw] max-w-screen max-h-screen min-h-screen',
-            ' 992:px-5 992:translate-x-0 922:block 992:sticky 992:z-0 992:w-[17rem] 992:min-w-[17rem] overflow-y-auto 1460:pl-6',
+            ' 992:px-5 992:translate-x-0 922:block 992:sticky 992:z-0 992:w-[17rem] 992:min-w-[17rem] overflow-y-auto 1460:pl-5',
             open && 'translate-x-0',
             navbar
               ? '992:top-20 992:min-h-[calc(100vh-5rem)] 992:max-h-[calc(100vh-5rem)]'
@@ -202,7 +202,7 @@
         'w-full overflow-x-hidden',
         navbar ? `992:min-h-[calc(100vh-5rem)]` : 'min-h-screen',
         navbar && showBottomNav ? 'min-h-[calc(100vh-10rem)]' : 'min-h-[calc(100vh-5rem)]',
-        showSidebar ? 'px-8 992:px-16 max-w-[85ch]' : 'px-8 1280:pl-6 1460:pl-0',
+        showSidebar ? 'px-8 992:px-16 max-w-[85ch]' : 'px-6',
         navbar || showBottomNav ? 'pt-10' : '',
       )}
     >
