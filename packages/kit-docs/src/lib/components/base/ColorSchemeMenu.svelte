@@ -6,7 +6,7 @@
   import Menu from '$lib/components/base/Menu.svelte';
   import MenuItem from '$lib/components/base/MenuItem.svelte';
   import { colorScheme, colorSchemes, isDarkColorScheme } from '$lib/stores/colorScheme';
-  import { uppercaseFirstLetter } from '$lib/utils/string';
+  import { getI18nContext } from '../layout/contexts';
 
   const buttonIcon = {
     light: SunIcon,
@@ -18,18 +18,20 @@
     ...buttonIcon,
     system: SettingsIcon,
   };
+
+  const i18n = getI18nContext();
 </script>
 
 <Menu>
   <svelte:fragment slot="button">
     <svelte:component this={buttonIcon[$colorScheme]} class={'h-6 w-6'} />
-    <span class="sr-only">Color Scheme</span>
+    <span class="sr-only">{$i18n.colorScheme.title}</span>
   </svelte:fragment>
 
   {#each colorSchemes as scheme (scheme)}
     <MenuItem selected={$colorScheme === scheme} on:select={() => ($colorScheme = scheme)}>
       <svelte:component this={menuIcon[scheme]} slot="icon" />
-      {uppercaseFirstLetter(scheme)}
+      {$i18n.colorScheme[scheme]}
     </MenuItem>
   {/each}
 </Menu>

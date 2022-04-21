@@ -11,7 +11,7 @@
 
   import ColorSchemeMenu from '$lib/components/base/ColorSchemeMenu.svelte';
   import NavLinkItem from './NavLink.svelte';
-  import { getNavbarContext } from './contexts';
+  import { getI18nContext, getNavbarContext } from './contexts';
 
   export let search = false;
 
@@ -27,6 +27,8 @@
 
   const context = getNavbarContext();
   $: navLinks = $context.links;
+
+  const i18n = getI18nContext();
 </script>
 
 <div
@@ -46,7 +48,7 @@
       <Popover overlay on:open={onOpenPopover} on:close={onClosePopover}>
         <svelte:fragment slot="button">
           <MenuIcon width="30" height="30" />
-          <span class="sr-only">Main navigation menu</span>
+          <span class="sr-only">{$i18n.nav.mainMenu}</span>
         </svelte:fragment>
 
         <slot name="popover-top" />
@@ -76,7 +78,7 @@
               <label
                 class="relative ml-4 flex items-center border border-gray-200 px-4 py-1 dark:border-gray-400"
               >
-                <span class="sr-only">Theme</span>
+                <span class="sr-only">{$i18n.colorScheme.theme}</span>
                 {uppercaseFirstLetter($colorScheme)}
                 <ArrowDropDownIcon width="20" height="20" class="ml-1" />
                 <select

@@ -184,3 +184,88 @@ export function getSidebarContext(): SidebarContext {
     console.warn('[kit-docs]: attempted to get sidebar context before setting it.');
   }
 }
+
+export type I18NTranslations = {
+  nav: {
+    next: string;
+    previous: string;
+    mainMenu: string;
+    openSidebar: string;
+  };
+  toc: {
+    title: string;
+  };
+  colorScheme: {
+    title: string;
+    light: string;
+    dark: string;
+    system: string;
+    theme: string;
+  };
+  dialog: {
+    close: string;
+  };
+  admonition: {
+    note: string;
+    info: string;
+    tip: string;
+    warning: string;
+    danger: string;
+    experimental: string;
+  };
+  code: {
+    copy: string;
+    copied: string;
+  };
+};
+
+export const DEFAULT_I18N_TRANSLATIONS: I18NTranslations = {
+  nav: {
+    previous: 'Previous',
+    next: 'Next',
+    mainMenu: 'Main navigation menu',
+    openSidebar: 'Open main sidebar',
+  },
+  toc: {
+    title: 'On this page',
+  },
+  colorScheme: {
+    title: 'Color Scheme',
+    light: 'Light',
+    dark: 'Dark',
+    system: 'System',
+    theme: 'Theme',
+  },
+  dialog: {
+    close: 'Close dialog',
+  },
+  admonition: {
+    note: 'NOTE',
+    info: 'INFO',
+    tip: 'TIP',
+    warning: 'WARNING',
+    danger: 'DANGER',
+    experimental: 'EXPERIMENTAL',
+  },
+  code: {
+    copy: 'Copy code',
+    copied: 'Copied!',
+  },
+};
+
+export type I18NContext = Readable<I18NTranslations>;
+
+export const I18N_CONTEXT_KEY = Symbol();
+
+export function getI18nContext(): I18NContext {
+  try {
+    return getContext(I18N_CONTEXT_KEY);
+  } catch (e) {
+    console.error(e);
+    console.warn('[kit-docs]: attempted to get i18n context before setting it.');
+  }
+}
+
+export function setI18nContext(context: I18NContext) {
+  setContext(I18N_CONTEXT_KEY, context);
+}

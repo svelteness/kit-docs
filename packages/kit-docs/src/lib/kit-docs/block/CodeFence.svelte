@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { getI18nContext } from '$lib/components/layout/contexts';
+
   import clsx from 'clsx';
 
   import CopyFileIcon from '~icons/ri/file-copy-line';
@@ -14,6 +16,8 @@
   export let showCopyCode = false;
   export let copyHighlightOnly = false;
   export let copySteps = false;
+
+  const i18n = getI18nContext();
 
   let currentStep = 1;
   let stepHighlightLines = [];
@@ -99,7 +103,7 @@
             aria-hidden="true"
             style="background-color: var(--kd-code-copied-bg-color);"
           >
-            Copied!
+            {$i18n.code.copied}
           </div>
 
           <CopyFileIcon
@@ -111,7 +115,7 @@
                 : 'opacity-100 transition-opacity duration-600 ease-in',
             )}
           />
-          <span class="sr-only">Copy code</span>
+          <span class="sr-only">{$i18n.code.copy}</span>
         </button>
       {/if}
     </div>

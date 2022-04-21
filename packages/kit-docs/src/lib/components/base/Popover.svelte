@@ -16,6 +16,7 @@
   import { hideDocumentScrollbar } from '$lib/utils/scroll';
 
   import Overlay from './Overlay.svelte';
+  import { getI18nContext } from '../layout/contexts';
 
   export let open = false;
   export let overlay = false;
@@ -43,6 +44,8 @@
     closeDialog?.();
     hideDocumentScrollbar(false);
   }
+
+  const i18n = getI18nContext();
 </script>
 
 <div class="relative inline-block text-left not-prose">
@@ -102,7 +105,7 @@
             on:keydown={(e) => wasEnterKeyPressed(e) && closeDialog(true)}
           >
             <CloseIcon width="24" height="24" />
-            <span class="sr-only">Close dialog</span>
+            <span class="sr-only">{$i18n.dialog.close}</span>
           </button>
         </div>
 

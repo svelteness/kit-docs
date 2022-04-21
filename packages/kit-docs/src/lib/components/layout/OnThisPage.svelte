@@ -6,6 +6,7 @@
   import { hasMarkdownHeaders, kitDocs } from '$lib/stores/kitDocs';
   import { page } from '$app/stores';
   import { useActiveHeaderLinks } from './useActiveHeaderLinks';
+  import { getI18nContext } from './contexts';
 
   useActiveHeaderLinks();
 
@@ -13,11 +14,13 @@
   export { __class as class };
 
   export let style = '';
+
+  const i18n = getI18nContext();
 </script>
 
 {#if hasMarkdownHeaders($kitDocs.meta)}
   <div class={clsx('on-this-page', __class)} {style}>
-    <h5 class="font-semibold w-full text-left text-gray-inverse text-lg">On this page</h5>
+    <h5 class="font-semibold w-full text-left text-gray-inverse text-lg">{$i18n.toc.title}</h5>
     <ul class="space-y-4 mt-4">
       {#each $kitDocs.meta.headers as header (header.slug)}
         <li

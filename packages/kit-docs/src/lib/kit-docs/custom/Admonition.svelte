@@ -7,9 +7,12 @@
   import WarningIcon from '~icons/ri/error-warning-fill';
   import DangerIcon from '~icons/ri/skull-2-fill';
   import ExperimentalIcon from '~icons/ri/test-tube-fill';
+  import { getI18nContext } from '$lib/components/layout/contexts';
 
   export let type: 'note' | 'info' | 'tip' | 'warning' | 'danger' | 'experimental';
   export let title: string | null = null;
+
+  const i18n = getI18nContext();
 
   const icons = {
     note: NoteIcon,
@@ -20,7 +23,7 @@
     experimental: ExperimentalIcon,
   };
 
-  $: heading = title ?? type.toUpperCase();
+  $: heading = title ?? $i18n.admonition[type];
 </script>
 
 <div
