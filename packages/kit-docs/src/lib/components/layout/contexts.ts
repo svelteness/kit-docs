@@ -152,11 +152,13 @@ export function createSidebarContext(
   );
 
   const activeCategory = derived([normalizedConfig, activeLink], ([$config, $activeLink]) => {
-    return Object.keys($config.links).find((category) =>
+    const category = Object.keys($config.links).find((category) =>
       $config.links[category]?.some(
         (link) => link.title === $activeLink?.title && link.slug === $activeLink?.slug,
       ),
     );
+
+    return category !== '.' ? category : null;
   });
 
   const context: SidebarContext = {

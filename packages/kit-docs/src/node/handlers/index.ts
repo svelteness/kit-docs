@@ -150,6 +150,10 @@ export async function handleSidebarRequest(
 
   const links: Record<string, { title: string; slug: string; match?: 'deep' }[]> = {};
 
+  // Root at top.
+  links['.'] = [];
+  let hasRoot = false;
+
   for (const filePath of filePaths) {
     const filename = path.basename(filePath);
     const relativeFilePath = path.relative(ROUTES_DIR, filePath);
@@ -157,31 +161,33 @@ export async function handleSidebarRequest(
     const cleanPath = cleanFilePath(filePath);
     const cleanDirs = path.dirname(cleanPath).split('/');
     const cleanDirsReversed = cleanDirs.slice().reverse();
-    const index = /\/index\./.test(cleanPath);
+    const isIndexFile = /\/index\./.test(cleanPath);
+    const isRoot = cleanDirs.length === 1;
 
-    let deepMatch = false;
-    let validDeepMatch = false;
+    let isDeepMatch = false;
+    let isValidDeepMatch = false;
+
     if (deepMatchRE.test(relativeFilePath)) {
       const deepMatchDir = dirs.findIndex((dir) => deepMatchRE.test(dir));
-      deepMatch = deepMatchDir >= 0;
+      isDeepMatch = deepMatchDir >= 0;
 
       const glob = (depth: number) =>
         `src/routes/*${cleanDirs.slice(0, depth).join('/*')}/*index*.{md,svelte}`;
 
-      let file = deepMatch ? globbySync(glob(deepMatchDir + 1))?.[0] : null;
+      let file = isDeepMatch ? globbySync(glob(deepMatchDir + 1))?.[0] : null;
 
-      if (deepMatch && !file) {
-        file = deepMatch ? globbySync(glob(deepMatchDir + 2))?.[0] : null;
+      if (isDeepMatch && !file) {
+        file = isDeepMatch ? globbySync(glob(deepMatchDir + 2))?.[0] : null;
       }
 
-      validDeepMatch = deepMatch ? file === `src/routes/${relativeFilePath}` : false;
+      isValidDeepMatch = isDeepMatch ? file === `src/routes/${relativeFilePath}` : false;
     }
 
     if (
       filename.startsWith('_') ||
       filename.startsWith('.') ||
-      cleanDirs.length == 1 ||
-      (deepMatch && !validDeepMatch) ||
+      (isRoot && isIndexFile) ||
+      (isDeepMatch && !isValidDeepMatch) ||
       !(filter?.(`/${cleanPath}`) ?? true)
     ) {
       continue;
@@ -208,11 +214,12 @@ export async function handleSidebarRequest(
     const resolveDefaultTitle = () =>
       frontmatter.sidebar_title ??
       frontmatter.title ??
-      (deepMatch ? formatCategory(cleanDirsReversed[0]) : null) ??
+      (isDeepMatch ? formatCategory(cleanDirsReversed[0]) : null) ??
       fileContent.match(headingRE)?.[1] ??
       kebabToTitleCase(path.basename(cleanPath, path.extname(cleanPath)));
 
-    const resolveDefaultCategory = () => cleanDirsReversed[index && deepMatch ? 1 : 0];
+    const resolveDefaultCategory = () =>
+      isRoot ? '.' : cleanDirsReversed[isIndexFile && isDeepMatch ? 1 : 0];
 
     const resolveDefaultSlug = () =>
       `/${cleanPath.replace(path.extname(cleanPath), '').replace(/\/index$/, '')}`;
@@ -230,9 +237,14 @@ export async function handleSidebarRequest(
       (await resolveSlug?.({ ...resolverData, resolve: resolveDefaultSlug })) ??
       resolveDefaultSlug();
 
-    const match = deepMatch ? 'deep' : undefined;
+    const match = isDeepMatch ? 'deep' : undefined;
 
     (links[category] ??= []).push({ title, slug, match });
+    if (!hasRoot) hasRoot = category === '.';
+  }
+
+  if (!hasRoot) {
+    delete links['.'];
   }
 
   return { links };
