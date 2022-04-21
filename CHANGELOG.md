@@ -1,3 +1,17 @@
+# [0.16.0](https://github.com/svelteness/kit-docs/compare/v0.15.2...v0.16.0) (2022-04-21)
+
+
+### Bug Fixes
+
+* support root level files without a category ([e8784bb](https://github.com/svelteness/kit-docs/commit/e8784bbe45e29d1e39779a4857e5f3d60059349e))
+
+
+### Features
+
+* add `i18n` option to `<KitDocsLayout />` ([4b336fe](https://github.com/svelteness/kit-docs/commit/4b336fe3e7ed239591db709dcf53276553ffa5be)), closes [#13](https://github.com/svelteness/kit-docs/issues/13)
+
+
+
 ## [0.15.2](https://github.com/svelteness/kit-docs/compare/v0.15.1...v0.15.2) (2022-04-20)
 
 
