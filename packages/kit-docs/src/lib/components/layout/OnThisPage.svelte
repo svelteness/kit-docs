@@ -6,16 +6,17 @@
   import { hasMarkdownHeaders, kitDocs } from '$lib/stores/kitDocs';
   import { page } from '$app/stores';
   import { useActiveHeaderLinks } from './useActiveHeaderLinks';
-  import { getI18nContext } from './contexts';
-
-  useActiveHeaderLinks();
+  import { getI18nContext, getNavigationContext } from './contexts';
 
   let __class = '';
   export { __class as class };
 
   export let style = '';
 
+  const nav = getNavigationContext();
   const i18n = getI18nContext();
+
+  useActiveHeaderLinks(nav);
 </script>
 
 {#if hasMarkdownHeaders($kitDocs.meta)}
@@ -25,7 +26,7 @@
       {#each $kitDocs.meta.headers as header (header.slug)}
         <li
           class={clsx(
-            $page.url.hash === `#${header.slug}`
+            $nav.cleanHash($page.url.hash) === `#${header.slug}`
               ? 'text-brand'
               : 'text-gray-soft hover:text-gray-inverse',
           )}
@@ -38,7 +39,7 @@
               <li
                 class={clsx(
                   'flex group group',
-                  $page.url.hash === `#${childHeader.slug}`
+                  $nav.cleanHash($page.url.hash) === `#${childHeader.slug}`
                     ? 'text-brand'
                     : 'text-gray-soft hover:text-gray-inverse',
                 )}

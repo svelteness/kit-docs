@@ -5,6 +5,33 @@ import { page } from '$app/stores';
 import { kebabToTitleCase, titleToKebabCase } from '$lib/utils/string.js';
 import { isRegExp, isString } from '$lib/utils/unit.js';
 
+export const NAVIGATION_CONTEXT_KEY = Symbol('');
+
+export type NavigationConfig = {
+  canUpdateHash: (hash: string) => boolean;
+  cleanHash: (hash: string) => string;
+};
+
+export type NavigationContext = Readable<NavigationConfig>;
+
+export const DEFAULT_NAVIGATION_CONFIG: NavigationConfig = {
+  canUpdateHash: () => true,
+  cleanHash: (hash) => hash,
+};
+
+export function getNavigationContext(): NavigationContext {
+  try {
+    return getContext(NAVIGATION_CONTEXT_KEY);
+  } catch (e) {
+    console.error(e);
+    console.warn('[kit-docs]: attempted to get navigation context before setting it.');
+  }
+}
+
+export function setNavigationContext(context: NavigationContext) {
+  setContext(NAVIGATION_CONTEXT_KEY, context);
+}
+
 export const NAVBAR_CONTEXT_KEY = Symbol('');
 
 export type NavLinkItem = {
@@ -193,6 +220,8 @@ export type I18NTranslations = {
     previous: string;
     mainMenu: string;
     openSidebar: string;
+    options: string;
+    links: string;
   };
   toc: {
     title: string;

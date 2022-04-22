@@ -14,12 +14,15 @@
   import {
     createSidebarContext,
     DEFAULT_I18N_TRANSLATIONS,
+    DEFAULT_NAVIGATION_CONFIG,
     getSidebarContext,
     setI18nContext,
     setNavbarContext,
+    setNavigationContext,
     setSidebarContext,
     type I18NTranslations,
     type NavbarConfig,
+    type NavigationConfig,
     type SidebarConfig,
   } from './contexts';
   import { writable } from 'svelte/store';
@@ -27,6 +30,7 @@
   import { scrollDirection, scrollTop } from '$lib/stores/scroll';
   import { kitDocs } from '$lib/stores/kitDocs';
 
+  export let navigation: Partial<NavigationConfig> | null = null;
   export let navbar: NavbarConfig | false;
   export let sidebar: SidebarConfig | null = null;
   export let i18n: Partial<I18NTranslations> | null = null;
@@ -37,6 +41,10 @@
   export let search = false;
 
   let closeSidebar: CloseDialogCallback;
+
+  const navigatonContext = writable<NavigationConfig>();
+  $: $navigatonContext = { ...DEFAULT_NAVIGATION_CONFIG, ...navigation };
+  setNavigationContext(navigatonContext);
 
   const navbarContext = writable<NavbarConfig>();
   $: $navbarContext = navbar ? navbar : { links: [] };

@@ -1,4 +1,5 @@
 import { onMount, tick } from 'svelte';
+import { get } from 'svelte/store';
 
 import { goto } from '$app/navigation';
 import { isExtraLargeScreen } from '$lib/stores/isLargeScreen';
@@ -6,9 +7,11 @@ import { kitDocs } from '$lib/stores/kitDocs.js';
 import { createDisposalBin } from '$lib/utils/events.js';
 import { throttleAndDebounce } from '$lib/utils/timing';
 
+import type { NavigationContext } from './contexts';
+
 const NAVBAR_HEIGHT = 160;
 
-export function useActiveHeaderLinks() {
+export function useActiveHeaderLinks(navContext: NavigationContext) {
   const disposal = createDisposalBin();
 
   const setActiveRouteHash = async () => {
@@ -79,7 +82,9 @@ export function useActiveHeaderLinks() {
         }
       }
 
-      goto(anchorHash, { replaceState: true, noscroll: true });
+      if (get(navContext).canUpdateHash(anchorHash)) {
+        goto(anchorHash, { replaceState: true, noscroll: true });
+      }
 
       return;
     }
