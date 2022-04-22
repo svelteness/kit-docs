@@ -1,3 +1,17 @@
+# [0.17.0](https://github.com/svelteness/kit-docs/compare/v0.16.1...v0.17.0) (2022-04-22)
+
+
+### Bug Fixes
+
+* deep match at root not categorized correctly ([7d15114](https://github.com/svelteness/kit-docs/commit/7d15114dda06eb8b5bb0b5ea43cb7caa5e66e875))
+
+
+### Features
+
+* `resolve` and `transform` meta options can be an array ([fe93f23](https://github.com/svelteness/kit-docs/commit/fe93f232ef6fabe3c1b87a04ff33c9cdf70f7128))
+
+
+
 ## [0.16.1](https://github.com/svelteness/kit-docs/compare/v0.16.0...v0.16.1) (2022-04-22)
 
 
