@@ -193,7 +193,8 @@ export async function handleSidebarRequest(
     const cleanDirs = path.dirname(cleanPath).split('/');
     const cleanDirsReversed = cleanDirs.slice().reverse();
     const isIndexFile = /\/index\./.test(cleanPath);
-    const isRoot = cleanDirs.length === 1;
+    const isShallowRoot = cleanDirs.length === 1;
+    const isRoot = isShallowRoot || deepMatchRE.test(dirs[1]);
 
     let isDeepMatch = false;
     let isValidDeepMatch = false;
@@ -217,7 +218,7 @@ export async function handleSidebarRequest(
     if (
       filename.startsWith('_') ||
       filename.startsWith('.') ||
-      (isRoot && isIndexFile) ||
+      (isShallowRoot && isIndexFile) ||
       (isDeepMatch && !isValidDeepMatch) ||
       !(filter?.(`/${cleanPath}`) ?? true)
     ) {
