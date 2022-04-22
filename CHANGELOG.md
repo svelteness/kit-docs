@@ -1,3 +1,17 @@
+# [0.18.0](https://github.com/svelteness/kit-docs/compare/v0.17.0...v0.18.0) (2022-04-22)
+
+
+### Bug Fixes
+
+* docsearch form input slightly off due to padding ([2a9b07a](https://github.com/svelteness/kit-docs/commit/2a9b07a5bee76d250f175f4655ef3c3af1e3d3c7))
+
+
+### Features
+
+* add navigation context ([7f08226](https://github.com/svelteness/kit-docs/commit/7f08226f6e21735fa84ef5307a087873331e414a))
+
+
+
 # [0.17.0](https://github.com/svelteness/kit-docs/compare/v0.16.1...v0.17.0) (2022-04-22)
 
 
