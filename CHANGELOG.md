@@ -1,3 +1,12 @@
+## [0.16.1](https://github.com/svelteness/kit-docs/compare/v0.16.0...v0.16.1) (2022-04-22)
+
+
+### Bug Fixes
+
+* add more translations ([#15](https://github.com/svelteness/kit-docs/issues/15)) ([87df79d](https://github.com/svelteness/kit-docs/commit/87df79d395b922e67cdbf5c5a22f5c71938b01ed))
+
+
+
 # [0.16.0](https://github.com/svelteness/kit-docs/compare/v0.15.2...v0.16.0) (2022-04-21)
 
 
