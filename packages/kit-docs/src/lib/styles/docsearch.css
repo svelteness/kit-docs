@@ -61,7 +61,7 @@
 }
 
 .DocSearch-Input {
-  @apply text-black pl-3;
+  @apply text-black pl-3 p-0;
 }
 
 :root.dark .DocSearch-Input {
