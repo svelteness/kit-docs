@@ -227,6 +227,8 @@ export const DEFAULT_I18N_TRANSLATIONS: I18NTranslations = {
     next: 'Next',
     mainMenu: 'Main navigation menu',
     openSidebar: 'Open main sidebar',
+    options: 'Options',
+    links: 'Links',
   },
   toc: {
     title: 'On this page',

@@ -54,7 +54,7 @@
         <slot name="popover-top" />
 
         <section class="flex flex-col items-start">
-          <h1 class="mb-6 text-xl font-medium">Links</h1>
+          <h1 class="mb-6 text-xl font-medium">{$i18n.nav.links}</h1>
           <nav>
             <ul>
               {#each navLinks as navLink (navLink.title)}
@@ -69,7 +69,7 @@
         <hr class="my-6 h-2 w-full border-t-2 border-dashed border-gray-200 dark:border-gray-400" />
 
         <section class="flex flex-col items-start">
-          <h1 class="mb-6 text-xl font-medium">Options</h1>
+          <h1 class="mb-6 text-xl font-medium">{$i18n.nav.options}</h1>
           <div class="flex flex-col space-y-6">
             <slot name="popover-options" />
             <div class="flex items-center">
@@ -85,9 +85,9 @@
                   class="absolute inset-0 appearance-none opacity-0"
                   bind:value={$colorScheme}
                 >
-                  <option value="light">Light</option>
-                  <option value="dark">Dark</option>
-                  <option value="system">System</option>
+                  <option value="light">{$i18n.colorScheme.light}</option>
+                  <option value="dark">{$i18n.colorScheme.dark}</option>
+                  <option value="system">{$i18n.colorScheme.system}</option>
                 </select>
               </label>
             </div>
