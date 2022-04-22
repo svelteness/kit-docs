@@ -27,22 +27,24 @@ const deepMatchRE = /\[\.\.\..*?_deep\]/;
 const layoutNameRE = /@.+/g;
 const defaultIncludeRE = /\.(md|svelte)($|\?)/;
 
+export type NoValue = null | undefined | void;
+
+export type FalsyValue = false | NoValue;
+
 export type HandleMetaRequestOptions = {
   filter?: (file: string) => boolean;
-  resolve?: FileResolver;
-  transform?: MetaTransform;
+  resolve?: FileResolver | null | (FileResolver | FalsyValue)[];
+  transform?: MetaTransform | null | (MetaTransform | FalsyValue)[];
 };
 
 export type FileResolver = (
   slug: string,
   helpers: { resolve: typeof resolveSlug },
-) =>
+) => ResolvedFile | FalsyValue | Promise<ResolvedFile | FalsyValue>;
+
+export type ResolvedFile =
   | string
-  | void
-  | null
-  | undefined
-  | { file: string; transform: MetaTransform }
-  | Promise<string | void | null | undefined | { file: string; transform: MetaTransform }>;
+  | { file: string; transform: MetaTransform | (MetaTransform | FalsyValue)[] };
 
 export type MetaTransform = (
   data: { slug: string; filePath: string } & ParsedMarkdownResult,
@@ -55,7 +57,22 @@ export async function handleMetaRequest(slugParam: string, options: HandleMetaRe
   const { filter, resolve, transform } = options;
 
   const slug = paramToSlug(slugParam);
-  const resolution = (await resolve?.(slug, { resolve: resolveSlug })) ?? resolveSlug(slug);
+  const resolverArgs: Parameters<FileResolver> = [slug, { resolve: resolveSlug }];
+
+  let resolution: ResolvedFile | FalsyValue = null;
+
+  if (Array.isArray(resolve)) {
+    for (const resolver of resolve) {
+      if (resolver) resolution = await resolver?.(...resolverArgs);
+      if (resolution) break;
+    }
+  } else {
+    resolution = await resolve?.(...resolverArgs);
+  }
+
+  if (!resolution) {
+    resolution = resolveSlug(slug);
+  }
 
   const resolvedFile = isString(resolution) ? resolution : resolution?.file;
   const resolvedTransform = isString(resolution) ? null : resolution?.transform;
@@ -76,7 +93,21 @@ export async function handleMetaRequest(slugParam: string, options: HandleMetaRe
   }
 
   const result = parseMarkdown(parser, content, filePath);
-  await (resolvedTransform ?? transform)?.({ slug, filePath, ...result });
+  const transformerArgs: Parameters<MetaTransform> = [{ slug, filePath, ...result }];
+
+  const runTransform = async (transform?: HandleMetaRequestOptions['transform']) => {
+    if (Array.isArray(transform)) {
+      for (const transformer of transform) {
+        if (transformer) await transformer?.(...transformerArgs);
+      }
+    } else {
+      await transform?.(...transformerArgs);
+    }
+  };
+
+  await runTransform(resolvedTransform);
+  await runTransform(transform);
+
   return result;
 }
 
