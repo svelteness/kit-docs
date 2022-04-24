@@ -1,3 +1,12 @@
+## [0.18.4](https://github.com/svelteness/kit-docs/compare/v0.18.3...v0.18.4) (2022-04-24)
+
+
+### Bug Fixes
+
+* escape raw code in code fences to avoid preprocessor errors ([6595bb9](https://github.com/svelteness/kit-docs/commit/6595bb98e8b17ab4ce98a4c4a5d171526d5b869f)), closes [#18](https://github.com/svelteness/kit-docs/issues/18)
+
+
+
 ## [0.18.3](https://github.com/svelteness/kit-docs/compare/v0.18.2...v0.18.3) (2022-04-24)
 
 
