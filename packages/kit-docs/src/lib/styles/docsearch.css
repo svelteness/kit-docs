@@ -8,25 +8,23 @@
   --docsearch-key-shadow: none;
   --docsearch-modal-background: #fafafa;
   --docsearch-footer-background: #ededed;
-  --docsearch-muted-color: #414141;
-  --docsearch-logo-color: #414141;
-  --docsearch-hit-color: #949494;
-  --docsearch-hit-active-color: white;
-  --docsearch-hit-active-color: white;
+  --docsearch-muted-color: #606060;
+  --docsearch-logo-color: #606060;
+  --docsearch-hit-color: #606060;
+  --docsearch-hit-active-color: var(--kd-color-gray-inverse);
+  --docsearch-hit-background: none;
 }
 
 :root.dark {
-  --docsearch-text-color: var(--kd-color-gray-inverse);
   --docsearch-modal-shadow: none;
   --docsearch-footer-shadow: none;
   --docsearch-hit-background: #292929;
-  --docsearch-hit-color: #919191;
-  --docsearch-hit-active-color: black;
+  --docsearch-hit-color: #b4b4b4;
   --docsearch-modal-background: #2d2d2d;
   --docsearch-hit-shadow: none;
   --docsearch-footer-background: #242424;
-  --docsearch-muted-color: #c1c1c1;
-  --docsearch-logo-color: #c1c1c1;
+  --docsearch-muted-color: #b4b4b4;
+  --docsearch-logo-color: #b4b4b4;
 }
 
 .DocSearch-Container {
@@ -90,6 +88,15 @@
 
 .DocSearch-Hit-source {
   color: var(--docsearch-hit-text-color);
+}
+
+.DocSearch-Hit[aria-selected='true'] a {
+  color: var(--docsearch-text-color);
+  background: var(--docsearch-hit-background);
+}
+
+.DocSearch-Hit[aria-selected='true'] mark {
+  color: var(--docsearch-highlight-color) !important;
 }
 
 :root.dark .DocSearch-Input {
