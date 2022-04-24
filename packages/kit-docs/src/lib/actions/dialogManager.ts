@@ -7,6 +7,7 @@ export type DialogManagerOptions = {
   onOpen?: () => void;
   onClose?: () => void;
   focusSelectors?: string[];
+  menuSelectors?: string[];
   openOnPointerEnter?: boolean;
   closeOnPointerLeave?: boolean;
   closeOnSelectSelectors?: string[];
@@ -36,6 +37,7 @@ export function dialogManager(dialogBtn: HTMLElement, options: DialogManagerOpti
   let open = false;
   let currentListItemIndex: number;
   let focusableElements: HTMLElement[];
+  let menuElements: HTMLElement[];
 
   reset();
 
@@ -130,6 +132,11 @@ export function dialogManager(dialogBtn: HTMLElement, options: DialogManagerOpti
         focusableElements.push(...elements);
       }
 
+      for (const selector of options.menuSelectors ?? FOCUSABLE_DIALOG_ELEMENTS) {
+        const elements = Array.from(dialogEl.querySelectorAll(`ul ${selector}`)) as HTMLElement[];
+        menuElements.push(...elements);
+      }
+
       if (focusableElements.length === 0) {
         (dialogEl as HTMLElement)?.focus();
       } else {
@@ -148,6 +155,18 @@ export function dialogManager(dialogBtn: HTMLElement, options: DialogManagerOpti
     return (currentListItemIndex + delta + noOfChildren) % noOfChildren;
   }
 
+  function focusFirstMenuElement() {
+    const firstMenuElement = menuElements[0];
+    const index = focusableElements.findIndex((el) => el === firstMenuElement);
+    focusChild(index >= 0 ? index : 0);
+  }
+
+  function focusLastMenuElement() {
+    const lastMenuElement = menuElements[menuElements.length - 1];
+    const index = focusableElements.findIndex((el) => el === lastMenuElement);
+    focusChild(index >= 0 ? index : focusableElements.length - 1);
+  }
+
   const keyboardActions = {
     Escape: () => {
       onCloseDialog(true);
@@ -162,10 +181,16 @@ export function dialogManager(dialogBtn: HTMLElement, options: DialogManagerOpti
       focusChild(nextIndex(+1));
     },
     PageUp: () => {
-      focusChild(0);
+      focusFirstMenuElement();
     },
     PageDown: () => {
-      focusChild(focusableElements.length - 1);
+      focusLastMenuElement();
+    },
+    Home: () => {
+      focusFirstMenuElement();
+    },
+    End: () => {
+      focusLastMenuElement();
     },
   };
 
@@ -183,6 +208,7 @@ export function dialogManager(dialogBtn: HTMLElement, options: DialogManagerOpti
   function reset() {
     open = false;
     focusableElements = [];
+    menuElements = [];
     currentListItemIndex = -1;
     dialogDisposal.dispose();
   }
