@@ -64,6 +64,14 @@
   @apply text-black p-0 pl-0;
 }
 
+.DocSearch-Hit {
+  @apply p-1;
+}
+
+.DocSearch-Hit-source {
+  color: var(--docsearch-hit-text-color);
+}
+
 :root.dark .DocSearch-Input {
   @apply text-white;
 }
