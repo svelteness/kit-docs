@@ -74,6 +74,16 @@
   @apply text-black p-0 pl-0;
 }
 
+.DocSearch-Reset:focus-visible {
+  outline: 1px auto Highlight;
+  outline: 1px auto -webkit-focus-ring-color;
+}
+
+.DocSearch-Reset.focus-visible {
+  outline: 1px auto Highlight;
+  outline: 1px auto -webkit-focus-ring-color;
+}
+
 .DocSearch-Hit {
   @apply p-1;
 }
