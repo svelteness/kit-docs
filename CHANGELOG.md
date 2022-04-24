@@ -1,3 +1,14 @@
+## [0.18.1](https://github.com/svelteness/kit-docs/compare/v0.18.0...v0.18.1) (2022-04-24)
+
+
+### Bug Fixes
+
+* actually remove docsearch form input padding ([7eeb2dc](https://github.com/svelteness/kit-docs/commit/7eeb2dcaab4ce65c6098a2b7b417bedd813b6c1e))
+* add `Home` and `End` keyboard shortcuts for dialogs ([9b7b254](https://github.com/svelteness/kit-docs/commit/9b7b254ab4c3dda16c5ed665decc8749635f119c)), closes [#16](https://github.com/svelteness/kit-docs/issues/16)
+* remove hardcoded code fence bg color ([2b45dca](https://github.com/svelteness/kit-docs/commit/2b45dca876b9e3303ead745b144f2ca194350e2c)), closes [#17](https://github.com/svelteness/kit-docs/issues/17)
+
+
+
 # [0.18.0](https://github.com/svelteness/kit-docs/compare/v0.17.0...v0.18.0) (2022-04-22)
 
 
