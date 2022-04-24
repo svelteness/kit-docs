@@ -156,7 +156,7 @@ function kitDocsTypography(theme) {
           fontVariantLigatures: 'none',
         },
         pre: {
-          backgroundColor: 'var(--kd-prose-pre-bg)',
+          backgroundColor: 'var(--kd-code-fence-bg, var(--kd-prose-pre-bg))',
           boxShadow: 'none',
           display: 'flex',
         },

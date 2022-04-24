@@ -76,12 +76,12 @@
     lang && `lang-${lang}`,
     ext && `ext-${ext}`,
   )}
-  style="background-color: var(--kd-prose-pre-bg);"
+  style="background-color: var(--kd-code-fence-bg);"
 >
   {#if showTopBar}
     <div
       class="sticky top-0 left-0 z-10 flex items-center rounded-md pt-2 backdrop-blur supports-backdrop-blur:bg-white/60"
-      style="background-color: rgba(31, 41, 55, 0.3);"
+      style="background-color: var(--kd-code-fence-top-bar-bg);"
     >
       {#if hasTopbarTitle}
         <span class="ml-3.5 font-mono text-sm text-gray-300">{topbarTitle}</span>
