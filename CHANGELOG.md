@@ -1,3 +1,14 @@
+## [0.18.3](https://github.com/svelteness/kit-docs/compare/v0.18.2...v0.18.3) (2022-04-24)
+
+
+### Bug Fixes
+
+* add focus visible outline to docsearch button ([def5cdf](https://github.com/svelteness/kit-docs/commit/def5cdfbb17cc63cbd951bdad96af9e189732b83))
+* add focus visible outline to docsearch reset button ([cacc645](https://github.com/svelteness/kit-docs/commit/cacc64530488b8e0a686bf93c17cc9427310a551))
+* docsearch styles cleanup for better readability ([27c7e89](https://github.com/svelteness/kit-docs/commit/27c7e8952b5511943161825831acc709158b4e99))
+
+
+
 ## [0.18.2](https://github.com/svelteness/kit-docs/compare/v0.18.1...v0.18.2) (2022-04-24)
 
 
