@@ -1,6 +1,6 @@
 import adapter from '@sveltejs/adapter-static';
 import { resolve } from 'path';
-import * as preprocess from 'svelte-preprocess';
+import preprocess from 'svelte-preprocess';
 import Icons from 'unplugin-icons/vite';
 
 import { kitDocsPlugin } from './node/index.js';
@@ -9,8 +9,7 @@ import { kitDocsPlugin } from './node/index.js';
 const config = {
   extensions: ['.svelte', '.md'],
 
-  // @ts-ignore
-  preprocess: preprocess.default.typescript(),
+  preprocess: preprocess(),
 
   kit: {
     adapter: adapter(),

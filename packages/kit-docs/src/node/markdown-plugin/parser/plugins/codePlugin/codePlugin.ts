@@ -29,12 +29,16 @@ export const codePlugin: PluginSimple = (parser) => {
     const content = uncommentTemplateTags(token.content);
 
     // Try to get highlighted code.
-    const code =
+    const html =
       options.highlight?.(content, language.name, '') || parser.utils.escapeHtml(content);
 
-    const html = code.replace(/\sclass="shiki" style=".*?"/, '').trim();
+    const code = html.replace(/\sclass="shiki" style=".*?"/, '').trim();
 
-    const linesCount = (code.match(/"line"/g) || []).length;
+    const rawCode = token.content
+      .replace(/<script/g, '<script&#8203')
+      .replace(/<style/g, '<style&#8203');
+
+    const linesCount = (html.match(/"line"/g) || []).length;
 
     // Resolve highlight line ranges from token info.
     const highlightLinesRanges = resolveHighlightLines(info);
@@ -58,11 +62,11 @@ export const codePlugin: PluginSimple = (parser) => {
       `linesCount={${linesCount}}`,
       useLineNumbers && 'showLineNumbers',
       (highlightLinesRanges?.length ?? 0) > 0 && `highlightLines={${highlight}}`,
-      showCopyCode && `rawCode={${JSON.stringify(token.content)}}`,
+      showCopyCode && `rawCode={${JSON.stringify(rawCode)}}`,
       showCopyCode && 'showCopyCode',
       copyHighlightOnly && `copyHighlightOnly`,
       copySteps && 'copySteps',
-      `code={${JSON.stringify(html)}}`,
+      `code={${JSON.stringify(code)}}`,
       slot && `slot="${slot}"`,
     ]
       .filter(Boolean)

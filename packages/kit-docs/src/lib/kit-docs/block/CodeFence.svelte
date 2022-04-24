@@ -34,16 +34,18 @@
   // `linesCount-1` since last line is always empty (prettier)
   $: lines = [...Array(linesCount - 1).keys()].map((n) => n + 1);
 
+  $: unescapedRawCode = rawCode?.replace(/&#8203/g, '');
+
   let showCopiedCodePrompt = false;
   async function copyCodeToClipboard() {
     try {
       const copiedCode =
         currentHighlightedLines.length > 0 && (copyHighlightOnly || copySteps)
-          ? rawCode
+          ? unescapedRawCode
               .split('\n')
               .filter((_, i) => isHighlightLine(i + 1))
               .join('\n')
-          : rawCode;
+          : unescapedRawCode;
 
       await navigator.clipboard.writeText(copiedCode);
     } catch (e) {
