@@ -219,7 +219,7 @@
         navbar ? `992:min-h-[calc(100vh-5rem)]` : 'min-h-screen',
         navbar && showBottomNav ? 'min-h-[calc(100vh-10rem)]' : 'min-h-[calc(100vh-5rem)]',
         $kitDocs.meta && (showSidebar ? 'px-8 992:px-16 max-w-[85ch]' : 'px-6'),
-        navbar || showBottomNav ? 'pt-10' : '',
+        $kitDocs.meta && (navbar || showBottomNav ? 'pt-10' : ''),
       )}
     >
       <slot name="main-top" />
