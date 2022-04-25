@@ -1,3 +1,13 @@
+## [0.21.2](https://github.com/svelteness/kit-docs/compare/v0.21.1...v0.21.2) (2022-04-25)
+
+
+### Bug Fixes
+
+* bottom sidebar items are not visible ([9acc2e4](https://github.com/svelteness/kit-docs/commit/9acc2e473ed1420b2ddee601631a3de5d8a51afd))
+* collapsed navbar still showing middle divider ([24d5eeb](https://github.com/svelteness/kit-docs/commit/24d5eeb17cb80c6561e33dc63fb2bb4c494f39c3))
+
+
+
 ## [0.21.1](https://github.com/svelteness/kit-docs/compare/v0.21.0...v0.21.1) (2022-04-25)
 
 
