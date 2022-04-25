@@ -73,7 +73,7 @@
 </svelte:head>
 
 <KitDocs {meta}>
-  <KitDocsLayout {navbar} {sidebar}>
+  <KitDocsLayout navbar={false} {sidebar}>
     <div slot="navbar-left">
       <div class="logo">
         <Button href="/docs">
