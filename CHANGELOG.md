@@ -1,3 +1,21 @@
+# [0.19.0](https://github.com/svelteness/kit-docs/compare/v0.18.4...v0.19.0) (2022-04-25)
+
+
+### Bug Fixes
+
+* gst ([59848f1](https://github.com/svelteness/kit-docs/commit/59848f107176a8d2c5490c546310796d715c9701))
+* layout not set correctly when navbar is `false` ([798e340](https://github.com/svelteness/kit-docs/commit/798e340f281dd2948f109b02742b87386661f794))
+* only include markdown files by default in handlers ([27c844a](https://github.com/svelteness/kit-docs/commit/27c844a5c8aff59621c7a992c0ce0f68de037462))
+* remove all `<main>` padding if no meta ([d28965e](https://github.com/svelteness/kit-docs/commit/d28965e3f1336a2d7216a661a80848c38b880cb5))
+* remove padding on `<main>` if no meta ([2ad8b98](https://github.com/svelteness/kit-docs/commit/2ad8b98bc5c32d2fd4f0b74c09d1fc5ac22d0d04))
+
+
+### Features
+
+* new `extensions` option for handlers ([169f3e9](https://github.com/svelteness/kit-docs/commit/169f3e984df45c423037dcc4cd5c9b9ab90b6a02))
+
+
+
 ## [0.18.4](https://github.com/svelteness/kit-docs/compare/v0.18.3...v0.18.4) (2022-04-24)
 
 
