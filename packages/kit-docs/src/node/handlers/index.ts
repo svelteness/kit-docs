@@ -48,7 +48,7 @@ export type ResolvedFile =
   | { file: string; transform: MetaTransform | (MetaTransform | FalsyValue)[] };
 
 export type MetaTransform = (
-  data: { slug: string; filePath: string } & ParsedMarkdownResult,
+  data: { slug: string; filePath: string; parser: MarkdownParser } & ParsedMarkdownResult,
 ) => void | Promise<void>;
 
 /**
@@ -94,7 +94,7 @@ export async function handleMetaRequest(slugParam: string, options: HandleMetaRe
   }
 
   const result = parseMarkdown(parser, content, filePath);
-  const transformerArgs: Parameters<MetaTransform> = [{ slug, filePath, ...result }];
+  const transformerArgs: Parameters<MetaTransform> = [{ slug, filePath, parser, ...result }];
 
   const runTransform = async (transform?: HandleMetaRequestOptions['transform']) => {
     if (Array.isArray(transform)) {
