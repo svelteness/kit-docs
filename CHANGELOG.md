@@ -1,3 +1,12 @@
+# [0.20.0](https://github.com/svelteness/kit-docs/compare/v0.19.1...v0.20.0) (2022-04-25)
+
+
+### Features
+
+* pass markdown parser to `transform` function ([8907891](https://github.com/svelteness/kit-docs/commit/8907891e5c4dfca710c2844e83ce172be89e342e))
+
+
+
 ## [0.19.1](https://github.com/svelteness/kit-docs/compare/v0.18.4...v0.19.1) (2022-04-25)
 
 
