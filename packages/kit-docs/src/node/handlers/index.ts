@@ -25,7 +25,7 @@ const restParamsRE = /\[\.\.\.(.*?)\]/g;
 const restPropsRE = /\[\.\.\.(.*?)\]/;
 const deepMatchRE = /\[\.\.\..*?_deep\]/;
 const layoutNameRE = /@.+/g;
-const defaultIncludeRE = /\.(md|svelte)($|\?)/;
+const defaultIncludeRE = /\.md($|\?)/;
 
 export type NoValue = null | undefined | void;
 
@@ -204,7 +204,7 @@ export async function handleSidebarRequest(
       isDeepMatch = deepMatchDir >= 0;
 
       const glob = (depth: number) =>
-        `src/routes/*${cleanDirs.slice(0, depth).join('/*')}/*index*.{md,svelte}`;
+        `src/routes/*${cleanDirs.slice(0, depth).join('/*')}/*index*.md`;
 
       let file = isDeepMatch ? globbySync(glob(deepMatchDir + 1))?.[0] : null;
 
@@ -325,11 +325,11 @@ export function resolveSlug(slug: string): string | null {
     .map((s) => `*${s}`)
     .join('/')}`;
 
-  const glob = `${fileGlobBase}/*${path.basename(slug)}*.{md,svelte}`;
+  const glob = `${fileGlobBase}/*${path.basename(slug)}*.md`;
   let file = globbySync(glob)?.[0];
 
   if (!file) {
-    const glob = `${fileGlobBase}/*${path.basename(slug)}/*index*.{md,svelte}`;
+    const glob = `${fileGlobBase}/*${path.basename(slug)}/*index*.md`;
     file = globbySync(glob)?.[0];
   }
 
