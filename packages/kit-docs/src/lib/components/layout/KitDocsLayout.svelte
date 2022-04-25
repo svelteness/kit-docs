@@ -218,7 +218,7 @@
         'w-full overflow-x-hidden',
         navbar ? `992:min-h-[calc(100vh-5rem)]` : 'min-h-screen',
         navbar && showBottomNav ? 'min-h-[calc(100vh-10rem)]' : 'min-h-[calc(100vh-5rem)]',
-        showSidebar ? 'px-8 992:px-16 max-w-[85ch]' : $kitDocs.meta && 'px-6',
+        $kitDocs.meta && (showSidebar ? 'px-8 992:px-16 max-w-[85ch]' : 'px-6'),
         navbar || showBottomNav ? 'pt-10' : '',
       )}
     >
