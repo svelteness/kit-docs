@@ -228,6 +228,13 @@
         $kitDocs.meta && (showSidebar ? 'px-8 992:px-16' : 'px-6'),
         $kitDocs.meta && (navbar || showBottomNav ? 'pt-8' : ''),
       )}
+      style={clsx(
+        `max-width: ${
+          $kitDocs.meta
+            ? 'var(--kd-main-max-width, var(--kd-article-max-width))'
+            : 'var(--kd-main-max-width)'
+        };`,
+      )}
     >
       <slot name="main-top" />
 

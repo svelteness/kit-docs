@@ -42,7 +42,7 @@
   --kd-sidebar-border-active: var(--kd-color-brand);
 
   --kd-content-max-width: 1440px;
-
+  /* --kd-main-max-width: unset; */
   --kd-article-max-width: 85ch;
 }
 
