@@ -1,3 +1,13 @@
+## [0.21.3](https://github.com/svelteness/kit-docs/compare/v0.21.2...v0.21.3) (2022-04-25)
+
+
+### Bug Fixes
+
+* clean file path not returning path relative to routes ([d0dd25a](https://github.com/svelteness/kit-docs/commit/d0dd25aedb5d51b32d6f23ad8e1aa8b53d21bd99))
+* new `--kd-main-max-width` css property ([01e04ae](https://github.com/svelteness/kit-docs/commit/01e04ae3af3f2d9632e2ec049c3392336c0e208c))
+
+
+
 ## [0.21.2](https://github.com/svelteness/kit-docs/compare/v0.21.1...v0.21.2) (2022-04-25)
 
 
