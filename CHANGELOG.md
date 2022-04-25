@@ -3,8 +3,7 @@
 
 ### Bug Fixes
 
-* gst ([59848f1](https://github.com/svelteness/kit-docs/commit/59848f107176a8d2c5490c546310796d715c9701))
-* layout not set correctly when navbar is `false` ([798e340](https://github.com/svelteness/kit-docs/commit/798e340f281dd2948f109b02742b87386661f794))
+* layout not set correctly when navbar is `false` ([798e340](https://github.com/svelteness/kit-docs/commit/f49e4cedb967bebfa6c89ef0a7fcdbe1275e7d77))
 * only include markdown files by default in handlers ([27c844a](https://github.com/svelteness/kit-docs/commit/27c844a5c8aff59621c7a992c0ce0f68de037462))
 * remove all `<main>` padding if no meta ([d28965e](https://github.com/svelteness/kit-docs/commit/d28965e3f1336a2d7216a661a80848c38b880cb5))
 * remove padding on `<main>` if no meta ([2ad8b98](https://github.com/svelteness/kit-docs/commit/2ad8b98bc5c32d2fd4f0b74c09d1fc5ac22d0d04))
