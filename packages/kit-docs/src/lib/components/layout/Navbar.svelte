@@ -32,8 +32,7 @@
 </script>
 
 <div
-  class="1200:py-5 flex w-full flex-col items-center justify-center px-5 py-4 992:min-h-[5rem] mx-auto"
-  style="max-width: var(--kd-navbar-max-width, 1440px);"
+  class="flex w-full flex-col items-center justify-center mx-auto max-w-[var(--kd-navbar-max-width)] p-[var(--kd-navbar-padding)] h-[var(--kd--navbar-height)]"
 >
   <div class={clsx('flex w-full items-center')}>
     <slot name="left" />

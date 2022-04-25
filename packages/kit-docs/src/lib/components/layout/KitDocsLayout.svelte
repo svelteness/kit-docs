@@ -73,7 +73,11 @@
 
 <div
   class="kit-docs bg-gray-body min-h-full min-w-full h-full transition-transform duration-150 ease-out"
-  style={clsx('font-family: var(--kd-font-family-sans, inherit);')}
+  style={clsx(
+    'font-family: var(--kd-font-family-sans, inherit);',
+    !showBottomNav && '--kd-breadcrumbs-height: 0px;',
+    `--kd--navbar-height: calc(var(--kd-navbar-height) + var(--kd-breadcrumbs-height));`,
+  )}
 >
   {#if navbar}
     <div
@@ -82,9 +86,11 @@
         isNavPopoverOpen
           ? 'bg-gray-100 dark:bg-gray-800'
           : 'supports-backdrop-blur:bg-white/60 bg-gray-200/95 backdrop-blur dark:bg-gray-800/60',
-        collapseNavbar ? '-translate-y-[5rem]' : 'translate-y-0',
+        collapseNavbar
+          ? '-translate-y-[calc(var(--kd--navbar-height)-var(--kd-breadcrumbs-height))]'
+          : 'translate-y-0',
       )}
-      style="border-bottom: var(--kd-navbar-border-bottom, 1px solid var(--kd-color-gray-divider));"
+      style="border-bottom: var(--kd-navbar-border-bottom);"
     >
       <Navbar
         {search}
@@ -141,7 +147,10 @@
 
               {#if $activeLink || $kitDocs.meta?.title}
                 <ol
-                  class="text-md text-gray-soft mt-px ml-1 flex items-center whitespace-nowrap leading-6"
+                  class={clsx(
+                    'text-md text-gray-soft ml-1 flex items-center whitespace-nowrap leading-6',
+                    showSidebar ? 'mt-px' : 'mt-2',
+                  )}
                 >
                   {#if $activeCategory && $activeCategory !== '.'}
                     <li class="flex items-center">
@@ -178,24 +187,22 @@
 
   <div
     class={clsx(
-      'mx-auto w-full flex flex-row min-h-full',
-      navbar && '992:pt-20 z-20',
-      navbar && (showBottomNav ? 'pt-40' : 'pt-20'),
+      'mx-auto w-full flex flex-row min-h-full max-w-[var(--kd-content-max-width)]',
+      navbar && 'pt-[var(--kd--navbar-height)] z-20',
     )}
-    style="max-width: var(--kd-content-max-width, 1440px);"
   >
     {#if showSidebar}
       <Sidebar
         {search}
         class={({ open }) =>
           clsx(
-            'self-start fixed top-0 left-0 transform bg-gray-body z-50 border-gray-divider border-r pb-8 px-7',
+            'self-start fixed top-0 left-0 transform bg-gray-body z-50 border-gray-divider border-r',
             '-translate-x-full transform transition-transform duration-200 ease-out will-change-transform',
-            'min-w-[90vw] 768:min-w-[70vw] max-w-screen max-h-screen min-h-screen',
-            ' 992:px-5 992:translate-x-0 922:block 992:sticky 992:z-0 992:w-[17rem] 992:min-w-[17rem] overflow-y-auto 1460:pl-5',
+            'max-h-screen min-h-screen min-w-[var(--kd-sidebar-min-width)] max-w-[var(--kd-sidebar-max-width)]',
+            '992:translate-x-0 922:block 992:sticky 992:z-0 overflow-y-auto p-[var(--kd-sidebar-padding)]',
             open && 'translate-x-0',
             navbar
-              ? '992:top-20 992:min-h-[calc(100vh-5rem)] 992:max-h-[calc(100vh-5rem)]'
+              ? '992:top-[var(--kd--navbar-height)] 992:min-h-[calc(100vh-var(--kd--navbar-height))] 992:max-h-[calc(100vh-var(--kd--navbar-height))]'
               : '992:top-0 min-h-screen max-h-screen',
           )}
         open={isSidebarOpen}
@@ -216,16 +223,16 @@
     <main
       class={clsx(
         'w-full overflow-x-hidden',
-        navbar ? `992:min-h-[calc(100vh-5rem)]` : 'min-h-screen',
-        navbar && showBottomNav ? 'min-h-[calc(100vh-10rem)]' : 'min-h-[calc(100vh-5rem)]',
-        $kitDocs.meta && (showSidebar ? 'px-8 992:px-16 max-w-[85ch]' : 'px-6'),
-        $kitDocs.meta && (navbar || showBottomNav ? 'pt-10' : ''),
+        navbar ? `992:min-h-[calc(100vh-var(--kd--navbar-height))]` : 'min-h-screen',
+        navbar && 'min-h-[calc(100vh-var(--kd--navbar-height))]',
+        $kitDocs.meta && (showSidebar ? 'px-8 992:px-16' : 'px-6'),
+        $kitDocs.meta && (navbar || showBottomNav ? 'pt-8' : ''),
       )}
     >
       <slot name="main-top" />
 
       {#if $kitDocs.meta}
-        <article class="markdown prose dark:prose-invert z-10">
+        <article class="markdown prose dark:prose-invert z-10 max-w-[var(--kd-article-max-width)]">
           {#if $activeCategory && $activeCategory !== '.'}
             <p class="text-brand mb-3.5 text-[15px] font-semibold leading-6">
               {$activeCategory}
@@ -281,8 +288,10 @@
 
     <OnThisPage
       class={clsx(
-        'pt-10 pb-8 hidden overflow-auto min-w-[160px] sticky right-4 1440:right-6 1440:pr-4 1280:block',
-        navbar ? 'top-20 max-h-[calc(100vh-5rem)]' : 'top-0 max-h-screen',
+        'pt-8 pb-8 hidden overflow-auto min-w-[160px] sticky right-4 pr-4 1440:right-6 1440:pr-2 1280:block',
+        navbar
+          ? 'top-[var(--kd--navbar-height)] max-h-[calc(100vh-var(--kd--navbar-height))]'
+          : 'top-0 max-h-screen',
       )}
     />
   </div>
