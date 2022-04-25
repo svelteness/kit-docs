@@ -32,6 +32,7 @@ export type NoValue = null | undefined | void;
 export type FalsyValue = false | NoValue;
 
 export type HandleMetaRequestOptions = {
+  extensions?: string[];
   filter?: (file: string) => boolean;
   resolve?: FileResolver | null | (FileResolver | FalsyValue)[];
   transform?: MetaTransform | null | (MetaTransform | FalsyValue)[];
@@ -54,7 +55,7 @@ export type MetaTransform = (
  * Careful this function will throw if it can't match the `slug` param to a file.
  */
 export async function handleMetaRequest(slugParam: string, options: HandleMetaRequestOptions = {}) {
-  const { filter, resolve, transform } = options;
+  const { filter, extensions, resolve, transform } = options;
 
   const slug = paramToSlug(slugParam);
   const resolverArgs: Parameters<FileResolver> = [slug, { resolve: resolveSlug }];
@@ -71,7 +72,7 @@ export async function handleMetaRequest(slugParam: string, options: HandleMetaRe
   }
 
   if (!resolution) {
-    resolution = resolveSlug(slug);
+    resolution = resolveSlug(slug, { extensions });
   }
 
   const resolvedFile = isString(resolution) ? resolution : resolution?.file;
@@ -122,7 +123,10 @@ export function createMetaRequestHandler(
 ): RequestHandler {
   const { include, exclude, debug, ...handlerOptions } = options;
 
-  const filter = createFilter(include ?? defaultIncludeRE, exclude);
+  const filter = createFilter(
+    include ?? handlerOptions.extensions?.map((ext) => new RegExp(`${ext}$`)) ?? defaultIncludeRE,
+    exclude,
+  );
 
   return async ({ params }) => {
     try {
@@ -147,6 +151,7 @@ export function createMetaRequestHandler(
 const headingRE = /#\s(.*?)($|\n|\r)/;
 
 export type HandleSidebarRequestOptions = {
+  extensions?: string[];
   filter?: (file: string) => boolean;
   resolveTitle?: SidebarMetaResolver;
   resolveCategory?: SidebarMetaResolver;
@@ -172,7 +177,12 @@ export async function handleSidebarRequest(
   dirParam: string,
   options: HandleSidebarRequestOptions = {},
 ) {
-  const { filter, formatCategoryName, resolveTitle, resolveCategory, resolveSlug } = options;
+  const { extensions, filter, formatCategoryName, resolveTitle, resolveCategory, resolveSlug } =
+    options;
+
+  const exts = extensions ?? ['.md'];
+  const globExt =
+    exts.length > 1 ? `.{${exts.map((ext) => ext.replace(/^\./, '')).join(',')}}` : exts[0];
 
   const directory = paramToDir(dirParam);
   const dirPath = path.resolve(ROUTES_DIR, directory);
@@ -204,7 +214,7 @@ export async function handleSidebarRequest(
       isDeepMatch = deepMatchDir >= 0;
 
       const glob = (depth: number) =>
-        `src/routes/*${cleanDirs.slice(0, depth).join('/*')}/*index*.md`;
+        `src/routes/*${cleanDirs.slice(0, depth).join('/*')}/*index*${globExt}`;
 
       let file = isDeepMatch ? globbySync(glob(deepMatchDir + 1))?.[0] : null;
 
@@ -293,7 +303,10 @@ export function createSidebarRequestHandler(
 ): RequestHandler {
   const { include, debug, exclude, ...handlerOptions } = options;
 
-  const filter = createFilter(include ?? defaultIncludeRE, exclude);
+  const filter = createFilter(
+    include ?? handlerOptions.extensions?.map((ext) => new RegExp(`${ext}$`)) ?? defaultIncludeRE,
+    exclude,
+  );
 
   return async ({ params }) => {
     try {
@@ -314,22 +327,33 @@ export function createSidebarRequestHandler(
   };
 }
 
+export type ResolveSlugOptions = {
+  extensions?: string[];
+};
+
 /**
  * Attempts to resolve the given slug to a file in the `routes` directory. This function returns
  * a relative file path.
  */
-export function resolveSlug(slug: string): string | null {
+export function resolveSlug(slug: string, options: ResolveSlugOptions = {}): string | null {
+  const { extensions } = options;
+
+  const exts = extensions ?? ['.md'];
+
+  const globExt =
+    exts.length > 1 ? `.{${exts.map((ext) => ext.replace(/^\./, '')).join(',')}}` : exts[0];
+
   const fileGlobBase = `src/routes/${slug
     .split('/')
     .slice(0, -1)
     .map((s) => `*${s}`)
     .join('/')}`;
 
-  const glob = `${fileGlobBase}/*${path.basename(slug)}*.md`;
+  const glob = `${fileGlobBase}/*${path.basename(slug)}*${globExt}`;
   let file = globbySync(glob)?.[0];
 
   if (!file) {
-    const glob = `${fileGlobBase}/*${path.basename(slug)}/*index*.md`;
+    const glob = `${fileGlobBase}/*${path.basename(slug)}/*index*${globExt}`;
     file = globbySync(glob)?.[0];
   }
 
@@ -343,7 +367,7 @@ export function resolveSlug(slug: string): string | null {
     .replace(path.extname(file), '')
     .replace(/\/index$/, slug === 'index' ? '/index' : '');
 
-  if (matchedSlug !== `src/routes/${slug}` || !file.endsWith('.md')) {
+  if (matchedSlug !== `src/routes/${slug}` || !exts.some((ext) => file.endsWith(ext))) {
     return null;
   }
 
