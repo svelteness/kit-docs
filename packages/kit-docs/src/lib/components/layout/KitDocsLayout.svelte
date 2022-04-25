@@ -87,7 +87,7 @@
           ? 'bg-gray-100 dark:bg-gray-800'
           : 'supports-backdrop-blur:bg-white/60 bg-gray-200/95 backdrop-blur dark:bg-gray-800/60',
         collapseNavbar
-          ? '-translate-y-[calc(var(--kd--navbar-height)-var(--kd-breadcrumbs-height))]'
+          ? '-translate-y-[calc(calc(var(--kd--navbar-height)-var(--kd-breadcrumbs-height))+1px)]'
           : 'translate-y-0',
       )}
       style="border-bottom: var(--kd-navbar-border-bottom);"
