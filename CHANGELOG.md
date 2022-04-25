@@ -1,3 +1,17 @@
+# [0.21.0](https://github.com/svelteness/kit-docs/compare/v0.20.0...v0.21.0) (2022-04-25)
+
+
+### Bug Fixes
+
+* clean up select component styles ([f1735d3](https://github.com/svelteness/kit-docs/commit/f1735d3053e0bd8410c1762f54b07847507396d4))
+
+
+### Features
+
+* more css variables for customizing default layout ([87dae88](https://github.com/svelteness/kit-docs/commit/87dae88cc8737fbc7385d4b7150d2be4adcaa14c))
+
+
+
 # [0.20.0](https://github.com/svelteness/kit-docs/compare/v0.19.1...v0.20.0) (2022-04-25)
 
 
