@@ -1,3 +1,13 @@
+## [0.21.1](https://github.com/svelteness/kit-docs/compare/v0.21.0...v0.21.1) (2022-04-25)
+
+
+### Bug Fixes
+
+* select component design tweaks ([7e7f3d5](https://github.com/svelteness/kit-docs/commit/7e7f3d5ba5759badd58e0e900bb07a5236fd7097))
+* set back original sidebar min width ([337c2b1](https://github.com/svelteness/kit-docs/commit/337c2b121347df4945e7e3cb6ab97d4aa669673d))
+
+
+
 # [0.21.0](https://github.com/svelteness/kit-docs/compare/v0.20.0...v0.21.0) (2022-04-25)
 
 
