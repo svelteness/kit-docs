@@ -21,24 +21,26 @@
       disabled ? 'text-gray-300' : 'text-gray-inverse focus-within:ring-2',
       raised ? 'bg-gray-elevate hover:bg-gray-hover shadow-sm' : 'hover:bg-gray-hover',
     )}
-    style="padding: var(--kd-padding, 0.25rem 0.5rem 0.25rem 0.875rem);"
+    style="padding: var(--kd-padding, 0.25rem 0.2rem 0.25rem 0.5rem); min-width: var(--kd-min-width, 6rem);"
   >
     <slot name="before-title" />
 
-    <span class="sr-only">{title}</span>
+    <div class="mx-auto flex items-center justify-center">
+      <span class="sr-only">{title}</span>
 
-    <span
-      class="flex items-center h-full mt-0.5"
-      style="font-size: var(--kd-value-font-size, 0.875rem);"
-    >
-      {value}
-    </span>
+      <span
+        class="flex items-center h-full mt-0.5"
+        style="font-size: var(--kd-value-font-size, 0.875rem);"
+      >
+        {value}
+      </span>
 
-    <ArrowDropDownIcon
-      width={arrowWidth}
-      height={arrowHeight}
-      class="ml-[var(--kd-arrow-margin-left,0.25rem)]"
-    />
+      <ArrowDropDownIcon
+        width={arrowWidth}
+        height={arrowHeight}
+        class="ml-[var(--kd-arrow-margin-left,0.1rem)]"
+      />
+    </div>
 
     <select
       class="absolute inset-0 cursor-pointer appearance-none opacity-0"
