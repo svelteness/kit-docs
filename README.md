@@ -40,7 +40,7 @@ You can find our documentation at [kit-docs.svelteness.dev](https://kit-docs.sve
 Thanks to [Vercel](https://vercel.com) for graciously providing us an OSS sponsored account
 for hosting our docs site!
 
-[![Powered by Vercel](./assets/img/vercel.svg)](https://vercel.com/?utm_source=[svelteness]&utm_campaign=oss)
+[![Powered by Vercel](./assets/img/vercel.svg)](https://vercel.com/?utm_source=svelteness&utm_campaign=oss)
 
 ## 📝 License
 

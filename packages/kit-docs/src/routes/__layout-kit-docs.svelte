@@ -91,7 +91,7 @@
 
     <div slot="main-bottom" class="footer">
       <a
-        href="https://vercel.com/?utm_source=[svelteness]&utm_campaign=oss"
+        href="https://vercel.com/?utm_source=svelteness&utm_campaign=oss"
         rel="external"
         target="_blank"
       >
