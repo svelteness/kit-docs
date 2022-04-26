@@ -168,6 +168,7 @@ export type SidebarMetaResolver = (data: {
   frontmatter: Record<string, any>;
   fileContent: string;
   resolve: () => string;
+  slugify: typeof slugifyFilePath;
 }) => string | void | null | undefined | Promise<string | void | null | undefined>;
 
 /**
@@ -246,6 +247,7 @@ export async function handleSidebarRequest(
       fileContent,
       dirname: path.dirname(filePath),
       cleanDirname: path.dirname(cleanPath),
+      slugify: slugifyFilePath,
     };
 
     const categoryFormatter = formatCategoryName ?? kebabToTitleCase;
@@ -263,8 +265,7 @@ export async function handleSidebarRequest(
     const resolveDefaultCategory = () =>
       isRoot ? '.' : cleanDirsReversed[isIndexFile && isDeepMatch ? 1 : 0];
 
-    const resolveDefaultSlug = () =>
-      `/${cleanPath.replace(path.extname(cleanPath), '').replace(/\/index$/, '')}`;
+    const resolveDefaultSlug = () => slugifyFilePath(filePath);
 
     const category = formatCategory(
       (await resolveCategory?.({ ...resolverData, resolve: resolveDefaultCategory })) ??
@@ -391,4 +392,13 @@ export function paramToSlug(param: string) {
 
 export function paramToDir(param: string) {
   return paramToSlug(param);
+}
+
+/**
+ * Maps a path that points to a file in the `routes` directory to a slug. The file path
+ * can be absolute or relative to the `routes` directory.
+ */
+export function slugifyFilePath(filePath: string) {
+  const cleanPath = cleanFilePath(filePath);
+  return `/${cleanPath.replace(path.extname(cleanPath), '').replace(/\/?index$/, '')}`;
 }
