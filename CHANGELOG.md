@@ -1,3 +1,12 @@
+## [0.22.2](https://github.com/svelteness/kit-docs/compare/v0.22.1...v0.22.2) (2022-04-26)
+
+
+### Bug Fixes
+
+* accessibility improvements and new `--kd-color-focus` css var ([bcf7576](https://github.com/svelteness/kit-docs/commit/bcf7576e55dda8f6933b72a7c4afa802ef0071bc))
+
+
+
 ## [0.22.1](https://github.com/svelteness/kit-docs/compare/v0.22.0...v0.22.1) (2022-04-26)
 
 
