@@ -67,7 +67,7 @@ export type SidebarLink = {
   title: string;
   slug: string;
   match?: 'deep' | RegExp;
-  icon?: { before?: SvelteComponent; after?: SvelteComponent };
+  icon?: { before?: typeof SvelteComponent; after?: typeof SvelteComponent };
 };
 
 export type SidebarLinks = {
