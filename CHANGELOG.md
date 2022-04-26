@@ -1,3 +1,15 @@
+## [0.22.3](https://github.com/svelteness/kit-docs/compare/v0.22.2...v0.22.3) (2022-04-26)
+
+
+### Bug Fixes
+
+* docsearch modal broken on mobile ([f007b32](https://github.com/svelteness/kit-docs/commit/f007b32a75cf5d6f2d51641842d065ba564bd4fb))
+* hide magnifier icon in docsearch on mobile ([5df392a](https://github.com/svelteness/kit-docs/commit/5df392a30b72359b5c34f78063f1b2322d8dee6b))
+* prevent focus ring on docsearch keys ([c934a73](https://github.com/svelteness/kit-docs/commit/c934a7329e52c07fc35bcd8a5cd914126aaeaa32))
+* show focus ring around docsearch button ([2a0d401](https://github.com/svelteness/kit-docs/commit/2a0d4019395caeae718386ed44d73cc6f1d66965))
+
+
+
 ## [0.22.2](https://github.com/svelteness/kit-docs/compare/v0.22.1...v0.22.2) (2022-04-26)
 
 
