@@ -1,6 +1,6 @@
 {
   "name": "@svelteness/kit-docs",
-  "version": "0.22.3",
+  "version": "0.22.4",
   "description": "Documentation integration for SvelteKit.",
   "license": "MIT",
   "type": "module",

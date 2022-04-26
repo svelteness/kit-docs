@@ -1,3 +1,12 @@
+## [0.22.4](https://github.com/svelteness/kit-docs/compare/v0.22.3...v0.22.4) (2022-04-26)
+
+
+### Bug Fixes
+
+* avoid transforming same meta object every request due to caching ([c597d6d](https://github.com/svelteness/kit-docs/commit/c597d6d8c6d7422ea85cc681758ff6821bd89b57))
+
+
+
 ## [0.22.3](https://github.com/svelteness/kit-docs/compare/v0.22.2...v0.22.3) (2022-04-26)
 
 
