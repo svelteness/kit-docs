@@ -37,14 +37,11 @@
   border: 1px solid var(--kd-color-gray-divider);
 }
 
-.DocSearch-Button:focus-visible {
-  outline: 1px auto Highlight;
-  outline: 1px auto -webkit-focus-ring-color;
-}
-
+.DocSearch-Button:focus-visible,
 .DocSearch-Button.focus-visible {
-  outline: 1px auto Highlight;
-  outline: 1px auto -webkit-focus-ring-color;
+  @apply outline-none !ring-2;
+  --tw-ring-color: var(--kd-color-focus);
+  outline: 2px solid transparent !important;
 }
 
 .DocSearch-Button-Container {
