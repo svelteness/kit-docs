@@ -112,7 +112,7 @@
 }
 
 .DocSearch-MagnifierLabel {
-  @apply text-gray-soft;
+  @apply !hidden;
 }
 
 @media only screen and (max-width: 991px) {
