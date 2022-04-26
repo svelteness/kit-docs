@@ -94,7 +94,10 @@ export async function handleMetaRequest(slugParam: string, options: HandleMetaRe
   }
 
   const result = parseMarkdown(parser, content, filePath);
-  const transformerArgs: Parameters<MetaTransform> = [{ slug, filePath, parser, ...result }];
+
+  const transformerArgs: Parameters<MetaTransform> = [
+    { slug, filePath, parser, ...result, meta: { ...result.meta } },
+  ];
 
   const runTransform = async (transform?: HandleMetaRequestOptions['transform']) => {
     if (Array.isArray(transform)) {
