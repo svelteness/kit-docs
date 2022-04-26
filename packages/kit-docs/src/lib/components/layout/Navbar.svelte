@@ -75,7 +75,8 @@
               Theme
 
               <label
-                class="relative ml-4 flex items-center border border-gray-200 px-4 py-1 dark:border-gray-400"
+                class="relative ml-4 flex items-center border border-gray-200 px-4 py-1 dark:border-gray-400 rounded-md focus-within:ring-2"
+                style="--tw-ring-color: var(--kd-color-focus);"
               >
                 <span class="sr-only">{$i18n.colorScheme.theme}</span>
                 {uppercaseFirstLetter($colorScheme)}

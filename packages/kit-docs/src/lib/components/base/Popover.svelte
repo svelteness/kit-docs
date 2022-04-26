@@ -53,7 +53,7 @@
     id={popoverButtonId}
     type="button"
     class={clsx(
-      'inline-flex w-full justify-center rounded-md px-4 py-2 text-lg font-medium',
+      'inline-flex w-full justify-center rounded-md p-2 text-lg font-medium',
       open ? 'text-gray-inverse' : 'text-gray-soft hover:text-gray-inverse',
     )}
     aria-controls={popoverId}
@@ -98,7 +98,7 @@
           <div class="flex-1" />
           <button
             class={clsx(
-              'p-4 text-gray-soft hover:text-gray-inverse',
+              'p-4 text-gray-soft hover:text-gray-inverse mt-[0.125rem] mr-[0.125rem]',
               !open && 'pointer-events-none',
             )}
             on:pointerdown={() => closeDialog()}

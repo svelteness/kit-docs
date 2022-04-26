@@ -21,7 +21,7 @@
       disabled ? 'text-gray-300' : 'text-gray-inverse focus-within:ring-2',
       raised ? 'bg-gray-elevate hover:bg-gray-hover shadow-sm' : 'hover:bg-gray-hover',
     )}
-    style="padding: var(--kd-padding, 0.25rem 0.2rem 0.25rem 0.5rem); min-width: var(--kd-min-width, 6rem);"
+    style="padding: var(--kd-padding, 0.25rem 0.2rem 0.25rem 0.5rem); min-width: var(--kd-min-width, 6rem); --tw-ring-color: var(--kd-color-focus);"
   >
     <slot name="before-title" />
 

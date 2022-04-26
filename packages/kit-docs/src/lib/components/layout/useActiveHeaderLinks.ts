@@ -1,6 +1,7 @@
 import { onMount, tick } from 'svelte';
 import { get } from 'svelte/store';
 
+import { browser } from '$app/env';
 import { goto } from '$app/navigation';
 import { isExtraLargeScreen } from '$lib/stores/isLargeScreen';
 import { kitDocs } from '$lib/stores/kitDocs.js';
@@ -13,6 +14,8 @@ const NAVBAR_HEIGHT = 160;
 
 export function useActiveHeaderLinks(navContext: NavigationContext) {
   const disposal = createDisposalBin();
+
+  let initialHash: string | null = browser ? window.location.hash : null;
 
   const setActiveRouteHash = async () => {
     const headerLinks: HTMLAnchorElement[] = Array.from(
@@ -82,43 +85,54 @@ export function useActiveHeaderLinks(navContext: NavigationContext) {
         }
       }
 
-      if (get(navContext).canUpdateHash(anchorHash)) {
-        goto(anchorHash, { replaceState: true, noscroll: true });
+      if (!initialHash && get(navContext).canUpdateHash(anchorHash)) {
+        goto(anchorHash, { replaceState: true, noscroll: true, keepfocus: true });
       }
+
+      initialHash = null;
 
       return;
     }
   };
 
-  const onScroll = throttleAndDebounce(
-    () =>
-      tick().then(() =>
-        window.requestAnimationFrame(() => {
-          setActiveRouteHash();
-        }),
-      ),
-    100,
-  );
+  const onScroll = throttleAndDebounce(() => setActiveRouteHash(), 100);
 
   onMount(() => {
     let unsub: () => void;
 
-    setTimeout(() => {
+    const idleCallback =
+      window.requestIdleCallback ??
+      ((fn: any) => {
+        setTimeout(fn, 300);
+      });
+
+    idleCallback(() => {
       function init() {
         onScroll();
         window.addEventListener('scroll', onScroll);
         disposal.add(() => window.removeEventListener('scroll', onScroll));
-        disposal.add(kitDocs.subscribe(onScroll));
+
+        let skip = true;
+        disposal.add(
+          kitDocs.subscribe(() => {
+            if (skip) {
+              skip = false;
+              return;
+            }
+
+            tick().then(() => onScroll());
+          }),
+        );
       }
 
       unsub = isExtraLargeScreen.subscribe(($is) => {
         if ($is) {
-          init();
+          tick().then(() => init());
         } else {
           disposal.dispose();
         }
       });
-    }, 300);
+    });
 
     return () => {
       unsub?.();

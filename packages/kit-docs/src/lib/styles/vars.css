@@ -21,6 +21,7 @@
   --kd-color-gray-hover-inverse: rgb(53, 53, 53);
   --kd-color-gray-elevate: rgb(255, 255, 255);
   --kd-color-gray-body: rgb(255, 255, 255);
+  --kd-color-focus: rgba(var(--kd-color-brand-rgb), 0.7);
 
   --kd-code-fence-bg: var(--kd-prose-pre-bg, rgb(31, 41, 55));
   --kd-code-fence-top-bar-bg: rgba(31, 41, 55, 0.3);

@@ -11,6 +11,8 @@ body {
 }
 
 .js-focus-visible [data-focus-visible-added] {
+  @apply outline-none ring-2;
+  --tw-ring-color: var(--kd-color-focus);
 }
 
 * {
@@ -39,6 +41,10 @@ body {
 .kit-docs p + .admonition,
 .kit-docs p + .steps {
   margin-top: 2.5rem;
+}
+
+.kit-docs .steps + p {
+  margin-top: 4rem;
 }
 
 .kit-docs .admonition + .steps {
@@ -91,11 +97,22 @@ body {
   background-color: none;
 }
 
+.kit-docs h1:focus,
+.kit-docs h2:focus,
+.kit-docs h3:focus,
+.kit-docs h4:focus,
+.kit-docs h5:focus,
+.kit-docs h6:focus {
+  outline: none;
+}
+
 @media (hover: hover) and (pointer: fine) {
   .kit-docs h1:hover .header-anchor,
   .kit-docs h2:hover .header-anchor,
   .kit-docs h3:hover .header-anchor,
-  .kit-docs h4:hover .header-anchor {
+  .kit-docs h4:hover .header-anchor,
+  .kit-docs h5:hover .header-anchor,
+  .kit-docs h6:hover .header-anchor {
     opacity: 1;
   }
 }
@@ -104,7 +121,9 @@ body {
   .kit-docs h1:focus .header-anchor,
   .kit-docs h2:focus .header-anchor,
   .kit-docs h3:focus .header-anchor,
-  .kit-docs h4:focus .header-anchor {
+  .kit-docs h4:focus .header-anchor,
+  .kit-docs h5:focus .header-anchor,
+  .kit-docs h6:focus .header-anchor {
     opacity: 1;
   }
 }

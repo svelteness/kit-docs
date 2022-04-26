@@ -74,7 +74,7 @@
 </svelte:head>
 
 <KitDocs {meta}>
-  <KitDocsLayout {navbar} {sidebar} --kd-sidebar-min-width="14rem">
+  <KitDocsLayout {navbar} {sidebar}>
     <div slot="navbar-left">
       <div class="logo">
         <Button href="/docs">
@@ -111,9 +111,10 @@
   }
 
   .logo :global(a) {
-    margin-left: 0.75rem;
+    margin-left: 0.375rem;
     display: flex;
     align-items: center;
+    padding: 0.25rem;
   }
 
   .logo :global(svg) {
@@ -122,11 +123,7 @@
 
   .socials {
     display: flex;
-    margin-right: -0.5rem;
-  }
-
-  .socials > :global(a) {
-    padding: 0 0.5rem;
+    margin-left: -0.25rem;
   }
 
   .footer {
@@ -134,5 +131,11 @@
     justify-content: center;
     margin-top: -1rem;
     padding-bottom: 2.5rem;
+  }
+
+  @media screen and (min-width: 992px) {
+    :global(:root) {
+      --kd-sidebar-min-width: 14rem;
+    }
   }
 </style>

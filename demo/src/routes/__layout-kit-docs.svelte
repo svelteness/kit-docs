@@ -99,11 +99,7 @@
 
   .socials {
     display: flex;
-    margin-right: -0.5rem;
-  }
-
-  .socials > :global(a) {
-    padding: 0 0.5rem;
+    margin-left: -0.25rem;
   }
 
   :global(:root) {

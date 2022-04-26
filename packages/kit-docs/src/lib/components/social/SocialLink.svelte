@@ -25,7 +25,7 @@
 
 <a
   class={clsx(
-    'relative flex items-center text-gray-soft hover:text-gray-inverse border-0',
+    'relative flex items-center text-gray-soft hover:text-gray-inverse border-0 rounded-md p-2',
     __class,
   )}
   {href}

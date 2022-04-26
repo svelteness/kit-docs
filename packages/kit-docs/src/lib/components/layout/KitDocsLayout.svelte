@@ -121,7 +121,7 @@
                 <button
                   id="main-sidebar-button"
                   type="button"
-                  class="text-gray-soft hover:text-gray-inverse -ml-3 inline-flex justify-center rounded-md px-4 py-2 text-sm font-medium"
+                  class="text-gray-soft hover:text-gray-inverse inline-flex justify-center rounded-md p-2 text-sm font-medium"
                   aria-controls="main-sidebar"
                   aria-expanded={ariaBool(isSidebarOpen)}
                   aria-haspopup="true"
@@ -148,8 +148,8 @@
               {#if $activeLink || $kitDocs.meta?.title}
                 <ol
                   class={clsx(
-                    'text-md text-gray-soft ml-1 flex items-center whitespace-nowrap leading-6',
-                    showSidebar ? 'mt-px' : 'mt-2',
+                    'text-md text-gray-soft flex items-center whitespace-nowrap leading-6',
+                    showSidebar ? 'mt-px ml-2.5' : 'mt-2',
                   )}
                 >
                   {#if $activeCategory && $activeCategory !== '.'}
@@ -295,7 +295,7 @@
 
     <OnThisPage
       class={clsx(
-        'pt-8 pb-8 hidden overflow-auto min-w-[160px] sticky right-4 pr-4 1440:right-6 1440:pr-2 1280:block',
+        'pt-8 pb-8 hidden overflow-auto min-w-[160px] sticky right-4 pr-4 1440:right-6 1440:pr-2 1280:block pl-0.5',
         navbar
           ? 'top-[var(--kd--navbar-height)] max-h-[calc(100vh-var(--kd--navbar-height))]'
           : 'top-0 max-h-screen',

@@ -73,32 +73,30 @@ export function dialogManager(dialogBtn: HTMLElement, options: DialogManagerOpti
         dialogDisposal.add(listen(dialogEl, 'pointerleave', () => onCloseDialog()));
       }
 
-      if (options.closeOnSelectSelectors) {
-        for (const selector of options.closeOnSelectSelectors) {
-          const elements = Array.from(dialogEl.querySelectorAll(selector)) as HTMLElement[];
-          for (const element of elements) {
-            dialogDisposal.add(
-              listen(
-                element,
-                'keydown',
-                (e) => wasEnterKeyPressed(e) && setTimeout(() => onCloseDialog(true), 150),
-              ),
-            );
+      for (const selector of options.closeOnSelectSelectors ?? ['a[href]']) {
+        const elements = Array.from(dialogEl.querySelectorAll(selector)) as HTMLElement[];
+        for (const element of elements) {
+          dialogDisposal.add(
+            listen(
+              element,
+              'keydown',
+              (e) => wasEnterKeyPressed(e) && setTimeout(() => onCloseDialog(true), 150),
+            ),
+          );
 
-            let pointerTimer;
-            dialogDisposal.add(
-              listen(element, 'pointerup', () => {
-                window.clearTimeout(pointerTimer);
-                // Prevent user scrolling triggering close.
-                const y = dialogEl.scrollTop;
-                pointerTimer = setTimeout(() => {
-                  if (dialogEl.scrollTop === y) {
-                    onCloseDialog();
-                  }
-                }, 150);
-              }),
-            );
-          }
+          let pointerTimer;
+          dialogDisposal.add(
+            listen(element, 'pointerup', () => {
+              window.clearTimeout(pointerTimer);
+              // Prevent user scrolling triggering close.
+              const y = dialogEl.scrollTop;
+              pointerTimer = setTimeout(() => {
+                if (dialogEl.scrollTop === y) {
+                  onCloseDialog();
+                }
+              }, 150);
+            }),
+          );
         }
       }
     }
