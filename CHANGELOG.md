@@ -1,3 +1,13 @@
+## [0.22.5](https://github.com/svelteness/kit-docs/compare/v0.22.4...v0.22.5) (2022-04-26)
+
+
+### Bug Fixes
+
+* attach transformed meta back to returned response ([5299339](https://github.com/svelteness/kit-docs/commit/5299339f87cda1d0c63a8a779daa86e9ebb2a558))
+* run resolved transformers last ([8131762](https://github.com/svelteness/kit-docs/commit/81317622cb03ae3d94184aec5fddf9a9a2ce022c))
+
+
+
 ## [0.22.4](https://github.com/svelteness/kit-docs/compare/v0.22.3...v0.22.4) (2022-04-26)
 
 
