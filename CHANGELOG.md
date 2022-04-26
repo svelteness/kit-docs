@@ -1,3 +1,12 @@
+## [0.22.1](https://github.com/svelteness/kit-docs/compare/v0.22.0...v0.22.1) (2022-04-26)
+
+
+### Bug Fixes
+
+* popover has excessive top empty space ([41bca4c](https://github.com/svelteness/kit-docs/commit/41bca4c67dd7630fd4a5c132978cbecb1267b2e0))
+
+
+
 # [0.22.0](https://github.com/svelteness/kit-docs/compare/v0.21.3...v0.22.0) (2022-04-26)
 
 
