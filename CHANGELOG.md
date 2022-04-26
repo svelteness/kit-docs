@@ -1,3 +1,12 @@
+## [0.22.6](https://github.com/svelteness/kit-docs/compare/v0.22.5...v0.22.6) (2022-04-26)
+
+
+### Bug Fixes
+
+* deep clone parsed markdown result in handlers to avoid leakage ([85fd9a8](https://github.com/svelteness/kit-docs/commit/85fd9a8aabc2b032e5b1624d020ad45ae31be669))
+
+
+
 ## [0.22.5](https://github.com/svelteness/kit-docs/compare/v0.22.4...v0.22.5) (2022-04-26)
 
 
