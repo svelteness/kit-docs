@@ -112,6 +112,8 @@ export async function handleMetaRequest(slugParam: string, options: HandleMetaRe
   await runTransform(resolvedTransform);
   await runTransform(transform);
 
+  result.meta = transformerArgs[0].meta;
+
   return result;
 }
 
