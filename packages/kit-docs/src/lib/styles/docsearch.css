@@ -48,6 +48,10 @@
   @apply flex w-full items-center;
 }
 
+.DocSearch-SearchBar {
+  @apply pb-2;
+}
+
 .DocSearch-Search-Icon {
   @apply hidden;
 }
@@ -66,17 +70,7 @@
 }
 
 .DocSearch-Input {
-  @apply text-black p-0 pl-0;
-}
-
-.DocSearch-Reset:focus-visible {
-  outline: 1px auto Highlight;
-  outline: 1px auto -webkit-focus-ring-color;
-}
-
-.DocSearch-Reset.focus-visible {
-  outline: 1px auto Highlight;
-  outline: 1px auto -webkit-focus-ring-color;
+  @apply text-black p-0 pl-0 mr-2;
 }
 
 .DocSearch-Hit {
@@ -100,6 +94,10 @@
   @apply text-white;
 }
 
+.DocSearch-Cancel {
+  @apply hidden;
+}
+
 .DocSearch-Screen-Icon {
   @apply flex items-center justify-center pb-6;
 }
@@ -110,6 +108,13 @@
 
 .DocSearch-MagnifierLabel {
   @apply !hidden;
+}
+
+@media screen and (max-width: 750px) {
+  .DocSearch-Modal {
+    @apply max-w-[90vw] max-h-[75vh] !overflow-hidden top-4 left-0 right-0 mx-auto;
+    --docsearch-vh: 0.75vh !important;
+  }
 }
 
 @media only screen and (max-width: 991px) {
