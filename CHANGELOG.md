@@ -1,3 +1,12 @@
+# [0.22.0](https://github.com/svelteness/kit-docs/compare/v0.21.3...v0.22.0) (2022-04-26)
+
+
+### Features
+
+* new `slugifyFilePath` export from node dist ([d0de580](https://github.com/svelteness/kit-docs/commit/d0de580b61eeb88b8a37d6c9b3bef4b8bc1f1cda))
+
+
+
 ## [0.21.3](https://github.com/svelteness/kit-docs/compare/v0.21.2...v0.21.3) (2022-04-25)
 
 
