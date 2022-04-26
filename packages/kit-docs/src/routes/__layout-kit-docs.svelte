@@ -19,6 +19,7 @@
   import { page } from '$app/stores';
   import kitDocsLogo from '$img/kit-docs-logo.svg?raw';
   import socialCardLarge from '$img/social-card-large.jpg';
+  import poweredByVercel from '$img/powered-by-vercel.svg?raw';
 
   import {
     KitDocs,
@@ -87,6 +88,16 @@
     </div>
 
     <slot />
+
+    <div slot="main-bottom" class="footer">
+      <a
+        href="https://vercel.com/?utm_source=[svelteness]&utm_campaign=oss"
+        rel="external"
+        target="_blank"
+      >
+        {@html poweredByVercel}
+      </a>
+    </div>
   </KitDocsLayout>
 </KitDocs>
 
@@ -116,5 +127,12 @@
 
   .socials > :global(a) {
     padding: 0 0.5rem;
+  }
+
+  .footer {
+    display: flex;
+    justify-content: center;
+    margin-top: -1rem;
+    padding-bottom: 2.5rem;
   }
 </style>
