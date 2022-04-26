@@ -93,11 +93,10 @@ export async function handleMetaRequest(slugParam: string, options: HandleMetaRe
     parser = await createMarkdownParser();
   }
 
-  const result = parseMarkdown(parser, content, filePath);
+  let result = parseMarkdown(parser, content, filePath);
+  result = JSON.parse(JSON.stringify(result));
 
-  const transformerArgs: Parameters<MetaTransform> = [
-    { slug, filePath, parser, ...result, meta: { ...result.meta } },
-  ];
+  const transformerArgs: Parameters<MetaTransform> = [{ slug, filePath, parser, ...result }];
 
   const runTransform = async (transform?: HandleMetaRequestOptions['transform']) => {
     if (Array.isArray(transform)) {
@@ -111,8 +110,6 @@ export async function handleMetaRequest(slugParam: string, options: HandleMetaRe
 
   await runTransform(transform);
   await runTransform(resolvedTransform);
-
-  result.meta = transformerArgs[0].meta;
 
   return result;
 }
