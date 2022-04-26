@@ -94,7 +94,7 @@
       <div
         class="flex min-h-[60px] flex-col overflow-hidden rounded-md border border-gray-divider bg-gray-elevate shadow-md"
       >
-        <div class="flex items-center">
+        <div class="flex items-center z-20">
           <div class="flex-1" />
           <button
             class={clsx(
@@ -109,7 +109,7 @@
           </button>
         </div>
 
-        <div class="px-4 pt-0 pb-8">
+        <div class="px-4 pt-2.5 pb-6 -mt-[2.5rem]">
           <slot />
         </div>
       </div>
