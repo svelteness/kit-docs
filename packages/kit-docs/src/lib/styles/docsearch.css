@@ -132,4 +132,8 @@
   .DocSearch-Button-Keys {
     @apply hidden;
   }
+
+  .DocSearch-Button-Key {
+    @apply !ring-0;
+  }
 }
