@@ -1,3 +1,13 @@
+## [0.22.7](https://github.com/svelteness/kit-docs/compare/v0.22.6...v0.22.7) (2022-04-27)
+
+
+### Bug Fixes
+
+* md code plugin stripping redundant value from inline code ([ab0a599](https://github.com/svelteness/kit-docs/commit/ab0a599e45af6da3f21fa91d25f20682163210bd))
+* sidebar link icon field typed incorrectly ([bb4364a](https://github.com/svelteness/kit-docs/commit/bb4364a7c5f30da46b87d33513e3153ece9e41f6))
+
+
+
 ## [0.22.6](https://github.com/svelteness/kit-docs/compare/v0.22.5...v0.22.6) (2022-04-26)
 
 
