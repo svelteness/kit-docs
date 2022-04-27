@@ -10,7 +10,7 @@ import { resolveLanguage } from './resolveLanguage';
 export const codePlugin: PluginSimple = (parser) => {
   parser.renderer.rules.code_inline = (tokens, idx) => {
     const token = tokens[idx];
-    const code = token.content.replace(/:ignore$/, '');
+    const code = token.content;
     const props = [`code={${JSON.stringify(code)}}`].join(' ');
     return `<CodeInline ${props} />`;
   };
