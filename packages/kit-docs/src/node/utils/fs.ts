@@ -41,7 +41,7 @@ export function readDirDeepSync(dir: string, options: { maxDepth?: number; _dept
   return files;
 }
 
-const fileOrderRE = /\[\.\.\.(\d*?)(_|\])/;
+const fileOrderRE = /\[\.\.\.(\d*?)(_|=|\])/;
 const sortFilesCache = new LRUCache<string, number>({ max: 1024 });
 export function sortOrderedFiles(files: string[]) {
   return files.sort((fileA, fileB) => {
