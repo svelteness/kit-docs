@@ -1,3 +1,12 @@
+## [0.22.8](https://github.com/svelteness/kit-docs/compare/v0.22.7...v0.22.8) (2022-05-06)
+
+
+### Bug Fixes
+
+* ignore matcher syntax `=` when sorting ordered pages ([ba11d4a](https://github.com/svelteness/kit-docs/commit/ba11d4a786300c1bf9ae619b09d8e0bf50fbb3dd))
+
+
+
 ## [0.22.7](https://github.com/svelteness/kit-docs/compare/v0.22.6...v0.22.7) (2022-04-27)
 
 
