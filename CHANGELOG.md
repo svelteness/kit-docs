@@ -1,3 +1,12 @@
+## [0.22.10](https://github.com/svelteness/kit-docs/compare/v0.22.9...v0.22.10) (2022-05-08)
+
+
+### Bug Fixes
+
+* docsearch search icon shifts on hydration ([81cb109](https://github.com/svelteness/kit-docs/commit/81cb10902738fd91b082cc5d7911945646fb728f))
+
+
+
 ## [0.22.9](https://github.com/svelteness/kit-docs/compare/v0.22.8...v0.22.9) (2022-05-08)
 
 
