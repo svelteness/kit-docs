@@ -30,6 +30,10 @@
     createSidebarContext,
   } from '$lib';
 
+  // import '@docsearch/css';
+  // import '$lib/styles/docsearch.css';
+  // import { Algolia } from '$lib/algolia';
+
   /** @type {import('$lib').MarkdownMeta | null} */
   export let meta = null;
 
@@ -75,6 +79,13 @@
 
 <KitDocs {meta}>
   <KitDocsLayout {navbar} {sidebar}>
+    <!-- <Algolia
+      apiKey="599cec31baffa4868cae4e79f180729b"
+      appId="R2IYF7ETH7"
+      indexName="docsearch"
+      slot="search"
+    /> -->
+
     <div slot="navbar-left">
       <div class="logo">
         <Button href="/docs">

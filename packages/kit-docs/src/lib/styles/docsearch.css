@@ -119,7 +119,7 @@
 }
 
 .DocSearch-Form:focus-within .DocSearch-MagnifierLabel {
-  color: var(--docsearch-primary-color);
+  color: var(--kd-color-focus);
 }
 
 .DocSearch-MagnifierLabel {
@@ -136,7 +136,11 @@
 @media only screen and (max-width: 991px) {
   .DocSearch-Button {
     --docsearch-text-color: var(--kd-color-gray-soft);
-    @apply m-0 mr-2 border-0 bg-transparent p-0 hover:bg-transparent;
+    @apply m-0 flex w-12 h-12 items-center justify-center border-0 bg-transparent p-0 hover:bg-transparent;
+  }
+
+  .DocSearch-Button-Container {
+    width: auto;
   }
 
   .DocSearch-Button-Placeholder {
