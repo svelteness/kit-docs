@@ -1,3 +1,12 @@
+## [0.22.9](https://github.com/svelteness/kit-docs/compare/v0.22.8...v0.22.9) (2022-05-08)
+
+
+### Bug Fixes
+
+* slight docsearch styling improvements ([55e26a3](https://github.com/svelteness/kit-docs/commit/55e26a36ea43b9d9fb2d2825b3fa8c17ca22abc9))
+
+
+
 ## [0.22.8](https://github.com/svelteness/kit-docs/compare/v0.22.7...v0.22.8) (2022-05-06)
 
 
