@@ -53,7 +53,8 @@
 }
 
 .DocSearch-Search-Icon {
-  @apply hidden;
+  margin-top: -0.25rem;
+  margin-right: 0.5rem;
 }
 
 .DocSearch-Button-Placeholder {
@@ -70,7 +71,18 @@
 }
 
 .DocSearch-Input {
-  @apply text-black p-0 pl-0 mr-2;
+  @apply text-black p-0 pl-0 ml-1 mr-2;
+}
+
+.DocSearch-Form:focus-within {
+  @apply outline-none ring-2;
+  --tw-ring-color: var(--kd-color-focus);
+}
+
+.DocSearch-Input:focus,
+.DocSearch-Input:focus-visible {
+  outline: 0;
+  box-shadow: none;
 }
 
 .DocSearch-Hit {
@@ -106,8 +118,12 @@
   @apply pb-6;
 }
 
+.DocSearch-Form:focus-within .DocSearch-MagnifierLabel {
+  color: var(--docsearch-primary-color);
+}
+
 .DocSearch-MagnifierLabel {
-  @apply !hidden;
+  color: var(--docsearch-text-color);
 }
 
 @media screen and (max-width: 750px) {
@@ -129,6 +145,10 @@
 
   .DocSearch-Search-Icon {
     @apply inline-block h-6 w-6;
+  }
+
+  .DocSearch-Search-Icon:hover {
+    color: var(--kd-color-gray-inverse);
   }
 
   .DocSearch-Button-Keys {
