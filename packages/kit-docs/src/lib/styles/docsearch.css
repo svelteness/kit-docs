@@ -155,6 +155,10 @@
     color: var(--kd-color-gray-inverse);
   }
 
+  .DocSearch-Button {
+    @apply shadow-none;
+  }
+
   .DocSearch-Button-Keys {
     @apply hidden;
   }
