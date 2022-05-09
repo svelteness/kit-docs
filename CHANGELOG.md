@@ -1,3 +1,13 @@
+## [0.22.11](https://github.com/svelteness/kit-docs/compare/v0.22.10...v0.22.11) (2022-05-09)
+
+
+### Bug Fixes
+
+* default code fence title should be consistent (lowercase) ([f90062c](https://github.com/svelteness/kit-docs/commit/f90062c7aec6cf79a39e8e2493e09309c1eba6ed))
+* docsearch button has unintended shadow on small devices ([9aef3f2](https://github.com/svelteness/kit-docs/commit/9aef3f2ff5826804ec9a0609ad2fceba22811add))
+
+
+
 ## [0.22.10](https://github.com/svelteness/kit-docs/compare/v0.22.9...v0.22.10) (2022-05-08)
 
 

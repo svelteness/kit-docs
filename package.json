@@ -1,6 +1,6 @@
 {
   "name": "kit-docs-workspace",
-  "version": "0.22.10",
+  "version": "0.22.11",
   "private": true,
   "type": "module",
   "scripts": {

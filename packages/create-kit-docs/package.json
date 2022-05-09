@@ -1,6 +1,6 @@
 {
   "name": "@svelteness/create-kit-docs",
-  "version": "0.22.10",
+  "version": "0.22.11",
   "description": "Quickly scaffold a KitDocs application.",
   "license": "MIT",
   "type": "module",
