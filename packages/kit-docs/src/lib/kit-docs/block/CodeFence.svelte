@@ -68,7 +68,7 @@
 
   $: showTopBar = title || showCopyCode;
   $: hasTopbarTitle = title || ext;
-  $: topbarTitle = title ?? (ext === 'sh' ? 'terminal' : ext?.toUpperCase());
+  $: topbarTitle = title ?? (ext === 'sh' ? 'terminal' : ext);
 </script>
 
 <div
