@@ -1,3 +1,12 @@
+## [0.22.12](https://github.com/svelteness/kit-docs/compare/v0.22.11...v0.22.12) (2022-05-18)
+
+
+### Bug Fixes
+
+* catch potential error on missing meta data ([#27](https://github.com/svelteness/kit-docs/issues/27)) ([8cb923a](https://github.com/svelteness/kit-docs/commit/8cb923a8b780e975a9a96b54f443db5d5e5f0c57))
+
+
+
 ## [0.22.11](https://github.com/svelteness/kit-docs/compare/v0.22.10...v0.22.11) (2022-05-09)
 
 
