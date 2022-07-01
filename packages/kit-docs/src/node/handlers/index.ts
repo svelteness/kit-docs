@@ -15,6 +15,7 @@ import {
 import { readDirDeepSync, sortOrderedFiles } from '../utils/fs';
 import { kebabToTitleCase } from '../utils/string';
 import { isString } from '../utils/unit';
+import { slash } from '../utils/path';
 
 const CWD = process.cwd();
 const ROUTES_DIR = path.resolve(CWD, 'src/routes');
@@ -200,7 +201,7 @@ export async function handleSidebarRequest(
 
   for (const filePath of filePaths) {
     const filename = path.basename(filePath);
-    const relativeFilePath = path.relative(ROUTES_DIR, filePath);
+    const relativeFilePath = slash(path.relative(ROUTES_DIR, filePath));
     const dirs = path.dirname(relativeFilePath).split('/');
     const cleanPath = cleanFilePath(filePath);
     const cleanDirs = path.dirname(cleanPath).split('/');
@@ -384,7 +385,7 @@ export function resolveSlug(slug: string, options: ResolveSlugOptions = {}): str
  * @example `src/routes/docs/[...1getting-started]/[...1]intro.md` = `docs/getting-started/intro.md`
  */
 export function cleanFilePath(filePath: string) {
-  const relativePath = path.relative(ROUTES_DIR, filePath);
+  const relativePath = slash(path.relative(ROUTES_DIR, filePath));
   return relativePath.replace(restParamsRE, '').replace(layoutNameRE, path.extname(filePath));
 }
 
