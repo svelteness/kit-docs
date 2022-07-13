@@ -1,3 +1,12 @@
+# [0.23.0](https://github.com/svelteness/kit-docs/compare/v0.22.12...v0.23.0) (2022-07-13)
+
+
+### Bug Fixes
+
+* update to match latest svelte-kit ([22d6a83](https://github.com/svelteness/kit-docs/commit/22d6a8350212c3aa2efc0b70cb29b219f16bed91)), closes [#50](https://github.com/svelteness/kit-docs/issues/50) [#51](https://github.com/svelteness/kit-docs/issues/51)
+
+
+
 ## [0.22.12](https://github.com/svelteness/kit-docs/compare/v0.22.11...v0.22.12) (2022-05-18)
 
 
