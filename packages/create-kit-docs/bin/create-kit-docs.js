@@ -37,7 +37,7 @@ async function main() {
     console.log(`\n[kit-docs]: target directory is empty, creating new SvelteKit app.\n`);
 
     try {
-      const child = spawn('npm', ['init', 'svelte@next', rootDirName ?? '.'], {
+      const child = spawn('npm', ['create', 'svelte', rootDirName ?? '.'], {
         stdio: 'inherit',
         shell: true,
       });
@@ -63,7 +63,7 @@ async function main() {
   }
 
   /** @type {RegExp[]} */
-  let overwrite = [/svelte\.config\.js/, /src\/routes\//];
+  let overwrite = [/svelte\.config\.js/, /vite\.config\.js/, /src\/routes\//];
 
   if (!isTargetDirEmpty) {
     /** @type {{ ok: boolean }} */
@@ -71,6 +71,14 @@ async function main() {
       type: 'confirm',
       name: 'ok',
       message: `Overwrite \`svelte.config.js\`?`,
+      initial: false,
+    });
+
+    /** @type {{ ok: boolean }} */
+    const { ok: viteConfig } = await enquirer.prompt({
+      type: 'confirm',
+      name: 'ok',
+      message: `Overwrite \`vite.config.js\`?`,
       initial: false,
     });
 
@@ -83,7 +91,11 @@ async function main() {
     });
 
     overwrite = /** @type {RegExp[]} */ (
-      [svelteConfig && /svelte\.config\.js/, routes && /src\/routes\//].filter(Boolean)
+      [
+        svelteConfig && /svelte\.config\.js/,
+        viteConfig && /vite\.config\.js/,
+        routes && /src\/routes\//,
+      ].filter(Boolean)
     );
   }
 
@@ -92,13 +104,13 @@ async function main() {
 
   const deps = {
     '@iconify-json/ri': '^1.1.1',
-    '@sveltejs/adapter-auto': 'next',
-    '@sveltejs/kit': 'next',
+    '@sveltejs/adapter-auto': '^1.0.0-next.57',
+    '@sveltejs/kit': '^1.0.0-next.370',
     '@svelteness/kit-docs': `^${version}`,
-    clsx: '^1.1.1',
-    'unplugin-icons': '^0.13.4',
-    shiki: '^0.10.1',
-    svelte: '^3.44.0',
+    clsx: '^1.1.0',
+    'unplugin-icons': '^0.13.0',
+    shiki: '^0.10.0',
+    svelte: '^3.49.0',
   };
 
   if (!pkg.devDependencies) {
@@ -161,7 +173,7 @@ async function main() {
     if (!/svelteness::color-scheme/.test(fileContent)) {
       fs.writeFileSync(
         appHTMLPath,
-        fileContent.replace(/%svelte.head%/, `${colorSchemeScript}\n    %svelte.head%`),
+        fileContent.replace(/%sveltekit.head%/, `${colorSchemeScript}\n    %sveltekit.head%`),
       );
     }
   }

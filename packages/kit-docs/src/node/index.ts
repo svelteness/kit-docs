@@ -4,3 +4,4 @@ export * from './kit-docs-plugin';
 export * from './markdown-plugin';
 export * from './markdown-plugin/parser';
 export { kebabToTitleCase } from './utils/string';
+export { kitDocsPlugin as default } from './kit-docs-plugin';
