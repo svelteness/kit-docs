@@ -105,7 +105,7 @@ async function main() {
   const deps = {
     '@iconify-json/ri': '^1.1.1',
     '@sveltejs/adapter-auto': '^1.0.0-next.57',
-    '@sveltejs/kit': '^1.0.0-next.370',
+    '@sveltejs/kit': '^1.0.0-next.371',
     '@svelteness/kit-docs': `^${version}`,
     clsx: '^1.1.0',
     'unplugin-icons': '^0.13.0',
