@@ -37,7 +37,7 @@ async function main() {
     console.log(`\n[kit-docs]: target directory is empty, creating new SvelteKit app.\n`);
 
     try {
-      const child = spawn('npm', ['create', 'svelte', rootDirName ?? '.'], {
+      const child = spawn('npm', ['create', 'svelte@2.0.0-next.147', rootDirName ?? '.'], {
         stdio: 'inherit',
         shell: true,
       });
