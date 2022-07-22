@@ -143,13 +143,14 @@ async function main() {
   }
 
   const appDTSPath = path.resolve(targetDir, 'src/app.d.ts');
-  const appDTSContent = fs.readFileSync(appDTSPath).toString();
-
-  if (!/@svelteness\/kit-docs\/globals/.test(appDTSContent)) {
-    fs.writeFileSync(
-      appDTSPath,
-      appDTSContent.replace(/\n/, `\n/// <reference types="@svelteness/kit-docs/globals" />\n`),
-    );
+  if (fs.existsSync(appDTSPath)) {
+    const appDTSContent = fs.readFileSync(appDTSPath).toString();
+    if (!/@svelteness\/kit-docs\/globals/.test(appDTSContent)) {
+      fs.writeFileSync(
+        appDTSPath,
+        appDTSContent.replace(/\n/, `\n/// <reference types="@svelteness/kit-docs/globals" />\n`),
+      );
+    }
   }
 
   if (defaultTheme) {
@@ -204,7 +205,7 @@ async function main() {
  * @returns {boolean}
  */
 function validateDirectory(targetDir) {
-  const requiredFiles = ['package.json', 'src/app.d.ts', 'src/app.html'];
+  const requiredFiles = ['package.json', 'src/app.html'];
 
   for (const file of requiredFiles) {
     const filePath = path.resolve(targetDir, 'package.json');
