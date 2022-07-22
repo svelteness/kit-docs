@@ -1,5 +1,4 @@
 import type { Load } from '@sveltejs/kit';
-import { get } from 'svelte/store';
 
 import type { ResolvedSidebarConfig } from '$lib/components/layout/contexts.js';
 import type { MarkdownMeta } from '$lib/stores/kitDocs.js';

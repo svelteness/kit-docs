@@ -104,13 +104,14 @@ async function main() {
 
   const deps = {
     '@iconify-json/ri': '^1.1.1',
-    '@sveltejs/adapter-auto': '^1.0.0-next.57',
-    '@sveltejs/kit': '^1.0.0-next.370',
+    '@sveltejs/adapter-auto': 'next',
+    '@sveltejs/kit': 'next',
     '@svelteness/kit-docs': `^${version}`,
     clsx: '^1.1.0',
-    'unplugin-icons': '^0.13.0',
+    'unplugin-icons': '^0.14.0',
     shiki: '^0.10.0',
     svelte: '^3.49.0',
+    vite: '^3.0.0',
   };
 
   if (!pkg.devDependencies) {

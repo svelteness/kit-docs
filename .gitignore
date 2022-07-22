@@ -2,6 +2,7 @@
 turbo-graph*
 
 dist/
+sandbox/
 .svelte-kit/
 
 demo/build/
