@@ -1,3 +1,13 @@
+# [0.24.0](https://github.com/svelteness/kit-docs/compare/v0.23.0...v0.24.0) (2022-07-22)
+
+
+### Bug Fixes
+
+* `get` -> `GET` ([0570a8b](https://github.com/svelteness/kit-docs/commit/0570a8b8e21b0a3f9ea3446bbdab507fa504cbcc))
+* **create:** dont throw error if `app.d.ts` missing ([a8c840a](https://github.com/svelteness/kit-docs/commit/a8c840a4f1ce1a363cf74203d2bcce14089b3753)), closes [#57](https://github.com/svelteness/kit-docs/issues/57)
+
+
+
 # [0.23.0](https://github.com/svelteness/kit-docs/compare/v0.22.12...v0.23.0) (2022-07-13)
 
 
