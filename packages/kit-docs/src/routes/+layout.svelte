@@ -10,20 +10,13 @@
   import socialCardLarge from '$img/social-card-large.jpg';
   import poweredByVercel from '$img/powered-by-vercel.svg?raw';
 
-  import {
-    KitDocs,
-    KitDocsLayout,
-    Button,
-    SocialLink,
-    createKitDocsLoader,
-    createSidebarContext,
-  } from '$lib';
+  import { KitDocs, KitDocsLayout, Button, SocialLink, createSidebarContext } from '$lib';
 
   // import '@docsearch/css';
   // import '$lib/styles/docsearch.css';
   // import { Algolia } from '$lib/algolia';
   /** @type {import('./$types').LayoutData} */
-  export let data = null;
+  export let data;
 
   let { meta, sidebar } = data;
   $: ({ meta, sidebar } = data);
@@ -96,6 +89,7 @@
         {@html poweredByVercel}
       </a>
     </div>
+    {JSON.stringify(data)}
   </KitDocsLayout>
 </KitDocs>
 

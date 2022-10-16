@@ -1,10 +1,10 @@
 import { type PluginSimple } from 'markdown-it';
-import { getHighlighter, type HighlighterOptions, renderToHtml } from 'shiki';
+import { type HighlighterOptions, getHighlighter, renderToHtml } from 'shiki';
 
 export const createShikiPlugin = async (options?: HighlighterOptions) => {
   const highlighter = await getHighlighter({
     theme: 'material-palenight',
-    langs: [],
+    langs: ["bash", "javascript", "typescript", "svelte", "markdown", "html", "diff", "css"],
     ...options,
   });
 

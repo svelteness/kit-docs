@@ -30,6 +30,7 @@ export async function loadKitDocsMeta(
   const slug = event.url.pathname;
   try {
     const url = `/kit-docs/${slug === '/' ? 'index' : slugToRequestParam(slug.replace(/\.html$/, ''))}`;
+
     const res = await event.fetch(url + '.meta.json');
     return await res.json();
   } catch (e) {

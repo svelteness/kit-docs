@@ -350,7 +350,7 @@ export function resolveSlug(slug: string, options: ResolveSlugOptions = {}): str
     .map((s) => `*${s}`)
     .join('/')}`;
 
-  const glob = `${fileGlobBase}/*${path.basename(slug)}*${globExt}`;
+  const glob = `${fileGlobBase}/*${path.basename(slug)}/*${globExt}`;
   let file = globbySync(glob)?.[0];
 
   if (!file) {
@@ -368,7 +368,7 @@ export function resolveSlug(slug: string, options: ResolveSlugOptions = {}): str
     .replace(path.extname(file), '')
     .replace(/\/index$/, slug === 'index' ? '/index' : '');
 
-  if (matchedSlug !== `src/routes/${slug}` || !exts.some((ext) => file.endsWith(ext))) {
+  if (matchedSlug !== `src/routes/${slug}/+page` || !exts.some((ext) => file.endsWith(ext))) {
     return null;
   }
   return file;
