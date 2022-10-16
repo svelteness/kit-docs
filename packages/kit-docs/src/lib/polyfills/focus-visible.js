@@ -1,6 +1,6 @@
 // @ts-nocheck
 
-import { browser } from '$app/env';
+import { browser } from '$app/environment';
 
 /**
  * Applies the :focus-visible polyfill at the given scope.

@@ -1,4 +1,4 @@
-import { createFilter, type FilterPattern } from '@rollup/pluginutils';
+import { type FilterPattern, createFilter } from '@rollup/pluginutils';
 import type { RequestHandler } from '@sveltejs/kit';
 import { readFileSync } from 'fs';
 import { globbySync } from 'globby';
@@ -6,10 +6,10 @@ import kleur from 'kleur';
 import path from 'path';
 
 import {
-  createMarkdownParser,
-  getFrontmatter,
   type MarkdownParser,
   type ParsedMarkdownResult,
+  createMarkdownParser,
+  getFrontmatter,
   parseMarkdown,
 } from '../markdown-plugin/parser';
 import { readDirDeepSync, sortOrderedFiles } from '../utils/fs';
@@ -55,9 +55,12 @@ export type MetaTransform = (
  * Careful this function will throw if it can't match the `slug` param to a file.
  */
 export async function handleMetaRequest(slugParam: string, options: HandleMetaRequestOptions = {}) {
+
   const { filter, extensions, resolve, transform } = options;
 
   const slug = paramToSlug(slugParam);
+
+
   const resolverArgs: Parameters<FileResolver> = [slug, { resolve: resolveSlug }];
 
   let resolution: ResolvedFile | FalsyValue = null;
@@ -77,7 +80,6 @@ export async function handleMetaRequest(slugParam: string, options: HandleMetaRe
 
   const resolvedFile = isString(resolution) ? resolution : resolution?.file;
   const resolvedTransform = isString(resolution) ? null : resolution?.transform;
-
   if (!resolvedFile) {
     throw Error('Could not find file.');
   }
@@ -86,9 +88,9 @@ export async function handleMetaRequest(slugParam: string, options: HandleMetaRe
     return null;
   }
 
+
   const filePath = path.isAbsolute(resolvedFile) ? resolvedFile : path.resolve(CWD, resolvedFile);
   const content = readFileSync(filePath).toString();
-
   if (!parser) {
     parser = await createMarkdownParser();
   }
@@ -110,7 +112,6 @@ export async function handleMetaRequest(slugParam: string, options: HandleMetaRe
 
   await runTransform(transform);
   await runTransform(resolvedTransform);
-
   return result;
 }
 
@@ -132,13 +133,12 @@ export function createMetaRequestHandler(
 
   return async ({ params }) => {
     try {
-      const res = await handleMetaRequest(params.slug, { filter, ...handlerOptions });
+      const res = await handleMetaRequest(params.slug as string, { filter, ...handlerOptions });
 
       if (!res) {
-        return { body: null };
+        return new Response(null);
       }
-
-      return { body: res.meta as any };
+      return new Response(JSON.stringify(res.meta));
     } catch (e) {
       if (debug) {
         console.log(kleur.bold(kleur.red(`\n[kit-docs]: failed to handle meta request.`)));
@@ -146,7 +146,7 @@ export function createMetaRequestHandler(
       }
     }
 
-    return { body: null };
+    return new Response(null);
   };
 }
 
@@ -203,12 +203,11 @@ export async function handleSidebarRequest(
     const relativeFilePath = path.relative(ROUTES_DIR, filePath);
     const dirs = path.dirname(relativeFilePath).split('/');
     const cleanPath = cleanFilePath(filePath);
-    const cleanDirs = path.dirname(cleanPath).split('/');
+    const cleanDirs = path.dirname(cleanPath).split('/').slice(0, -1);
     const cleanDirsReversed = cleanDirs.slice().reverse();
     const isIndexFile = /\/index\./.test(cleanPath);
     const isShallowRoot = cleanDirs.length === 1;
     const isRoot = isShallowRoot || deepMatchRE.test(dirs[1]);
-
     let isDeepMatch = false;
     let isValidDeepMatch = false;
 
@@ -271,7 +270,7 @@ export async function handleSidebarRequest(
 
     const category = formatCategory(
       (await resolveCategory?.({ ...resolverData, resolve: resolveDefaultCategory })) ??
-        resolveDefaultCategory(),
+      resolveDefaultCategory(),
     );
 
     const title =
@@ -313,12 +312,11 @@ export function createSidebarRequestHandler(
 
   return async ({ params }) => {
     try {
-      const { links } = await handleSidebarRequest(params.dir, {
+      const { links } = await handleSidebarRequest(params.dir as string, {
         filter,
         ...handlerOptions,
       });
-
-      return { body: { links } };
+      return new Response(JSON.stringify({ links }));
     } catch (e) {
       if (debug) {
         console.log(kleur.bold(kleur.red(`\n[kit-docs]: failed to handle sidebar request.`)));
@@ -326,7 +324,7 @@ export function createSidebarRequestHandler(
       }
     }
 
-    return { body: null };
+    return new Response(null);
   };
 }
 
@@ -373,7 +371,6 @@ export function resolveSlug(slug: string, options: ResolveSlugOptions = {}): str
   if (matchedSlug !== `src/routes/${slug}` || !exts.some((ext) => file.endsWith(ext))) {
     return null;
   }
-
   return file;
 }
 
@@ -402,5 +399,5 @@ export function paramToDir(param: string) {
  */
 export function slugifyFilePath(filePath: string) {
   const cleanPath = cleanFilePath(filePath);
-  return `/${cleanPath.replace(path.extname(cleanPath), '').replace(/\/?index$/, '')}`;
+  return `/${cleanPath.replace(path.extname(cleanPath), '').replace(/\/?index$/, '').replace(/\/\+page$/, '')}`;
 }

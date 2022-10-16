@@ -1,14 +1,3 @@
-<script context="module">
-  export const prerender = true;
-
-  export const load = createKitDocsLoader({
-    sidebar: {
-      '/': null,
-      '/docs': '/docs',
-    },
-  });
-</script>
-
 <script>
   import '$lib/polyfills/index';
   import '$lib/styles/normalize.css';
@@ -33,12 +22,11 @@
   // import '@docsearch/css';
   // import '$lib/styles/docsearch.css';
   // import { Algolia } from '$lib/algolia';
+  /** @type {import('./$types').LayoutData} */
+  export let data = null;
 
-  /** @type {import('$lib').MarkdownMeta | null} */
-  export let meta = null;
-
-  /** @type {import('$lib').ResolvedSidebarConfig | null} */
-  export let sidebar = null;
+  let { meta, sidebar } = data;
+  $: ({ meta, sidebar } = data);
 
   /** @type {import('$lib').NavbarConfig} */
   const navbar = {
@@ -76,7 +64,6 @@
     {/if}
   {/key}
 </svelte:head>
-
 <KitDocs {meta}>
   <KitDocsLayout {navbar} {sidebar}>
     <!-- <Algolia

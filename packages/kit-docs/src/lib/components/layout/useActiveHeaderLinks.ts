@@ -1,7 +1,7 @@
 import { onMount, tick } from 'svelte';
 import { get } from 'svelte/store';
 
-import { browser } from '$app/env';
+import { browser } from '$app/environment';
 import { goto } from '$app/navigation';
 import { isExtraLargeScreen } from '$lib/stores/isLargeScreen';
 import { kitDocs } from '$lib/stores/kitDocs.js';

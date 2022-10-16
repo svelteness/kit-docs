@@ -162,6 +162,7 @@ export function kitDocsMarkdownPlugin(options: MarkdownPluginOptions = {}): Plug
     transform(code, id) {
       if (filter(id)) {
         const filePath = normalizePath(id);
+
         const { component } = parseMarkdownToSvelte(parser, code, filePath, parseOptions());
         files.add(filePath);
         return component;

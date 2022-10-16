@@ -1,4 +1,5 @@
-import type { Load } from '@sveltejs/kit';
+import type { LoadEvent } from '@sveltejs/kit';
+import { resourceLimits } from 'worker_threads';
 
 import type { ResolvedSidebarConfig } from '$lib/components/layout/contexts.js';
 import type { MarkdownMeta } from '$lib/stores/kitDocs.js';
@@ -24,15 +25,12 @@ export type LoaderFetchFn = (info: RequestInfo, init?: RequestInit) => Promise<R
  * @param input - SvelteKit loader input.
  */
 export async function loadKitDocsMeta(
-  slug: string,
-  { fetch }: { fetch: LoaderFetchFn },
+  event: LoadEvent,
 ): Promise<MarkdownMeta | null> {
+  const slug = event.url.pathname;
   try {
-    const res = await fetch(
-      `/kit-docs/${
-        slug === '/' ? 'index' : slugToRequestParam(slug.replace(/\.html$/, ''))
-      }.meta.json`,
-    );
+    const url = `/kit-docs/${slug === '/' ? 'index' : slugToRequestParam(slug.replace(/\.html$/, ''))}`;
+    const res = await event.fetch(url + '.meta.json');
     return await res.json();
   } catch (e) {
     return null;
@@ -50,16 +48,15 @@ export type SidebarLoaderPath = string | { [path: string]: string };
  */
 export async function loadKitDocsSidebar(
   path: SidebarLoaderPath,
-  { url, fetch }: { url: URL; fetch: LoaderFetchFn },
+  event: LoadEvent,
 ): Promise<ResolvedSidebarConfig | null> {
-  const matchedPath = matchSidebarPath(url, path);
-
+  const matchedPath = matchSidebarPath(event.url, path);
   if (!matchedPath) {
     return null;
   }
 
   try {
-    const res = await fetch(`/kit-docs/${slugToRequestParam(matchedPath)}.sidebar.json`);
+    const res = await event.fetch(`/kit-docs/${slugToRequestParam(matchedPath)}.sidebar.json`);
     return res.json();
   } catch (e) {
     return null;
@@ -70,7 +67,7 @@ export function matchSidebarPath(url: URL, path: SidebarLoaderPath): string | nu
   if (isString(path)) return path;
 
   const currentPath = url.pathname;
-  // Match deep paths first.
+  // Match deep paths first.createKitDocsLoader
   const sortedPaths = Object.keys(path).sort((a, b) => b.length - a.length);
 
   for (const possiblePath of sortedPaths) {
@@ -102,20 +99,17 @@ export type KitDocsLoaderOptions = {
   sidebar?: SidebarLoaderPath;
 };
 
-export function createKitDocsLoader(options: KitDocsLoaderOptions = {}): Load {
-  return async ({ url, fetch }): Promise<LoadKitDocsResult> => {
-    const meta = await loadKitDocsMeta(url.pathname, { fetch });
-    return {
-      props: options.sidebar
-        ? { meta, sidebar: await loadKitDocsSidebar(options.sidebar, { url, fetch }) }
-        : { meta },
+export function createKitDocsLoader(options: KitDocsLoaderOptions = {}) {
+  return async (event: LoadEvent): Promise<LoadKitDocsResult> => {
+    const meta = await loadKitDocsMeta(event) as MarkdownMeta;
+    const result = {
+      ...(options.sidebar ? { meta, sidebar: await loadKitDocsSidebar(options.sidebar, event) as ResolvedSidebarConfig } : { meta }),
     };
+    return result;
   };
 }
 
 export type LoadKitDocsResult = {
-  props: {
-    meta: MarkdownMeta;
-    sidebar?: ResolvedSidebarConfig;
-  };
+  meta: MarkdownMeta;
+  sidebar?: ResolvedSidebarConfig;
 };

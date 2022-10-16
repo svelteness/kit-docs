@@ -106,9 +106,9 @@ export function normalizeSidebarConfig(config?: SidebarConfig): ResolvedSidebarC
     for (const categoryLink of categoryLinks) {
       const link: SidebarLink = isString(categoryLink)
         ? {
-            title: kebabToTitleCase(categoryLink),
-            slug: `${baseUrl}/${categorySlug}/${categoryLink}`,
-          }
+          title: kebabToTitleCase(categoryLink),
+          slug: `${baseUrl}/${categorySlug}/${categoryLink}`,
+        }
         : categoryLink;
 
       if (!links[categoryName]) links[categoryName] = [];
