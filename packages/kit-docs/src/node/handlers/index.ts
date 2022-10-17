@@ -122,6 +122,7 @@ export type CreateMetaRequestHandlerOptions = {
 } & HandleMetaRequestOptions;
 
 export function createMetaRequestHandler(
+  wrapResponse = (x) => x,
   options: CreateMetaRequestHandlerOptions = {},
 ): RequestHandler {
   const { include, exclude, debug, ...handlerOptions } = options;
@@ -136,9 +137,9 @@ export function createMetaRequestHandler(
       const res = await handleMetaRequest(params.slug as string, { filter, ...handlerOptions });
 
       if (!res) {
-        return new Response(null);
+        return wrapResponse(null);
       }
-      return new Response(JSON.stringify(res.meta));
+      return wrapResponse(JSON.stringify(res.meta));
     } catch (e) {
       if (debug) {
         console.log(kleur.bold(kleur.red(`\n[kit-docs]: failed to handle meta request.`)));
@@ -146,7 +147,7 @@ export function createMetaRequestHandler(
       }
     }
 
-    return new Response(null);
+    return wrapResponse(null);
   };
 }
 
@@ -301,7 +302,9 @@ export type CreateSidebarRequestHandlerOptions = {
 } & HandleSidebarRequestOptions;
 
 export function createSidebarRequestHandler(
+  wrapResponse = (x) => x,
   options: CreateSidebarRequestHandlerOptions = {},
+
 ): RequestHandler {
   const { include, debug, exclude, ...handlerOptions } = options;
 
@@ -316,7 +319,7 @@ export function createSidebarRequestHandler(
         filter,
         ...handlerOptions,
       });
-      return new Response(JSON.stringify({ links }));
+      return wrapResponse(JSON.stringify({ links }));
     } catch (e) {
       if (debug) {
         console.log(kleur.bold(kleur.red(`\n[kit-docs]: failed to handle sidebar request.`)));
@@ -324,7 +327,7 @@ export function createSidebarRequestHandler(
       }
     }
 
-    return new Response(null);
+    return wrapResponse(null);
   };
 }
 

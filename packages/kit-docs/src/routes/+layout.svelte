@@ -89,7 +89,6 @@
         {@html poweredByVercel}
       </a>
     </div>
-    {JSON.stringify(data)}
   </KitDocsLayout>
 </KitDocs>
 
