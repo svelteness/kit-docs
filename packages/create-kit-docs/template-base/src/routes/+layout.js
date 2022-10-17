@@ -1,4 +1,4 @@
-import { createKitDocsLoader } from '$lib/loaders';
+import { createKitDocsLoader } from '@svelteness/kit-docs';
 
 export const prerender = true;
 

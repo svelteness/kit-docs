@@ -15,10 +15,10 @@
   // import '@docsearch/css';
   // import '$lib/styles/docsearch.css';
   // import { Algolia } from '$lib/algolia';
+
   /** @type {import('./$types').LayoutData} */
   export let data;
 
-  let { meta, sidebar } = data;
   $: ({ meta, sidebar } = data);
 
   /** @type {import('$lib').NavbarConfig} */
@@ -81,6 +81,7 @@
     <slot />
 
     <div slot="main-bottom" class="footer">
+      <!-- svelte-ignore security-anchor-rel-noreferrer -->
       <a
         href="https://vercel.com/?utm_source=svelteness&utm_campaign=oss"
         rel="external"

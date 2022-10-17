@@ -46,7 +46,7 @@ export const linksPlugin: PluginSimple = (parser) => {
 
         const slug = relative(ROUTES_DIR, absolutePath)
           .replace(restParamsRe, '')
-          .replace(/\/index/, '')
+          .replace(/\/\+page/, '')
           .replace(/\.(md|html)/, '');
 
         // Set new path.

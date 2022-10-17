@@ -14,11 +14,10 @@
 
   import { KitDocs, createKitDocsLoader, createSidebarContext } from '@svelteness/kit-docs';
 
-  /** @type {import('@svelteness/kit-docs').MarkdownMeta | null} */
-  export let meta = null;
+  /** @type {import('./$types').LayoutData} */
+  export let data;
 
-  /** @type {import('@svelteness/kit-docs').ResolvedSidebarConfig | null} */
-  export let sidebar = null;
+  $: ({ meta, sidebar } = data);
 
   const { activeCategory } = createSidebarContext(sidebar);
 

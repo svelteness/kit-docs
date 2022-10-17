@@ -12,6 +12,11 @@ const config = {
       entries: ['*'],
     },
   },
+
+  package: {
+    dir: 'client',
+    emitTypes: true,
+  },
 };
 
 export default config;
