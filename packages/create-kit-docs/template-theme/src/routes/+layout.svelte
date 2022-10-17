@@ -1,14 +1,3 @@
-<script context="module">
-  export const prerender = true;
-
-  export const load = createKitDocsLoader({
-    sidebar: {
-      '/': null,
-      '/docs': '/docs',
-    },
-  });
-</script>
-
 <script>
   import '@svelteness/kit-docs/client/polyfills/index.js';
   import '@svelteness/kit-docs/client/styles/normalize.css';
@@ -19,19 +8,12 @@
   import { page } from '$app/stores';
   import SvelteLogo from '$img/svelte-horizontal.svg?raw';
 
-  import {
-    Button,
-    KitDocs,
-    KitDocsLayout,
-    createKitDocsLoader,
-    createSidebarContext,
-  } from '@svelteness/kit-docs';
+  import { Button, KitDocs, KitDocsLayout, createSidebarContext } from '@svelteness/kit-docs';
 
-  /** @type {import('@svelteness/kit-docs').MarkdownMeta | null} */
-  export let meta = null;
+  /** @type {import('./$types').LayoutData} */
+  export let data;
 
-  /** @type {import('@svelteness/kit-docs').ResolvedSidebarConfig | null} */
-  export let sidebar = null;
+  $: ({ meta, sidebar } = data);
 
   /** @type {import('@svelteness/kit-docs').NavbarConfig} */
   const navbar = {

@@ -4,15 +4,11 @@ export async function get() {
   const filePaths = Object.keys(await import.meta.glob('./**/*.{svelte,md}'));
 
   const urls = filePaths
-    .filter((filePath) => {
-      const fileName = path.basename(filePath);
-      return !fileName.startsWith('_');
-    })
     .map((filePath) =>
       filePath
         .slice(2)
         .replace(path.extname(filePath), '')
-        .replace(/index$/, ''),
+        .replace(/\+page$/, ''),
     )
     .map(
       (url) => `

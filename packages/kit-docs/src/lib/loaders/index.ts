@@ -24,12 +24,12 @@ export type LoaderFetchFn = (info: RequestInfo, init?: RequestInit) => Promise<R
  * built (e.g., `docs/introduction`).
  * @param input - SvelteKit loader input.
  */
-export async function loadKitDocsMeta(
-  event: LoadEvent,
-): Promise<MarkdownMeta | null> {
+export async function loadKitDocsMeta(event: LoadEvent): Promise<MarkdownMeta | null> {
   const slug = event.url.pathname;
   try {
-    const url = `/kit-docs/${slug === '/' ? 'index' : slugToRequestParam(slug.replace(/\.html$/, ''))}`;
+    const url = `/kit-docs/${
+      slug === '/' ? 'index' : slugToRequestParam(slug.replace(/\.html$/, ''))
+    }`;
 
     const res = await event.fetch(url + '.meta.json');
     return await res.json();
@@ -38,7 +38,7 @@ export async function loadKitDocsMeta(
   }
 }
 
-export type SidebarLoaderPath = string | { [path: string]: string };
+export type SidebarLoaderPath = string | { [path: string]: string | null };
 
 /**
  * @param path - A path relative to the `routes/` directory. Markdown files will be resolved from
@@ -52,9 +52,8 @@ export async function loadKitDocsSidebar(
   event: LoadEvent,
 ): Promise<ResolvedSidebarConfig | null> {
   const matchedPath = matchSidebarPath(event.url, path);
-  if (!matchedPath) {
-    return null;
-  }
+
+  if (!matchedPath) return null;
 
   try {
     const res = await event.fetch(`/kit-docs/${slugToRequestParam(matchedPath)}.sidebar.json`);
@@ -68,7 +67,8 @@ export function matchSidebarPath(url: URL, path: SidebarLoaderPath): string | nu
   if (isString(path)) return path;
 
   const currentPath = url.pathname;
-  // Match deep paths first.createKitDocsLoader
+
+  // Match deep paths first
   const sortedPaths = Object.keys(path).sort((a, b) => b.length - a.length);
 
   for (const possiblePath of sortedPaths) {
@@ -102,9 +102,14 @@ export type KitDocsLoaderOptions = {
 
 export function createKitDocsLoader(options: KitDocsLoaderOptions = {}) {
   return async (event: LoadEvent): Promise<LoadKitDocsResult> => {
-    const meta = await loadKitDocsMeta(event) as MarkdownMeta;
+    const meta = (await loadKitDocsMeta(event)) as MarkdownMeta;
     const result = {
-      ...(options.sidebar ? { meta, sidebar: await loadKitDocsSidebar(options.sidebar, event) as ResolvedSidebarConfig } : { meta }),
+      ...(options.sidebar
+        ? {
+            meta,
+            sidebar: (await loadKitDocsSidebar(options.sidebar, event)) as ResolvedSidebarConfig,
+          }
+        : { meta }),
     };
     return result;
   };

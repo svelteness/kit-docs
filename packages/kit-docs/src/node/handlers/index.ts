@@ -55,11 +55,9 @@ export type MetaTransform = (
  * Careful this function will throw if it can't match the `slug` param to a file.
  */
 export async function handleMetaRequest(slugParam: string, options: HandleMetaRequestOptions = {}) {
-
   const { filter, extensions, resolve, transform } = options;
 
   const slug = paramToSlug(slugParam);
-
 
   const resolverArgs: Parameters<FileResolver> = [slug, { resolve: resolveSlug }];
 
@@ -87,7 +85,6 @@ export async function handleMetaRequest(slugParam: string, options: HandleMetaRe
   if (filter && !filter(`/${cleanFilePath(resolvedFile)}`)) {
     return null;
   }
-
 
   const filePath = path.isAbsolute(resolvedFile) ? resolvedFile : path.resolve(CWD, resolvedFile);
   const content = readFileSync(filePath).toString();
@@ -122,7 +119,6 @@ export type CreateMetaRequestHandlerOptions = {
 } & HandleMetaRequestOptions;
 
 export function createMetaRequestHandler(
-  wrapResponse = (x) => x,
   options: CreateMetaRequestHandlerOptions = {},
 ): RequestHandler {
   const { include, exclude, debug, ...handlerOptions } = options;
@@ -137,9 +133,9 @@ export function createMetaRequestHandler(
       const res = await handleMetaRequest(params.slug as string, { filter, ...handlerOptions });
 
       if (!res) {
-        return wrapResponse(null);
+        return new Response(null);
       }
-      return wrapResponse(JSON.stringify(res.meta));
+      return new Response(JSON.stringify(res.meta));
     } catch (e) {
       if (debug) {
         console.log(kleur.bold(kleur.red(`\n[kit-docs]: failed to handle meta request.`)));
@@ -147,7 +143,7 @@ export function createMetaRequestHandler(
       }
     }
 
-    return wrapResponse(null);
+    return new Response(null);
   };
 }
 
@@ -271,7 +267,7 @@ export async function handleSidebarRequest(
 
     const category = formatCategory(
       (await resolveCategory?.({ ...resolverData, resolve: resolveDefaultCategory })) ??
-      resolveDefaultCategory(),
+        resolveDefaultCategory(),
     );
 
     const title =
@@ -302,9 +298,7 @@ export type CreateSidebarRequestHandlerOptions = {
 } & HandleSidebarRequestOptions;
 
 export function createSidebarRequestHandler(
-  wrapResponse = (x) => x,
   options: CreateSidebarRequestHandlerOptions = {},
-
 ): RequestHandler {
   const { include, debug, exclude, ...handlerOptions } = options;
 
@@ -319,7 +313,8 @@ export function createSidebarRequestHandler(
         filter,
         ...handlerOptions,
       });
-      return wrapResponse(JSON.stringify({ links }));
+
+      return new Response(JSON.stringify({ links }));
     } catch (e) {
       if (debug) {
         console.log(kleur.bold(kleur.red(`\n[kit-docs]: failed to handle sidebar request.`)));
@@ -327,7 +322,7 @@ export function createSidebarRequestHandler(
       }
     }
 
-    return wrapResponse(null);
+    return new Response(null);
   };
 }
 
@@ -402,5 +397,8 @@ export function paramToDir(param: string) {
  */
 export function slugifyFilePath(filePath: string) {
   const cleanPath = cleanFilePath(filePath);
-  return `/${cleanPath.replace(path.extname(cleanPath), '').replace(/\/?index$/, '').replace(/\/\+page$/, '')}`;
+  return `/${cleanPath
+    .replace(path.extname(cleanPath), '')
+    .replace(/\/?index$/, '')
+    .replace(/\/\+page$/, '')}`;
 }
