@@ -4,7 +4,7 @@
     "baseUrl": ".",
     "outDir": "../../node",
     "declarationDir": "../../node-types",
-    "lib": ["es2019"]
+    "lib": ["es2019", "dom"]
   },
   "include": ["**/*.ts"]
 }
