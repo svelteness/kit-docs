@@ -202,8 +202,8 @@ export async function handleSidebarRequest(
     const cleanPath = cleanFilePath(filePath);
     const cleanDirs = path.dirname(cleanPath).split('/').slice(0, -1);
     const cleanDirsReversed = cleanDirs.slice().reverse();
-    const isIndexFile = /\/index\./.test(cleanPath);
-    const isShallowRoot = cleanDirs.length === 1;
+    const isIndexFile = /\/\+page\./.test(cleanPath);
+    const isShallowRoot = cleanDirs.length === 0;
     const isRoot = isShallowRoot || deepMatchRE.test(dirs[1]);
     let isDeepMatch = false;
     let isValidDeepMatch = false;
@@ -213,7 +213,7 @@ export async function handleSidebarRequest(
       isDeepMatch = deepMatchDir >= 0;
 
       const glob = (depth: number) =>
-        `src/routes/*${cleanDirs.slice(0, depth).join('/*')}/*index*${globExt}`;
+        `src/routes/*${cleanDirs.slice(0, depth).join('/*')}/*+page*${globExt}`;
 
       let file = isDeepMatch ? globbySync(glob(deepMatchDir + 1))?.[0] : null;
 

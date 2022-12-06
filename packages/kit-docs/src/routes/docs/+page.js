@@ -1,9 +1,8 @@
+import { redirect } from '@sveltejs/kit';
+
 export const prerender = true;
 
-/** @type {import("@sveltejs/kit").Load} */
+/** @type {import('./$types').PageLoad} */
 export function load() {
-  return {
-    status: 307,
-    redirect: '/docs/getting-started/introduction',
-  };
+  throw redirect(307, '/docs/getting-started/introduction');
 }
