@@ -24,12 +24,6 @@
   let { meta, sidebar } = data;
   $: ({ meta, sidebar } = data);
 
-  // /** @type {import('@svelteness/kit-docs').MarkdownMeta} */
-  // export let meta;
-
-  // /** @type {import('@svelteness/kit-docs').SidebarConfig} */
-  // export let sidebar;
-
   /** @type {import('@svelteness/kit-docs').NavbarConfig} */
   const navbar = {
     links: [
