@@ -260,8 +260,6 @@ It cannot appear at the top level of your markup; it must be inside an if or eac
 
 ```svelte
 <script>
-	throw new Error("@migration task: Add data prop (https://github.com/sveltejs/kit/discussions/5774#discussioncomment-3292707)");
-
 	export let count;
 </script>
 
@@ -301,8 +299,6 @@ If `this` has a nullish value, a warning will be logged in development mode.
 
 ```svelte
 <script>
-	throw new Error("@migration task: Add data prop (https://github.com/sveltejs/kit/discussions/5774#discussioncomment-3292707)");
-
 	let tag = 'div';
 	export let handler;
 </script>

@@ -411,8 +411,6 @@ The `{@const ...}` tag defines a local constant.
 
 ```svelte
 <script>
-  throw new Error("@migration task: Add data prop (https://github.com/sveltejs/kit/discussions/5774#discussioncomment-3292707)");
-
   export let boxes;
 </script>
 
