@@ -6,7 +6,7 @@ A lowercase tag, like `<div>`, denotes a regular HTML element. A capitalised tag
 
 ```svelte
 <script>
-	import Widget from '../Widget.svelte';
+	import Widget from './Widget.svelte';
 </script>
 
 <div>
