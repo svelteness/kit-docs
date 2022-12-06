@@ -1,5 +1,4 @@
 import type { LoadEvent } from '@sveltejs/kit';
-import { resourceLimits } from 'worker_threads';
 
 import type { ResolvedSidebarConfig } from '$lib/components/layout/contexts.js';
 import type { MarkdownMeta } from '$lib/stores/kitDocs.js';
