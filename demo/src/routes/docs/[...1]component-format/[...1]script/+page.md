@@ -27,6 +27,8 @@ In development mode (see the [compiler options](../compiler/compile.md#svelte-co
 
 ```svelte
 <script>
+	throw new Error("@migration task: Add data prop (https://github.com/sveltejs/kit/discussions/5774#discussioncomment-3292707)");
+
 	export let bar = 'optional default initial value';
 	export let baz = undefined;
 </script>
@@ -38,6 +40,8 @@ Readonly props can be accessed as properties on the element, tied to the compone
 
 ```svelte
 <script>
+	throw new Error("@migration task: Add data prop (https://github.com/sveltejs/kit/discussions/5774#discussioncomment-3292707)");
+
 	// these are readonly
 	export const thisIs = 'readonly';
 
@@ -54,6 +58,8 @@ You can use reserved words as prop names.
 
 ```svelte
 <script>
+	throw new Error("@migration task: Add data prop (https://github.com/sveltejs/kit/discussions/5774#discussioncomment-3292707)");
+
 	let className;
 
 	// creates a `class` property, even though it is a reserved word
@@ -101,6 +107,8 @@ Any top-level statement (i.e. not inside a block or a function) can be made reac
 
 ```svelte
 <script>
+	throw new Error("@migration task: Add data prop (https://github.com/sveltejs/kit/discussions/5774#discussioncomment-3292707)");
+
 	export let title;
 
 	// this will update `document.title` whenever
@@ -142,6 +150,8 @@ If a statement consists entirely of an assignment to an undeclared variable, Sve
 
 ```svelte
 <script>
+	throw new Error("@migration task: Add data prop (https://github.com/sveltejs/kit/discussions/5774#discussioncomment-3292707)");
+
 	export let num;
 
 	// we don't need to declare `squared` and `cubed`

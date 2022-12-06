@@ -1,14 +1,3 @@
-<script context="module">
-  export const prerender = true;
-
-  export const load = createKitDocsLoader({
-    sidebar: {
-      '/': null,
-      '/docs': '/docs',
-    },
-  });
-</script>
-
 <script>
   import '@svelteness/kit-docs/client/polyfills/index.js';
   import '@svelteness/kit-docs/client/styles/normalize.css';
@@ -29,11 +18,17 @@
     createSidebarContext,
   } from '@svelteness/kit-docs';
 
-  /** @type {import('@svelteness/kit-docs').MarkdownMeta} */
-  export let meta;
+  /** @type {import('./$types').PageData */
+  export let data;
 
-  /** @type {import('@svelteness/kit-docs').SidebarConfig} */
-  export let sidebar;
+  let { meta, sidebar } = data;
+  $: ({ meta, sidebar } = data);
+
+  // /** @type {import('@svelteness/kit-docs').MarkdownMeta} */
+  // export let meta;
+
+  // /** @type {import('@svelteness/kit-docs').SidebarConfig} */
+  // export let sidebar;
 
   /** @type {import('@svelteness/kit-docs').NavbarConfig} */
   const navbar = {

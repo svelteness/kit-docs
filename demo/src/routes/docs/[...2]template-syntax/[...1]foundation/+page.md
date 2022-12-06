@@ -6,7 +6,7 @@ A lowercase tag, like `<div>`, denotes a regular HTML element. A capitalised tag
 
 ```svelte
 <script>
-	import Widget from './Widget.svelte';
+	import Widget from '../Widget.svelte';
 </script>
 
 <div>
@@ -411,6 +411,8 @@ The `{@const ...}` tag defines a local constant.
 
 ```svelte
 <script>
+  throw new Error("@migration task: Add data prop (https://github.com/sveltejs/kit/discussions/5774#discussioncomment-3292707)");
+
   export let boxes;
 </script>
 

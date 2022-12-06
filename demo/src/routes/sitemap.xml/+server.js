@@ -1,15 +1,20 @@
 import path from 'path';
 
-export async function get() {
-  const filePaths = Object.keys(await import.meta.glob('./**/*.{svelte,md}'));
+export async function GET() {
+  const filePaths = Object.keys(await import.meta.glob('../**/*.{svelte,md}'));
 
   const urls = filePaths
     .map((filePath) =>
       filePath
-        .slice(2)
+        .slice(3)
         .replace(path.extname(filePath), '')
-        .replace(/\+page$/, ''),
+        .replace(/\+page$/, '')
+        // remove last slash
+        .replace(/\/$/, '')
+        // remove all instances of [...x] from string, where x is a number
+        .replace(/\[\.\.\.\d+\]/g, ''),
     )
+    .filter((url) => !url.endsWith('+layout'))
     .map(
       (url) => `
 			<url>
@@ -21,12 +26,8 @@ export async function get() {
     )
     .join('\n');
 
-  return {
-    headers: {
-      'Cache-Control': 'max-age=0, s-maxage=3600',
-      'Content-Type': 'application/xml',
-    },
-    body: `
+  return new Response(
+    `
       <?xml version="1.0" encoding="UTF-8" ?>
       <urlset
         xmlns="https://www.sitemaps.org/schemas/sitemap/0.9"
@@ -39,5 +40,11 @@ export async function get() {
 				${urls}
       </urlset>
     `.trim(),
-  };
+    {
+      headers: {
+        'Cache-Control': 'max-age=0, s-maxage=3600',
+        'Content-Type': 'application/xml',
+      },
+    },
+  );
 }

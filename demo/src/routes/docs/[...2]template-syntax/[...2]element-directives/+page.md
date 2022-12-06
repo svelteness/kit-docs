@@ -406,6 +406,8 @@ Don't worry about the fact that we're redeclaring the `foo` function for every c
 
 ```svelte
 <script>
+	throw new Error("@migration task: Add data prop (https://github.com/sveltejs/kit/discussions/5774#discussioncomment-3292707)");
+
 	export let bar;
 
 	function foo(node, bar) {
@@ -496,6 +498,8 @@ The function is called repeatedly _before_ the transition begins, with different
 
 ```svelte
 <script>
+	throw new Error("@migration task: Add data prop (https://github.com/sveltejs/kit/discussions/5774#discussioncomment-3292707)");
+
 	import { elasticOut } from 'svelte/easing';
 
 	export let visible;
@@ -529,6 +533,8 @@ If it's possible to use `css` instead of `tick`, do so — CSS animations can ru
 
 ```svelte
 <script>
+	throw new Error("@migration task: Add data prop (https://github.com/sveltejs/kit/discussions/5774#discussioncomment-3292707)");
+
 	export let visible = false;
 
 	function typewriter(node, { speed = 1 }) {

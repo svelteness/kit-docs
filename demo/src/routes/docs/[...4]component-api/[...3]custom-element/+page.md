@@ -6,6 +6,8 @@ Svelte components can also be compiled to custom elements (aka web components) u
 <svelte:options tag="my-element" />
 
 <script>
+	throw new Error("@migration task: Add data prop (https://github.com/sveltejs/kit/discussions/5774#discussioncomment-3292707)");
+
 	export let name = 'world';
 </script>
 

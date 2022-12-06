@@ -1,15 +1,20 @@
 import path from 'path';
 
 export async function GET() {
-  const filePaths = Object.keys(await import.meta.glob('./**/+page.{svelte,md}'));
+  const filePaths = Object.keys(await import.meta.glob('../**/+page.{svelte,md}'));
 
   const urls = filePaths
     .map((filePath) =>
       filePath
-        .slice(2)
+        .slice(3)
         .replace(path.extname(filePath), '')
-        .replace(/\+page$/, ''),
+        .replace(/\+page$/, '')
+        // remove last slash
+        .replace(/\/$/, '')
+        // remove all instances of [...x] from string, where x is a number
+        .replace(/\[\.\.\.\d+\]/g, ''),
     )
+    .filter((url) => !url.endsWith('+layout'))
     .map(
       (url) => `
 			<url>
