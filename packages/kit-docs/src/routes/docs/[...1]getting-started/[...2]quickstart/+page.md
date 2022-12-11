@@ -237,14 +237,13 @@ src
 ```
 
 ```js title=routes/+page.js|copy
+import { redirect } from '@sveltejs/kit';
+
 export const prerender = true;
 
-/** @type {import("@sveltejs/kit").Load} */
+/** @type {import('./$types').PageLoad} */
 export function load() {
-  return {
-    status: 307,
-    redirect: '/docs/first-category/first-page',
-  };
+  throw redirect(307, '/docs/first-category/first-page');
 }
 ```
 

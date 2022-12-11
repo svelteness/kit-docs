@@ -26,9 +26,3 @@ Here's a list of everything it has to offer:
 - :building_construction: Prebuilt Markdown components for steps, admonitions (i.e., callouts),
   tabbed links, responsive tables, and yes/no blocks.
 - :mag_right: Algolia search integration that includes a clean default design.
-
-## Demos
-
-- This site is built with KitDocs.
-- We rebuilt the [Svelte docs](https://kit-docs-demo.vercel.app) with KitDocs for fun.
-- [Vidstack Player docs](https://www.vidstack.io/docs/player) uses all of KitDocs' features.
