@@ -55,7 +55,7 @@ async function main() {
       return;
     }
 
-    await rmSync(path.resolve(targetDir, 'src/routes/index.svelte'));
+    await rmSync(path.resolve(targetDir, 'src/routes/+page.svelte'));
   }
 
   if (!validateDirectory(targetDir)) {
@@ -149,7 +149,7 @@ async function main() {
     if (!/@svelteness\/kit-docs\/globals/.test(appDTSContent)) {
       fs.writeFileSync(
         appDTSPath,
-        appDTSContent.replace(/\n/, `\n/// <reference types="@svelteness/kit-docs/globals" />\n`),
+        '/// <reference types="@svelteness/kit-docs/globals" />\n\n' + appDTSContent,
       );
     }
   }
