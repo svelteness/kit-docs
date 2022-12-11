@@ -265,7 +265,7 @@
                 arrow="left"
                 href={$previousLink.slug}
                 class="hover:text-gray-inverse"
-                sveltekit:prefetch
+                data-sveltekit-prefetch
               >
                 {$previousLink.title}
               </Button>
@@ -279,7 +279,7 @@
                 arrow="right"
                 href={$nextLink.slug}
                 class="hover:text-gray-inverse"
-                sveltekit:prefetch
+                data-sveltekit-prefetch
               >
                 {$nextLink.title}
               </Button>
