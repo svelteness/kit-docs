@@ -1,4 +1,4 @@
-import { createFilter, type FilterPattern, normalizePath } from '@rollup/pluginutils';
+import { type FilterPattern, createFilter, normalizePath } from '@rollup/pluginutils';
 import { globbySync } from 'globby';
 import { resolve } from 'path';
 import { fileURLToPath } from 'url';
@@ -7,14 +7,14 @@ import { type Plugin } from 'vite';
 import { isLocalEnv } from '../utils/env';
 import { getFileNameFromPath } from '../utils/path';
 import {
-  AddTopLevelHtmlTags,
-  clearMarkdownCaches,
-  createMarkdownParser,
-  MarkdownComponentContainer,
   type MarkdownComponents,
   type MarkdownParser,
   type MarkdownParserOptions,
   type ParseMarkdownOptions,
+  AddTopLevelHtmlTags,
+  clearMarkdownCaches,
+  createMarkdownParser,
+  MarkdownComponentContainer,
   parseMarkdownToSvelte,
 } from './parser';
 
@@ -28,7 +28,7 @@ export type MarkdownPluginOptions = MarkdownParserOptions & {
   /**
    * The markdown files to be parsed and rendered as Svelte components.
    *
-   * @defaultValue /\.md($|\?)/
+   * @defaultValue /\+page\.md($|\?)/
    */
   include?: FilterPattern;
   /**
@@ -53,7 +53,7 @@ export type MarkdownPluginOptions = MarkdownParserOptions & {
   topLevelHtmlTags?: AddTopLevelHtmlTags;
 };
 
-const DEFAULT_INCLUDE_RE = /\.md($|\?)/;
+const DEFAULT_INCLUDE_RE = /\+page\.md($|\?)/;
 const DEFAULT_EXCLUDE_RE = null;
 const DEFAULT_GLOBAL_COMPONENTS = 'src/kit-docs/**/[^_]*.svelte';
 
