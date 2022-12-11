@@ -1,5 +1,5 @@
 import { type FilterPattern, createFilter } from '@rollup/pluginutils';
-import type { RequestHandler } from '@sveltejs/kit';
+import { json, RequestHandler } from '@sveltejs/kit';
 import { readFileSync } from 'fs';
 import { globbySync } from 'globby';
 import kleur from 'kleur';
@@ -131,11 +131,8 @@ export function createMetaRequestHandler(
   return async ({ params }) => {
     try {
       const res = await handleMetaRequest(params.slug as string, { filter, ...handlerOptions });
-
-      if (!res) {
-        return new Response(null);
-      }
-      return new Response(JSON.stringify(res.meta));
+      if (!res) return new Response(null);
+      return json(res.meta);
     } catch (e) {
       if (debug) {
         console.log(kleur.bold(kleur.red(`\n[kit-docs]: failed to handle meta request.`)));
@@ -314,7 +311,7 @@ export function createSidebarRequestHandler(
         ...handlerOptions,
       });
 
-      return new Response(JSON.stringify({ links }));
+      return json({ links });
     } catch (e) {
       if (debug) {
         console.log(kleur.bold(kleur.red(`\n[kit-docs]: failed to handle sidebar request.`)));

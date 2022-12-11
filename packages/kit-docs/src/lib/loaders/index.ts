@@ -30,7 +30,7 @@ export async function loadKitDocsMeta(event: LoadEvent): Promise<MarkdownMeta | 
       slug === '/' ? 'index' : slugToRequestParam(slug.replace(/\.html$/, ''))
     }`;
 
-    const res = await event.fetch(url + '.meta.json');
+    const res = await event.fetch(url + '.meta');
     return await res.json();
   } catch (e) {
     return null;
@@ -55,7 +55,7 @@ export async function loadKitDocsSidebar(
   if (!matchedPath) return null;
 
   try {
-    const res = await event.fetch(`/kit-docs/${slugToRequestParam(matchedPath)}.sidebar.json`);
+    const res = await event.fetch(`/kit-docs/${slugToRequestParam(matchedPath)}.sidebar`);
     return res.json();
   } catch (e) {
     return null;

@@ -1,14 +1,3 @@
-<script context="module">
-  export const prerender = true;
-
-  export const load = createKitDocsLoader({
-    sidebar: {
-      '/': null,
-      '/docs': '/docs',
-    },
-  });
-</script>
-
 <script>
   import { page } from '$app/stores';
 

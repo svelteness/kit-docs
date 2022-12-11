@@ -102,17 +102,19 @@ export default config;
 src
 └─ routes
    └─ kit-docs
-      ├─ [dir].sidebar.json.js
-      ├─ [slug].meta.json.js
+      ├─ [dir].sidebar
+         ├─ +server.js
+      ├─ [slug].meta
+         ├─ +server.js
 ```
 
-```js title=routes/kit-docs/[slug].meta.json.js|copy
+```js title=routes/kit-docs/[slug].meta/+server.js|copy
 import { createMetaRequestHandler } from '@svelteness/kit-docs/node';
 
 export const GET = createMetaRequestHandler();
 ```
 
-```js title=routes/kit-docs/[dir].sidebar.json.js|copy
+```js title=routes/kit-docs/[dir].sidebar/+server.js|copy
 import { createSidebarRequestHandler } from '@svelteness/kit-docs/node';
 
 export const GET = createSidebarRequestHandler();
@@ -125,23 +127,11 @@ export const GET = createSidebarRequestHandler();
 ```
 src
 └─ routes
-   ├─ __layout-kit-docs.svelte
-   └─ docs
-      ├─ __layout@kit-docs.svelte
+   ├─ +layout.svelte
+   ├─ +layout.js
 ```
 
-```svelte title=routes/__layout-kit-docs.svelte|copy
-<script context="module">
-  export const prerender = true;
-
-  export const load = createKitDocsLoader({
-    sidebar: {
-      '/': null,
-      '/docs': '/docs',
-    },
-  });
-</script>
-
+```svelte title=routes/+layout.svelte|copy
 <script>
   import { page } from '$app/stores';
 
@@ -176,10 +166,18 @@ src
 </KitDocs>
 ```
 
-```svelte title=routes/docs/__layout@kit-docs.svelte|copy
-<!-- This layout inherits from `routes/__layout-kit-docs.svelte` -->
-<!-- Learn more: https://kit.svelte.dev/docs/layouts#named-layouts-inheritance-chains -->
-<slot />
+```js title=routes/+layout.js|copy
+import { createKitDocsLoader } from '@svelteness/kit-docs';
+
+export const prerender = true;
+
+/** @type {import('./$types').LayoutLoad} */
+export const load = createKitDocsLoader({
+  sidebar: {
+    '/': null,
+    '/docs': '/docs',
+  },
+});
 ```
 
 !!!
@@ -223,31 +221,31 @@ Congratulations, core setup is done :tada:
 
 ## Home Page
 
-You can create a Markdown (`routes/index@kit-docs.md`) or Svelte (`routes/index@kit-docs.svelte`)
+You can create a Markdown (`routes/+page.md`) or Svelte (`routes/+page.svelte`)
 file at the root of your `routes` directory if you'd like to include a home page.
 
+### Redirecting
+
 In some cases you might want to use the first page of your docs as the home page. You can achieve
-this by creating a `index.svelte` file at the root of your `routes` directory with the following
+this by creating a `+page.svelte` file at the root of your `routes` directory with the following
 content:
 
 ```
 src
 └─ routes
-   ├─ index.svelte <-
+   ├─ +page.js <-
 ```
 
-```svelte title=routes/index.svelte|copy
-<script context="module">
-  export const prerender = true;
+```js title=routes/+page.js|copy
+export const prerender = true;
 
-  /** @type {import("@sveltejs/kit").Load} */
-  export function load() {
-    return {
-      status: 307,
-      redirect: '/docs/first-category/first-page',
-    };
-  }
-</script>
+/** @type {import("@sveltejs/kit").Load} */
+export function load() {
+  return {
+    status: 307,
+    redirect: '/docs/first-category/first-page',
+  };
+}
 ```
 
 ## Tailwind
@@ -274,15 +272,16 @@ to get any values.
 
 ## Meta Endpoint
 
-The `kit-docs/[slug].meta.json.js` endpoint will match the `slug` parameter to a Markdown file in
-`routes/`, parse it and return Markdown metadata such as the title, description, frontmatter,
+The `kit-docs/[slug].meta/+server.js` endpoint will match the `slug` parameter to a Markdown
+file in `routes/`, parse it and return Markdown metadata such as the title, description, frontmatter,
 headings, etc. **This endpoint is required.**
 
 ```
 src
 └─ routes
    └─ kit-docs
-      ├─ [slug].meta.json.js <-
+      ├─ [slug].meta
+         ├─ +server.js <-
 ```
 
 ### Resolving
@@ -290,7 +289,7 @@ src
 You can override the default slug resolver which handles mapping a slug to a markdown file
 in the `routes` directory like so:
 
-```js title=[slug].meta.json.js|copy
+```js title=kit-docs/[slug].meta/+server.js|copy
 import { createMetaRequestHandler } from '@svelteness/kit-docs/node';
 
 export const GET = createMetaRequestHandler({
@@ -308,7 +307,7 @@ export const GET = createMetaRequestHandler({
 
 You can transform the meta object before it's returned like so:
 
-```js title=[slug].meta.json.js|copy
+```js title=kit-docs/[slug].meta/+server.js|copy
 import { createMetaRequestHandler } from '@svelteness/kit-docs/node';
 
 export const GET = createMetaRequestHandler({
@@ -330,7 +329,7 @@ export const GET = createMetaRequestHandler({
 
 You can also return a transformer when resolving a slug like so:
 
-```js title=[slug].meta.json.js|copy
+```js title=kit-docs/[slug].meta/+server.js|copy
 import { createMetaRequestHandler } from '@svelteness/kit-docs/node';
 
 export const GET = createMetaRequestHandler({
@@ -350,7 +349,7 @@ export const GET = createMetaRequestHandler({
 
 You can configure which files are included and excluded like so:
 
-```js title=[slug].meta.json.js|copy
+```js title=kit-docs/[slug].meta/+server.js|copy
 import { createMetaRequestHandler } from '@svelteness/kit-docs/node';
 
 export const GET = createMetaRequestHandler({
@@ -375,7 +374,7 @@ export type FilterPattern = ReadonlyArray<string | RegExp> | string | RegExp | n
 
 You can call the meta request handler and handle the result yourself like so:
 
-```js title=[slug].meta.json.js|copy
+```js title=kit-docs/[slug].meta/+server.js|copy
 import {
   handleMetaRequest,
   paramToSlug,
@@ -397,7 +396,7 @@ export function get({ params }) {
 
 ## Sidebar Endpoint
 
-The `kit-docs/[dir].sidebar.json.js` endpoint will match the `dir` parameter to a directory in
+The `kit-docs/[dir].sidebar/+server.js` endpoint will match the `dir` parameter to a directory in
 `routes/`, read all the files inside and return a sidebar config object. You can skip this
 endpoint and [create the sidebar manually](../default-layout/configuration.md#links-1).
 
@@ -405,7 +404,8 @@ endpoint and [create the sidebar manually](../default-layout/configuration.md#li
 src
 └─ routes
    └─ kit-docs
-      ├─ [dir].sidebar.json.js <-
+      ├─ [dir].sidebar
+         ├─ +server.js <-
 ```
 
 The loaded sidebar config object looks something like this:
@@ -480,7 +480,7 @@ a deep match means all nested files other than `index.md` will be ignored.
 
 You can override any of the default resolvers like so:
 
-```js title=[dir].sidebar.json.js|copy
+```js title=kit-docs/[dir].sidebar/+server.js|copy
 import { createSidebarRequestHandler } from '@svelteness/kit-docs/node';
 
 export const GET = createSidebarRequestHandler({
@@ -513,7 +513,7 @@ sidebar_title: Custom Sidebar Title
 
 You can configure which files are included and excluded like so:
 
-```js title=[dir].sidebar.json.js|copy
+```js title=kit-docs/[dir].sidebar/+server.js|copy
 import { createSidebarRequestHandler } from '@svelteness/kit-docs/node';
 
 export const GET = createSidebarRequestHandler({
@@ -538,7 +538,7 @@ export type FilterPattern = ReadonlyArray<string | RegExp> | string | RegExp | n
 
 You can control how the category names are formatted like so:
 
-```js title=[dir].sidebar.json.js|copy
+```js title=kit-docs/[dir].sidebar+server.js|copy
 import { createSidebarRequestHandler } from '@svelteness/kit-docs/node';
 
 export const GET = createSidebarRequestHandler({
@@ -551,7 +551,7 @@ export const GET = createSidebarRequestHandler({
 
 You can call the sidebar request handler and handle the result yourself like so:
 
-```js title=[dir].sidebar.json.js|copy
+```js title=kit-docs/[dir].sidebar/+server.js|copy
 import {
   handleSidebarRequest,
   paramToDir,
