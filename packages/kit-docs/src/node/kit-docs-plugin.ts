@@ -3,7 +3,7 @@ import { type HighlighterOptions } from 'shiki';
 import { type Plugin } from 'vite';
 
 import { kitDocsHighlightPlugin } from './highlight-plugin';
-import { kitDocsMarkdownPlugin, type MarkdownPluginOptions } from './markdown-plugin';
+import { type MarkdownPluginOptions, kitDocsMarkdownPlugin } from './markdown-plugin';
 
 const __cwd = process.cwd();
 

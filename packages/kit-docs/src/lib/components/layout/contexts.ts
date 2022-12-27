@@ -1,5 +1,5 @@
 import { getContext, setContext, SvelteComponent } from 'svelte';
-import { derived, type Readable, readable } from 'svelte/store';
+import { type Readable, derived, readable } from 'svelte/store';
 
 import { page } from '$app/stores';
 import { kebabToTitleCase, titleToKebabCase } from '$lib/utils/string.js';
@@ -88,7 +88,7 @@ export type ResolvedSidebarConfig = {
   links: SidebarLinks;
 };
 
-export function normalizeSidebarConfig(config?: SidebarConfig): ResolvedSidebarConfig {
+export function normalizeSidebarConfig(config: SidebarConfig | null = null): ResolvedSidebarConfig {
   if (!config) return { links: {} };
 
   const links: SidebarLinks = {};
@@ -150,7 +150,7 @@ export type SidebarContext = {
 };
 
 export function createSidebarContext(
-  config: SidebarConfig | null | Readable<SidebarConfig | null>,
+  config?: SidebarConfig | null | Readable<SidebarConfig | null>,
 ): SidebarContext {
   const configStore =
     config && 'subscribe' in config ? config : readable(config as SidebarConfig | null);

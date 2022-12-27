@@ -1,14 +1,12 @@
-import fs, { readFileSync } from 'fs';
+import fs from 'fs';
 import matter from 'gray-matter';
 import LRUCache from 'lru-cache';
-import { resolve } from 'path';
 import toml from 'toml';
 
 import { isLocalEnv } from '../../utils/env';
 import { getFileNameFromPath } from '../../utils/path';
 import { hashString } from '../../utils/string';
 import type {
-  MarkdownHeader,
   MarkdownMeta,
   MarkdownParser,
   MarkdownParserEnv,

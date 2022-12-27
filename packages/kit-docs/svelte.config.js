@@ -10,15 +10,14 @@ const config = {
   kit: {
     adapter: adapter(),
 
-    package: {
-      dir: 'client',
-      emitTypes: true,
-    },
-
     prerender: {
-      default: true,
       entries: ['*'],
     },
+  },
+
+  package: {
+    dir: 'client',
+    emitTypes: true,
   },
 };
 

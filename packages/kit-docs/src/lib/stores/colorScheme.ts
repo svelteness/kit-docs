@@ -1,6 +1,6 @@
 import { derived, get, writable } from 'svelte/store';
 
-import { browser } from '$app/env';
+import { browser } from '$app/environment';
 
 import { mediaQuery } from './mediaQuery.js';
 

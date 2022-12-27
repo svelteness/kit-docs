@@ -55,7 +55,7 @@ async function main() {
       return;
     }
 
-    await rmSync(path.resolve(targetDir, 'src/routes/index.svelte'));
+    await rmSync(path.resolve(targetDir, 'src/routes/+page.svelte'));
   }
 
   if (!validateDirectory(targetDir)) {
@@ -103,15 +103,15 @@ async function main() {
   const pkg = JSON.parse(fs.readFileSync(pkgPath).toString());
 
   const deps = {
-    '@iconify-json/ri': '^1.1.1',
-    '@sveltejs/adapter-auto': 'next',
-    '@sveltejs/kit': 'next',
+    '@iconify-json/ri': '^1.0.0',
+    '@sveltejs/adapter-auto': '^1.0.0',
+    '@sveltejs/kit': '^1.0.0',
     '@svelteness/kit-docs': `^${version}`,
-    clsx: '^1.1.0',
+    clsx: '^1.0.0',
     'unplugin-icons': '^0.14.0',
-    shiki: '^0.10.0',
-    svelte: '^3.49.0',
-    vite: '^3.0.0',
+    shiki: '^0.12.0',
+    svelte: '^3.54.0',
+    vite: '^4.0.0',
   };
 
   if (!pkg.devDependencies) {
@@ -149,7 +149,7 @@ async function main() {
     if (!/@svelteness\/kit-docs\/globals/.test(appDTSContent)) {
       fs.writeFileSync(
         appDTSPath,
-        appDTSContent.replace(/\n/, `\n/// <reference types="@svelteness/kit-docs/globals" />\n`),
+        '/// <reference types="@svelteness/kit-docs/globals" />\n\n' + appDTSContent,
       );
     }
   }

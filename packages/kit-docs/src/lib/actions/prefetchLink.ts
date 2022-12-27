@@ -2,9 +2,9 @@ export function prefetchLink(node: HTMLAnchorElement) {
   function update() {
     const href = node.getAttribute('href');
     if (/https?:/.test(href)) {
-      node.removeAttribute('sveltekit:prefetch');
+      node.removeAttribute('data-sveltekit-prefetch');
     } else {
-      node.setAttribute('sveltekit:prefetch', '');
+      node.setAttribute('data-sveltekit-prefetch', '');
     }
   }
 

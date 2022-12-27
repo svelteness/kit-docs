@@ -1,6 +1,6 @@
 import { readable } from 'svelte/store';
 
-import { browser } from '$app/env';
+import { browser } from '$app/environment';
 import { throttleAndDebounce } from '$lib/utils/timing';
 
 export const scrollTop = readable(0, (set) => {

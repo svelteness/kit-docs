@@ -1,9 +1,9 @@
 import path from 'path';
 import {
-  getHighlighter,
   type Highlighter,
   type HighlighterOptions,
   type Lang,
+  getHighlighter,
   renderToHtml,
 } from 'shiki';
 import { type Plugin } from 'vite';
