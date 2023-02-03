@@ -175,7 +175,7 @@ export function createSidebarContext(
       ),
     );
 
-    return category !== '.' ? category : null;
+    return !category || category === '.' ? null : category;
   });
 
   const context: SidebarContext = {
