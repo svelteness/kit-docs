@@ -5,7 +5,7 @@ export function notEqual(valueA: unknown, valueB: unknown): boolean {
   return valueB !== valueA && (valueB === valueB || valueA === valueA);
 }
 
-export function safeNotEqual(a, b) {
+export function safeNotEqual(a: any, b: any) {
   return a != a ? b == b : a !== b || (a && typeof a === 'object') || typeof a === 'function';
 }
 
