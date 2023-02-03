@@ -12,6 +12,9 @@ const config = {
   },
 
   server: {
+    watch: {
+      usePolling: true,
+    },
     fs: {
       strict: false,
     },
