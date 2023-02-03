@@ -6,6 +6,9 @@ const config = {
 
   kit: {
     adapter: adapter(),
+    prerender: {
+      handleMissingId: 'warn',
+    },
   },
 };
 
