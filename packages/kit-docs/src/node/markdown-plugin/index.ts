@@ -156,7 +156,10 @@ export function kitDocsMarkdownPlugin(options: MarkdownPluginOptions = {}): Plug
 
       server.watcher
         .add(globalComponents)
-        .on('add', () => restart())
+        .on('add', (path) => {
+          if (path.includes('.svelte-kit/types')) return;
+          restart();
+        })
         .on('unlink', () => restart());
     },
     transform(code, id) {
