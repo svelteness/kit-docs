@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 
 import type { MarkdownParserEnv } from '../../types';
-import type { ImportCodeTokenMeta } from './ImportCodeTokenMeta';
+import type { ImportCodeTokenMeta } from './import-code-token-meta';
 
 export const resolveImportCode = (
   { importPath, lineStart, lineEnd }: ImportCodeTokenMeta,

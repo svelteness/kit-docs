@@ -19,6 +19,12 @@ body {
   -webkit-tap-highlight-color: transparent;
 }
 
+/*
+ * -----------------------------------------------------
+ * SCROLLBAR
+ * -----------------------------------------------------
+ */
+
 .no-scrollbar {
   scrollbar-width: none;
 }
@@ -27,10 +33,72 @@ body {
   display: none;
 }
 
+@media screen and (min-width: 1280px) {
+  .scroll-contain {
+    overscroll-behavior: contain;
+  }
+}
+
+.scroll-contain-mobile {
+  overscroll-behavior: contain;
+}
+
+.scrollbar {
+  scrollbar-width: thin;
+  --kd-scrollbar-track-bg: rgb(var(--kd-color-border) / 0.3);
+  --kd-scrollbar-thumb-bg: rgb(var(--kd-color-border));
+}
+
+.dark .scrollbar {
+  --kd-scrollbar-track-bg: rgb(var(--kd-color-border) / 0.2);
+}
+
+@media screen and (prefers-reduced-motion: no-preference) {
+  .scrollbar {
+    scroll-behavior: smooth;
+  }
+}
+
+.scrollbar::-webkit-scrollbar {
+  @apply !h-1.5 !w-[5px] !bg-transparent;
+}
+
+.scrollbar::-webkit-scrollbar-track {
+  @apply !rounded;
+  background-color: var(--kd-scrollbar-track-bg) !important;
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+  @apply !rounded;
+  background-color: var(--kd-scrollbar-thumb-bg) !important;
+}
+
+/*
+ * -----------------------------------------------------
+ * BLUR
+ * -----------------------------------------------------
+ */
+
+.blur-bg {
+  @apply bg-body dark:bg-body backdrop-blur backdrop-filter;
+}
+
+@supports (backdrop-filter: blur(0)) or (-webkit-backdrop-filter: blur(0)) {
+  .blur-bg {
+    @apply bg-body/20 dark:bg-body/60;
+  }
+}
+
 .svg-responsive > svg {
   width: 100%;
   height: 100%;
 }
+
+/*
+ * -----------------------------------------------------
+ * DOCS
+ * -----------------------------------------------------
+ */
 
 .kit-docs pre {
   tab-size: 2;
@@ -70,7 +138,7 @@ body {
 }
 
 .kit-docs .step .description > code {
-  color: var(--kd-color-gray-inverse);
+  color: var(--kd-color-inverse);
 }
 
 .kit-docs .step .code-fence {

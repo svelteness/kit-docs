@@ -8,9 +8,9 @@
   import { ariaBool } from '$lib/utils/aria';
   import { wasEnterKeyPressed } from '$lib/utils/keyboard';
   import { scrollIntoCenter } from '$lib/utils/scroll';
-  import { isLargeScreen } from '$lib/stores/isLargeScreen';
+  import { isLargeScreen } from '$lib/stores/screen';
   import Overlay from '$lib/components/base/Overlay.svelte';
-  import { prefetchLink } from '$lib/actions/prefetchLink';
+  import { prefetchLink } from '$lib/actions/prefetch-link';
   import { getSidebarContext, isActiveSidebarLink } from './contexts';
   import { isFunction } from '$lib/utils/unit';
 
@@ -53,10 +53,7 @@
   <div class="992:hidden sticky top-0 left-0 flex items-center">
     <div class="flex-1" />
     <button
-      class={clsx(
-        'text-gray-soft hover:text-gray-inverse p-4 -mx-6',
-        !open && 'pointer-events-none',
-      )}
+      class={clsx('text-soft hover:text-inverse p-4 -mx-6', !open && 'pointer-events-none')}
       on:pointerdown={() => dispatch('close')}
       on:keydown={(e) => wasEnterKeyPressed(e) && dispatch('close', true)}
     >
@@ -65,14 +62,16 @@
     </button>
   </div>
 
-  <nav class="992:px-1">
+  <nav class="992:px-1 scrollbar">
     {#if search}
-      <div class="992:block pointer-events-none sticky top-0 -ml-0.5 hidden min-h-[80px]">
-        <div class="h-6 bg-white dark:bg-gray-800" />
-        <div class="pointer-events-auto relative bg-white dark:bg-gray-800">
-          <slot name="search" />
+      <div class="pointer-events-none sticky top-0 z-0 -ml-0.5 min-h-[80px]">
+        <div class="992:h-6 bg-body" />
+        <div class="bg-body pointer-events-auto relative">
+          <div class="992:block hidden">
+            <slot name="search" />
+          </div>
         </div>
-        <div class="h-8 bg-gradient-to-b from-white dark:from-gray-800" />
+        <div class="from-body h-8 bg-gradient-to-b" />
       </div>
     {/if}
 
@@ -83,21 +82,21 @@
         {@const links = $config.links[category]}
         <li class="992:mt-10 mt-12 first:mt-0">
           {#if category !== '.'}
-            <h5 class="text-gray-strong 992:mb-3 mb-8 text-lg font-semibold">
+            <h5 class="text-strong 992:mb-3 mb-8 text-lg font-semibold">
               {category}
             </h5>
           {:else}
             <div class="mt-10" />
           {/if}
-          <ul class="border-gray-divider space-y-3 border-l">
+          <ul class="border-border space-y-3 border-l">
             {#each links as link (link.title + link.slug)}
               <li class="first:mt-6">
                 <a
                   class={clsx(
-                    '992:py-1.5 -ml-px flex items-center border-l-2 py-2 pl-4',
+                    '992:py-1 -ml-px flex items-center border-l py-2 pl-4',
                     isActiveSidebarLink(link, $page.url.pathname)
                       ? 'text-brand font-semibold'
-                      : 'hover:border-gray-inverse text-gray-soft hover:text-gray-inverse border-transparent font-normal',
+                      : 'hover:border-inverse focus-visible:border-inverse text-soft hover:text-inverse focus-visible:text-inverse border-transparent font-normal',
                   )}
                   href={link.slug}
                   use:prefetchLink

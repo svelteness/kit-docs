@@ -76,6 +76,7 @@
 
 <style>
   .logo :global(a) {
+    color: rgb(var(--kd-color-inverse));
     display: flex;
     align-items: center;
     justify-content: center;
@@ -89,13 +90,5 @@
   .socials {
     display: flex;
     margin-left: -0.25rem;
-  }
-
-  :global(:root) {
-    --kd-color-brand-rgb: 209, 59, 18;
-  }
-
-  :global(:root.dark) {
-    --kd-color-brand-rgb: 227, 105, 70;
   }
 </style>

@@ -16,12 +16,15 @@
 <div class="inline-block">
   <label
     class={clsx(
-      'relative flex items-center border border-gray-divider',
-      rounded && 'rounded-full',
-      disabled ? 'text-gray-300' : 'text-gray-inverse focus-within:ring-2',
-      raised ? 'bg-gray-elevate hover:bg-gray-hover shadow-sm' : 'hover:bg-gray-hover',
+      'relative flex min-w-[85px] items-center border-[1.5px] pl-2.5 pr-1',
+      'bg-elevate transform-gpu transition-transform hover:scale-[1.025]',
+      rounded && 'rounded-md',
+      raised ? 'py-1' : 'py-0.5',
+      disabled
+        ? 'text-soft/40'
+        : 'text-soft hover:text-inverse focus-within:text-inverse focus-within:ring-2',
     )}
-    style="padding: var(--kd-padding, 0.25rem 0.2rem 0.25rem 0.5rem); min-width: var(--kd-min-width, 6rem); --tw-ring-color: var(--kd-color-focus);"
+    style="padding: var(--kd-padding, 0.25rem 0.2rem 0.25rem 0.5rem); min-width: var(--kd-min-width, 6rem); --tw-ring-color: rgb(var(--color-focus)); border-color: var(--select-border-color, rgb(var(--kd-color-border)));"
   >
     <slot name="before-title" />
 

@@ -1,8 +1,8 @@
 import type { PluginSimple } from 'markdown-it';
 
-import { uncommentTemplateTags } from '../../utils/htmlEscape';
-import { resolveHighlightLines } from './resolveHighlightLines';
-import { resolveLanguage } from './resolveLanguage';
+import { uncommentTemplateTags } from '../../utils/html-escape';
+import { resolveHighlightLines } from './resolve-highlight-lines';
+import { resolveLanguage } from './resolve-language';
 
 /**
  * Plugin to enable styled code fences with line numbers, syntax highlighting, etc.

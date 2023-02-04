@@ -7,10 +7,11 @@
 
 <div
   class={clsx(
-    'inline-flex h-6 items-center justify-center rounded-full px-2.5 py-1 text-xs tracking-wide font-mono font-medium',
-    'border border-gray-divider shadow-sm',
+    'inline-flex h-6 items-center justify-center px-2.5 py-1 font-mono text-xs font-medium tracking-wide',
+    'border-border border',
     __class,
   )}
+  style="border-radius: var(--chip-border-radius, 9999px);"
 >
   <span class="mt-px">
     <slot />

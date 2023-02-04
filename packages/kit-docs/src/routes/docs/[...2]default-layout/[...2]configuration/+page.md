@@ -38,7 +38,7 @@ rm -rf src/fonts
 ```html
 <style>
   :global(:root) {
-    --kd-color-brand-rgb: 233, 127, 6;
+    --kd-color-brand: 255 64 0;
     --kd-font-family-sans: /** Your sans fonts here. */ ;
     --kd-font-family-mono: /** Your mono fonts here. */ ;
   }

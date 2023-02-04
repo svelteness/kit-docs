@@ -1,4 +1,4 @@
-export * from './createMarkdownParser';
-export * from './parseMarkdown';
+export * from './create-markdown-parser';
+export * from './parse-markdown';
 export * from './plugins';
 export * from './types';

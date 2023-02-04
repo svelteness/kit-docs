@@ -13,8 +13,8 @@ import type {
   ParsedMarkdownResult,
   ParseMarkdownOptions,
 } from './types';
-import { commentOutTemplateTags, uncommentTemplateTags } from './utils/htmlEscape';
-import { preventViteReplace } from './utils/preventViteReplace';
+import { commentOutTemplateTags, uncommentTemplateTags } from './utils/html-escape';
+import { preventViteReplace } from './utils/prevent-vite-replace';
 
 const kitDocsImportPath = isLocalEnv() ? '$lib' : '@svelteness/kit-docs';
 

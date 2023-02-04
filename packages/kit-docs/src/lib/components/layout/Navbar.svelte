@@ -5,11 +5,11 @@
   import MenuIcon from '~icons/ri/menu-5-line';
   import ArrowDropDownIcon from '~icons/ri/arrow-drop-down-fill';
 
-  import { colorScheme } from '$lib/stores/colorScheme';
+  import { colorScheme } from '$lib/stores/color-scheme';
   import { uppercaseFirstLetter } from '$lib/utils/string';
   import Popover from '$lib/components/base/Popover.svelte';
 
-  import ColorSchemeMenu from '$lib/components/base/ColorSchemeMenu.svelte';
+  import ColorSchemeToggle from '$lib/components/base/ColorSchemeToggle.svelte';
   import NavLinkItem from './NavLink.svelte';
   import { getI18nContext, getNavbarContext } from './contexts';
 
@@ -65,7 +65,7 @@
 
         <slot name="popover-middle" />
 
-        <hr class="my-6 h-2 w-full border-t-2 border-dashed border-gray-200 dark:border-gray-400" />
+        <hr class="my-6 h-2 w-full border-t border-dashed border-border" />
 
         <section class="flex flex-col items-start">
           <h1 class="mb-6 text-xl font-medium">{$i18n.nav.options}</h1>
@@ -75,7 +75,7 @@
               Theme
 
               <label
-                class="relative ml-4 flex items-center border border-gray-200 px-4 py-1 dark:border-gray-400 rounded-md focus-within:ring-2"
+                class="relative ml-4 flex items-center border border-border px-4 py-1 rounded-md focus-within:ring-2"
                 style="--tw-ring-color: var(--kd-color-focus);"
               >
                 <span class="sr-only">{$i18n.colorScheme.theme}</span>
@@ -100,7 +100,7 @@
 
     <div class="992:flex 992:items-center hidden">
       <nav>
-        <ul class="flex items-center space-x-8 text-lg font-medium">
+        <ul class="flex items-center space-x-8">
           {#each navLinks as navLink (navLink.title)}
             <NavLinkItem {...navLink} />
           {/each}
@@ -109,11 +109,9 @@
 
       <slot name="right" />
 
-      <div class="border-gray-divider ml-6 mr-2.5 h-7 w-2 border-l-[1.5px]" />
-
-      <div class="hidden 992:flex items-center">
+      <div class="hidden 992:flex items-center ml-6">
         <slot name="right-alt" />
-        <ColorSchemeMenu />
+        <ColorSchemeToggle />
       </div>
     </div>
   </div>

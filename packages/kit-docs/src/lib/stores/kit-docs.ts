@@ -1,4 +1,4 @@
-import { derived, writable, type Readable } from 'svelte/store';
+import { type Readable, derived, writable } from 'svelte/store';
 
 export type MarkdownFrontmatter = Record<string, any>;
 

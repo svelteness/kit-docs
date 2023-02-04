@@ -1,7 +1,7 @@
 import type { PluginSimple } from 'markdown-it';
 
 import type { MarkdownHeader, MarkdownParserEnv } from '../types';
-import { resolveHeadersFromTokens } from '../utils/resolveHeadersFromToken';
+import { resolveHeadersFromTokens } from '../utils/resolve-headers-token';
 
 /**
  * Extracting markdown headers to `env`. Would be used for generating sidebar nav and toc.

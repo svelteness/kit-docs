@@ -1,8 +1,8 @@
 import type { PluginSimple } from 'markdown-it';
 
 import type { MarkdownParserEnv } from '../../types';
-import { createImportCodeBlockRule } from './createImportCodeBlockRule';
-import { resolveImportCode } from './resolveImportCode';
+import { createImportCodeBlockRule } from './create-import-code-block-rule';
+import { resolveImportCode } from './resolve-import-code';
 
 export const importCodePlugin: PluginSimple = (parser) => {
   // Add `import_code` block rule.

@@ -10,8 +10,8 @@
   export let type: 'discord' | 'gitHub' | 'twitter';
   export let title = uppercaseFirstLetter(type);
   export let href: string;
-  export let iconWidth = 28;
-  export let iconHeight = 28;
+  export let iconWidth = 24;
+  export let iconHeight = 24;
 
   let __class = '';
   export { __class as class };
@@ -26,7 +26,7 @@
 <!-- svelte-ignore security-anchor-rel-noreferrer -->
 <a
   class={clsx(
-    'relative flex items-center text-gray-soft hover:text-gray-inverse border-0 rounded-md p-2',
+    'relative flex transform-gpu items-center rounded-md border-0 p-2 transition-transform hover:scale-[1.1]',
     __class,
   )}
   {href}

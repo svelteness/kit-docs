@@ -6,8 +6,9 @@
 
 <div
   class={clsx(
-    'fixed top-0 left-0 bg-black/40 backdrop-blur-sm dark:bg-gray-700/80 transition-opacity duration-75 pointer-events-auto z-40',
-    'w-screen h-screen',
-    open ? 'opacity-100 visible' : 'opacity-0 invisible',
+    'pointer-events-auto fixed top-0 left-0 z-40 backdrop-blur-sm backdrop-filter transition-opacity duration-75',
+    'bg-body/20 dark:bg-body/60',
+    'h-screen w-screen',
+    open ? 'visible opacity-100' : 'invisible opacity-0',
   )}
 />

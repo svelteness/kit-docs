@@ -2,7 +2,7 @@ import { lstatSync } from 'fs';
 import { type PluginSimple } from 'markdown-it';
 import { dirname, relative, resolve } from 'path';
 
-import { isLinkExternal } from '../utils/isLink';
+import { isLinkExternal } from '../utils/link';
 
 const ROUTES_DIR = resolve(process.cwd(), 'src/routes');
 

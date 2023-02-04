@@ -8,7 +8,7 @@
 <TableWrapper class={__class}>
   <table>
     <thead
-      class="sticky top-0 left-0 border-b border-gray-divider bg-gray-50 shadow-sm dark:bg-gray-800"
+      class="sticky top-0 left-0 border-b border-border bg-gray-50 shadow-sm dark:bg-gray-800"
     >
       <slot name="head" />
     </thead>

@@ -8,7 +8,7 @@
 
   import { ariaBool } from '$lib/utils/aria';
   import { hideDocumentScrollbar } from '$lib/utils/scroll';
-  import { type CloseDialogCallback, dialogManager } from '$lib/actions/dialogManager';
+  import { type CloseDialogCallback, dialogManager } from '$lib/actions/dialog-manager';
   import Button from '$lib/components/base/Button.svelte';
   import OnThisPage from './OnThisPage.svelte';
   import {
@@ -26,9 +26,9 @@
     type SidebarConfig,
   } from './contexts';
   import { writable } from 'svelte/store';
-  import { isLargeScreen } from '$lib/stores/isLargeScreen';
+  import { isLargeScreen } from '$lib/stores/screen';
   import { scrollDirection, scrollTop } from '$lib/stores/scroll';
-  import { kitDocs } from '$lib/stores/kitDocs';
+  import { kitDocs } from '$lib/stores/kit-docs';
 
   export let navigation: Partial<NavigationConfig> | null = null;
   export let navbar: NavbarConfig | false;
@@ -72,7 +72,7 @@
 </script>
 
 <div
-  class="kit-docs bg-gray-body min-h-full min-w-full h-full transition-transform duration-150 ease-out"
+  class="kit-docs bg-body text-inverse min-h-full min-w-full h-full transition-transform duration-150 ease-out"
   style={clsx(
     'font-family: var(--kd-font-family-sans, inherit);',
     !showBottomNav && '--kd-breadcrumbs-height: 0px;',
@@ -83,9 +83,7 @@
     <div
       class={clsx(
         'fixed top-0 z-30 w-full flex-none transform-gpu transition-transform duration-150 ease-out',
-        isNavPopoverOpen
-          ? 'bg-gray-100 dark:bg-gray-800'
-          : 'supports-backdrop-blur:bg-white/60 bg-gray-200/95 backdrop-blur dark:bg-gray-800/60',
+        isNavPopoverOpen ? '' : 'blur-bg',
         collapseNavbar
           ? '-translate-y-[calc(calc(var(--kd--navbar-height)-var(--kd-breadcrumbs-height))+1px)]'
           : 'translate-y-0',
@@ -116,12 +114,12 @@
 
         <svelte:fragment slot="bottom">
           {#if showBottomNav}
-            <div class="border-gray-divider 992:hidden flex w-full items-center mt-4 pt-4 border-t">
+            <div class="border-border 992:hidden flex w-full items-center mt-4 pt-4 border-t">
               {#if showSidebar}
                 <button
                   id="main-sidebar-button"
                   type="button"
-                  class="text-gray-soft hover:text-gray-inverse inline-flex justify-center rounded-md p-2 text-sm font-medium"
+                  class="text-soft hover:text-inverse inline-flex justify-center rounded-md p-2 text-sm font-medium"
                   aria-controls="main-sidebar"
                   aria-expanded={ariaBool(isSidebarOpen)}
                   aria-haspopup="true"
@@ -148,7 +146,7 @@
               {#if $activeLink || $kitDocs.meta?.title}
                 <ol
                   class={clsx(
-                    'text-md text-gray-soft flex items-center whitespace-nowrap leading-6',
+                    'text-md text-soft flex items-center whitespace-nowrap leading-6',
                     showSidebar ? 'mt-px ml-2.5' : 'mt-2',
                   )}
                 >
@@ -196,7 +194,7 @@
         {search}
         class={({ open }) =>
           clsx(
-            'self-start fixed top-0 left-0 transform bg-gray-body z-50 border-gray-divider border-r',
+            'self-start fixed top-0 left-0 transform bg-body z-50 border-border border-r scrollbar',
             '-translate-x-full transform transition-transform duration-200 ease-out will-change-transform',
             'max-h-screen min-h-screen min-w-[var(--kd-sidebar-min-width)] max-w-[var(--kd-sidebar-max-width)]',
             '992:translate-x-0 922:block 992:sticky 992:z-0 overflow-y-auto p-[var(--kd-sidebar-padding)]',
@@ -253,18 +251,16 @@
       {/if}
 
       {#if $previousLink || $nextLink}
-        <hr class="border-gray-divider mt-20" />
+        <hr class="border-border mt-20" />
 
         <div class="992:text-xl flex items-center pt-12 pb-20 text-lg font-semibold text-gray-300">
           {#if $previousLink}
             <div class="mb-4 flex flex-col items-start">
-              <span class="text-gray-inverse ml-3 mb-4 inline-block"
-                >{$i18nContext.nav.previous}</span
-              >
+              <span class="text-inverse ml-3 mb-4 inline-block">{$i18nContext.nav.previous}</span>
               <Button
                 arrow="left"
                 href={$previousLink.slug}
-                class="hover:text-gray-inverse"
+                class="hover:text-inverse"
                 data-sveltekit-prefetch
               >
                 {$previousLink.title}
@@ -274,11 +270,11 @@
 
           {#if $nextLink}
             <div class="ml-auto mb-4 flex flex-col items-end">
-              <span class="text-gray-inverse mr-3 mb-4 inline-block">{$i18nContext.nav.next}</span>
+              <span class="text-inverse mr-3 mb-4 inline-block">{$i18nContext.nav.next}</span>
               <Button
                 arrow="right"
                 href={$nextLink.slug}
-                class="hover:text-gray-inverse"
+                class="hover:text-inverse"
                 data-sveltekit-prefetch
               >
                 {$nextLink.title}

@@ -95,11 +95,11 @@
 
 <style>
   :global(:root) {
-    --kd-color-brand-rgb: 233, 127, 6;
+    --kd-color-brand: 255 64 0;
   }
 
   :global(:root.dark) {
-    --kd-color-brand-rgb: 213, 149, 76;
+    --kd-color-brand: 255 83 26;
   }
 
   .logo :global(a) {

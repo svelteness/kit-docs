@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { wasEnterKeyPressed } from '$lib/utils/keyboard';
-
   import clsx from 'clsx';
   import { createEventDispatcher } from 'svelte';
+
+  import { wasEnterKeyPressed } from '$lib/utils/keyboard';
 
   const dispatch = createEventDispatcher();
 
@@ -18,15 +18,13 @@
 
 <li
   class={clsx(
-    'flex items-center px-4 py-2 text-sm hover:cursor-pointer transition-colors duraiton-100',
-    selected
-      ? 'text-brand'
-      : 'text-gray-soft hover:text-gray-inverse focus-visible:text-gray-inverse',
+    'duraiton-100 flex items-center px-4 py-2 text-base transition-colors hover:cursor-pointer',
+    selected ? 'text-brand' : 'text-soft hover:text-inverse focus-visible:text-inverse',
   )}
   role="menuitem"
   tabindex="-1"
   on:keydown={onSelect}
-  on:pointerdown={() => dispatch('select')}
+  on:pointerup={() => dispatch('select')}
 >
   {#if $$slots.icon}
     <div class="mr-3 h-5 w-5">

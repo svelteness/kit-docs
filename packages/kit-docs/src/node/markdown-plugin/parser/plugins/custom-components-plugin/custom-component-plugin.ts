@@ -1,7 +1,7 @@
 import type { PluginSimple } from 'markdown-it';
 
-import { htmlBlockRule, HTMLBlockSequence } from './htmlBlockRule';
-import { htmlInlineRule } from './htmlInlineRule';
+import { htmlBlockRule, HTMLBlockSequence } from './html-block-rule';
+import { htmlInlineRule } from './html-inline-rule';
 
 /**
  * Svelte reserved tags.

@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 
+/** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ['./src/lib/**/*.svelte'],
   darkMode: 'class',
@@ -24,29 +25,17 @@ module.exports = {
     extend: {
       colors: {
         brand: {
-          DEFAULT: 'var(--kd-color-brand)',
+          DEFAULT: 'rgb(var(--kd-color-brand) / <alpha-value>)',
         },
-        gray: {
-          DEFAULT: '#313131',
-          50: '#FFFFFF',
-          100: '#FBFBFB',
-          200: '#EAEAEA',
-          300: '#a5a5a5',
-          400: '#616161',
-          500: '#313131',
-          600: '#292929',
-          700: '#222222',
-          800: '#1A1A1A',
-          900: '#121212',
-          divider: 'var(--kd-color-gray-divider)',
-          soft: 'var(--kd-color-gray-soft)',
-          inverse: 'var(--kd-color-gray-inverse)',
-          current: 'var(--kd-color-gray-current)',
-          hover: 'var(--kd-color-gray-hover)',
-          'hover-inverse': 'var(--kd-color-gray-hover-inverse)',
-          elevate: 'var(--kd-color-gray-elevate)',
-          body: 'var(--kd-color-gray-body)',
+        focus: {
+          DEFAULT: 'rgb(var(--kd-color-focus) / <alpha-value>)',
         },
+        gray: {},
+        border: 'rgb(var(--kd-color-border) / <alpha-value>)',
+        soft: 'rgb(var(--kd-color-soft) / <alpha-value>)',
+        inverse: 'rgb(var(--kd-color-inverse) / <alpha-value>)',
+        body: 'rgb(var(--kd-color-body) / <alpha-value>)',
+        elevate: 'rgb(var(--kd-color-elevate) / <alpha-value>)',
       },
       typography: kitDocsTypography,
     },
@@ -59,24 +48,19 @@ function kitDocsVariants({ addVariant }) {
     'supports-backdrop-blur',
     '@supports (backdrop-filter: blur(0)) or (-webkit-backdrop-filter: blur(0))',
   );
-  addVariant('supports-scrollbars', '@supports selector(::-webkit-scrollbar)');
-  addVariant('children', '& > *');
-  addVariant('scrollbar', '&::-webkit-scrollbar');
-  addVariant('scrollbar-track', '&::-webkit-scrollbar-track');
-  addVariant('scrollbar-thumb', '&::-webkit-scrollbar-thumb');
 }
 
 function kitDocsTypography(theme) {
   return {
     DEFAULT: {
       css: {
-        '--tw-prose-counters': 'black',
-        '--tw-prose-invert-counters': 'white',
-        color: theme('colors.gray.soft'),
+        '--tw-prose-counters': 'rgb(var(--kd-color-inverse))',
+        '--tw-prose-invert-counters': 'rgb(var(--kd-color-inverse))',
+        color: 'rgb(var(--kd-color-soft))',
         fontSize: '18px',
         maxWidth: 'none',
         hr: {
-          borderColor: theme('colors.gray.divider'),
+          borderColor: 'rgb(var(--kd-color-border))',
           marginTop: '3em',
           marginBottom: '3em',
         },
@@ -84,6 +68,7 @@ function kitDocsTypography(theme) {
           letterSpacing: '-0.025em',
         },
         h2: {
+          marginTop: `1.75em`,
           marginBottom: `${16 / 24}em`,
         },
         h3: {
@@ -111,14 +96,14 @@ function kitDocsTypography(theme) {
           ...theme('fontSize.sm')[1],
         },
         ul: {
-          paddingLeft: '1rem',
+          paddingLeft: '1.25rem',
         },
         'ul > li': {
           position: 'relative',
           paddingLeft: '0.25rem',
         },
         'ul > li::marker': {
-          color: theme('colors.gray.inverse'),
+          color: 'rgb(var(--kd-color-inverse))',
         },
         'ul > li::before': {
           content: '""',
@@ -133,9 +118,9 @@ function kitDocsTypography(theme) {
           margin: 0,
         },
         a: {
-          fontWeight: theme('fontWeight.semibold'),
+          fontWeight: theme('fontWeight.normal'),
           textDecoration: 'none',
-          borderBottom: `1px solid var(--kd-color-brand)`,
+          borderBottom: `1px solid rgb(var(--kd-color-brand))`,
         },
         'a:hover': {
           borderBottomWidth: '2px',
@@ -152,11 +137,11 @@ function kitDocsTypography(theme) {
           fontWeight: 'inherit',
         },
         code: {
-          fontWeight: theme('fontWeight.medium'),
+          fontWeight: theme('fontWeight.semibold'),
           fontVariantLigatures: 'none',
         },
         pre: {
-          backgroundColor: 'var(--kd-code-fence-bg, var(--kd-prose-pre-bg))',
+          backgroundColor: 'var(--kd-code-fence-bg)',
           boxShadow: 'none',
           display: 'flex',
         },
@@ -173,8 +158,8 @@ function kitDocsTypography(theme) {
           borderCollapse: 'collapse',
         },
         thead: {
-          color: theme('colors.gray.inverse'),
-          borderBottomColor: theme('colors.gray.divider'),
+          color: 'rgb(var(--kd-color-inverse))',
+          borderBottomColor: 'rgb(var(--kd-color-border))',
         },
         tbody: {
           verticalAlign: 'baseline',
@@ -185,13 +170,10 @@ function kitDocsTypography(theme) {
         },
         'tbody tr': {
           fontSize: theme('fontSize.sm')[0],
-          borderBottomColor: theme('colors.gray.divider'),
+          borderBottomColor: 'rgb(var(--kd-color-border))',
         },
         'tbody td': {
           whiteSpace: 'nowrap',
-        },
-        'tbody tr:nth-child(odd)': {
-          backgroundColor: theme('colors.gray.100'),
         },
         'tbody tr:last-child': {
           borderBottomWidth: '1px',
@@ -225,7 +207,7 @@ function kitDocsTypography(theme) {
           marginTop: `${12 / 14}em`,
         },
         blockQuote: {
-          color: theme('colors.gray.inverse'),
+          color: 'rgb(var(--kd-color-inverse))',
           borderRadius: 2,
           borderColor: 'currentColor',
         },
@@ -233,11 +215,12 @@ function kitDocsTypography(theme) {
     },
     invert: {
       css: {
-        'tbody tr:nth-child(odd)': {
-          backgroundColor: theme('colors.gray.700'),
-        },
+        color: 'rgb(var(--kd-color-soft))',
         'tbody tr td:first-child code': {
           color: theme('colors.indigo.300'),
+        },
+        'tbody tr': {
+          borderBottomColor: 'rgb(var(--kd-color-border))',
         },
       },
     },

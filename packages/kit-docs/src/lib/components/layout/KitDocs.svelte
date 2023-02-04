@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { __kitDocs, type MarkdownMeta } from '$lib/stores/kitDocs';
+  import { __kitDocs, type MarkdownMeta } from '$lib/stores/kit-docs';
   import { onDestroy } from 'svelte';
 
   export let meta: MarkdownMeta | null = null;

@@ -14,7 +14,7 @@
 
 <div class="not-prose mt-10 mb-6 flex overflow-auto p-1">
   <div class="min-w-full flex-none pr-4">
-    <ul class="flex space-x-6 whitespace-nowrap border-b border-gray-divider">
+    <ul class="flex space-x-6 whitespace-nowrap border-b border-border">
       {#each links as link (link.title + link.href)}
         {@const isActive = $page.url.pathname === link.href}
         <li>
@@ -22,9 +22,7 @@
             <a
               class={clsx(
                 '-mb-px flex border-current pt-3 pb-2.5 leading-6 px-4 hover:border-b-2',
-                isActive
-                  ? 'text-brand font-semibold border-b-2'
-                  : 'text-gray-soft hover:text-gray-inverse',
+                isActive ? 'text-brand font-semibold border-b-2' : 'text-soft hover:text-inverse',
               )}
               href={link.href}
               data-sveltekit-prefetch

@@ -85,11 +85,11 @@ cp -R node_modules/@svelteness/kit-docs/client/fonts src/fonts
 ```svelte title=routes/docs/__layout.svelte|copy
 <style>
   :global(:root) {
-    --kd-color-brand-rgb: 233, 127, 6;
+    --kd-color-brand: 255 64 0;
   }
 
   :global(:root.dark) {
-    --kd-color-brand-rgb: 213, 149, 76;
+    --kd-color-brand: 255 83 26;
   }
 </style>
 ```

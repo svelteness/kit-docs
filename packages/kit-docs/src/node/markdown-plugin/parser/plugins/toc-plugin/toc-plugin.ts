@@ -1,8 +1,8 @@
 import type { PluginSimple } from 'markdown-it';
 
 import type { MarkdownHeader } from '../../types';
-import { resolveHeadersFromTokens } from '../../utils/resolveHeadersFromToken';
-import { createTocBlockRule } from './createTocBlockRule';
+import { resolveHeadersFromTokens } from '../../utils/resolve-headers-token';
+import { createTocBlockRule } from './create-toc-block-rule';
 
 /**
  * Generate table of contents.

@@ -2,7 +2,7 @@ import { derived, get, writable } from 'svelte/store';
 
 import { browser } from '$app/environment';
 
-import { mediaQuery } from './mediaQuery.js';
+import { mediaQuery } from './media-query.js';
 
 export type ColorScheme = 'light' | 'dark' | 'system';
 

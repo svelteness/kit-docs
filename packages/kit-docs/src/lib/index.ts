@@ -1,11 +1,11 @@
 // Actions
-export * from './actions/dialogManager.js';
-export * from './actions/prefetchLink.js';
+export * from './actions/dialog-manager.js';
+export * from './actions/prefetch-link.js';
 
 // Components
 export { default as Button } from './components/base/Button.svelte';
 export { default as Chip } from './components/base/Chip.svelte';
-export { default as ColorSchemeMenu } from './components/base/ColorSchemeMenu.svelte';
+export { default as ColorSchemeToggle } from './components/base/ColorSchemeToggle.svelte';
 export { default as Menu } from './components/base/Menu.svelte';
 export { default as MenuItem } from './components/base/MenuItem.svelte';
 export { default as Overlay } from './components/base/Overlay.svelte';
@@ -17,6 +17,7 @@ export { default as SocialLink } from './components/social/SocialLink.svelte';
 export * from './loaders/index.js';
 
 // Layout
+export { useActiveHeaderLinks } from './components/layout/active-header.js';
 export * from './components/layout/contexts.js';
 export { default as Footer } from './components/layout/Footer.svelte';
 export { default as KitDocs } from './components/layout/KitDocs.svelte';
@@ -25,7 +26,6 @@ export { default as Navbar } from './components/layout/Navbar.svelte';
 export { default as NavLink } from './components/layout/NavLink.svelte';
 export { default as OnThisPage } from './components/layout/OnThisPage.svelte';
 export { default as Sidebar } from './components/layout/Sidebar.svelte';
-export { useActiveHeaderLinks } from './components/layout/useActiveHeaderLinks.js';
 
 // Markdown (Block)
 export { default as CodeFence } from './kit-docs/block/CodeFence.svelte';
@@ -46,9 +46,9 @@ export { default as TableOfContents } from './kit-docs/custom/TableOfContents.sv
 export { default as Yes } from './kit-docs/custom/Yes.svelte';
 
 // Stores
-export * from './stores/colorScheme.js';
-export * from './stores/isLargeScreen.js';
-export * from './stores/kitDocs.js';
+export * from './stores/color-scheme.js';
+export * from './stores/kit-docs.js';
+export * from './stores/screen.js';
 
 // Utils
 export * from './utils/scroll.js';

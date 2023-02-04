@@ -1,7 +1,7 @@
 import type Token from 'markdown-it/lib/token';
 
 import type { MarkdownHeader } from '../types';
-import { resolveTitleFromToken } from './resolveTitleFromToken';
+import { resolveTitleFromToken } from './resolve-title-token';
 import { slugify } from './slugify';
 
 /**

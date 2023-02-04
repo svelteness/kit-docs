@@ -1,6 +1,6 @@
 import type Token from 'markdown-it/lib/token';
 
-import { htmlEscape } from './htmlEscape';
+import { htmlEscape } from './html-escape';
 
 /**
  * Resolve header title from `markdown-it` token. Typically using the next token of

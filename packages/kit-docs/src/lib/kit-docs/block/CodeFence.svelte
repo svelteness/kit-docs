@@ -13,14 +13,14 @@
   export let linesCount: number = (code?.match(/"line"/g) || []).length;
   export let showLineNumbers = false;
   export let highlightLines: [number, number][] = [];
-  export let showCopyCode = false;
   export let copyHighlightOnly = false;
   export let copySteps = false;
+  export let showCopyCode = copySteps || copyHighlightOnly;
 
   const i18n = getI18nContext();
 
   let currentStep = 1;
-  let stepHighlightLines = [];
+  let stepHighlightLines: [number, number][] = [];
 
   $: if (copySteps) {
     stepHighlightLines = [highlightLines[currentStep - 1] ?? [currentStep, currentStep]];
@@ -42,12 +42,12 @@
       const copiedCode =
         currentHighlightedLines.length > 0 && (copyHighlightOnly || copySteps)
           ? unescapedRawCode
-              .split('\n')
+              ?.split('\n')
               .filter((_, i) => isHighlightLine(i + 1))
               .join('\n')
           : unescapedRawCode;
 
-      await navigator.clipboard.writeText(copiedCode);
+      await navigator.clipboard.writeText(copiedCode || '');
     } catch (e) {
       // no-op
     }
@@ -73,20 +73,19 @@
 
 <div
   class={clsx(
-    'code-fence overflow-y-auto relative max-h-[60vh] 576:max-h-[32rem] my-8 rounded-md shadow-lg mx-auto',
-    'border border-gray-divider',
+    'code-fence 576:max-h-[32rem] relative my-8 mx-auto max-h-[60vh] overflow-y-auto rounded-md',
+    'prefers-dark-scheme scrollbar scroll-contain shadow-xl border-border border',
     lang && `lang-${lang}`,
-    ext && `ext-${ext}`,
   )}
   style="background-color: var(--kd-code-fence-bg);"
 >
   {#if showTopBar}
     <div
-      class="sticky top-0 left-0 z-10 flex items-center rounded-md pt-2 backdrop-blur supports-backdrop-blur:bg-white/60"
+      class="code-fence-top-bar sticky top-0 left-0 z-10 flex items-center py-1 pt-2 backdrop-blur backdrop-filter"
       style="background-color: var(--kd-code-fence-top-bar-bg);"
     >
       {#if hasTopbarTitle}
-        <span class="ml-3.5 font-mono text-sm text-gray-300">{topbarTitle}</span>
+        <span class="code-fence-title ml-3.5 font-mono text-sm text-soft">{topbarTitle}</span>
       {/if}
 
       <div class="flex-1" />
@@ -94,18 +93,18 @@
       {#if showCopyCode}
         <button
           type="button"
-          class="mr-2 px-2 py-1 hover:text-white"
+          class="mr-2 px-2 py-1 text-soft hover:text-inverse"
           on:click={copyCodeToClipboard}
         >
           <div
             class={clsx(
-              'text-white absolute top-2.5 right-4 transition-opacity z-10 duration-300 px-2 py-1 rounded-md ease-out text-sm font-mono',
+              'absolute top-2.5 right-4 z-10 rounded-md px-2 py-1 font-mono text-sm transition-opacity duration-300 ease-out',
               showCopiedCodePrompt ? 'opacity-100' : 'hidden opacity-0',
             )}
             aria-hidden="true"
             style="background-color: var(--kd-code-copied-bg-color);"
           >
-            {$i18n.code.copied}
+            Copied
           </div>
 
           <CopyFileIcon
@@ -114,28 +113,37 @@
             class={clsx(
               showCopiedCodePrompt
                 ? 'opacity-0'
-                : 'opacity-100 transition-opacity duration-600 ease-in',
+                : 'duration-600 opacity-100 transition-opacity ease-in',
             )}
           />
-          <span class="sr-only">{$i18n.code.copy}</span>
+          <span class="sr-only">Copy</span>
         </button>
       {/if}
     </div>
   {/if}
 
   <div class="code relative z-0 overflow-hidden">
-    <div class={clsx(showLineNumbers && 'pl-10')}>
-      {@html code}
+    <div class={clsx(showLineNumbers && '992:pl-10')}>
+      <pre
+        class={clsx(
+          'relative scrollbar overflow-scroll',
+          showLineNumbers && lines.length >= 100 ? 'pl-6' : 'pl-3',
+        )}>
+        {@html code
+          ?.replace(/^<pre(.*?)>/, '')
+          .replace(/<\/pre(.*?)>$/, '')
+          .trim()}
+      </pre>
     </div>
 
     {#if showLineNumbers}
       <pre
-        class="absolute top-3.5 left-0 m-0 flex flex-col text-sm leading-[27px]"
-        style="background-color: transparent; border-radius: 0; padding-top: 0;">
-			<div
-          class="hidden flex-none select-none text-right text-slate-600 992:block"
+        class="992:flex absolute top-3.5 left-0 m-0 hidden flex-col text-sm leading-[27px]"
+        style="border-radius: 0; padding-top: 0;">
+			  <div
+          class="992:block hidden flex-none select-none text-right text-soft"
           aria-hidden="true">{lines.join('\n')}</div>
-		</pre>
+		  </pre>
     {/if}
 
     {#if currentHighlightedLines.length > 0}

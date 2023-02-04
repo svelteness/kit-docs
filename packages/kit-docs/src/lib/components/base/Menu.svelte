@@ -6,8 +6,8 @@
   import clsx from 'clsx';
   import Transition from 'svelte-class-transition';
 
+  import { dialogManager } from '$lib/actions/dialog-manager';
   import { ariaBool } from '$lib/utils/aria';
-  import { dialogManager } from '$lib/actions/dialogManager';
 
   export let open = false;
 
@@ -23,13 +23,12 @@
   }
 </script>
 
-<div class="relative inline-block text-left not-prose">
+<div class="not-prose relative inline-block text-left">
   <button
     id={menuButtonId}
     type="button"
     class={clsx(
-      'inline-flex w-full justify-center rounded-md p-2 text-lg font-medium',
-      open ? 'text-gray-inverse' : 'text-gray-soft hover:text-gray-inverse',
+      'inline-flex w-full transform-gpu justify-center rounded-md p-2 text-lg font-medium transition-transform hover:scale-[1.1]',
     )}
     aria-controls={menuId}
     aria-expanded={ariaBool(open)}
@@ -55,7 +54,7 @@
   >
     <ul
       id={menuId}
-      class="absolute right-0 z-50 mt-2 w-48 origin-top-right rounded-md border border-gray-divider bg-gray-elevate shadow-md"
+      class="bg-elevate border-border absolute right-0 z-50 mt-2 w-40 origin-top-right rounded-md border-[1.5px]"
       role="menu"
       aria-orientation="vertical"
       aria-labelledby={menuButtonId}

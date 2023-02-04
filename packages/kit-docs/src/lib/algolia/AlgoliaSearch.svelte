@@ -1,9 +1,8 @@
 <script lang="ts">
-  // @ts-expect-error - no types.
   import docsearch from '@docsearch/js';
-
   import clsx from 'clsx';
   import { onMount } from 'svelte';
+
   import AlgoliaSkeleton from './AlgoliaSkeleton.svelte';
 
   export let appId: string;
@@ -11,10 +10,10 @@
   export let apiKey: string;
   export let placeholder = 'Search documentation';
 
-  let container;
+  let container: HTMLElement;
   let mounted = false;
 
-  onMount(() => {
+  $: if (container) {
     docsearch({
       container,
       placeholder,
@@ -22,7 +21,9 @@
       indexName,
       apiKey,
     });
+  }
 
+  onMount(() => {
     mounted = true;
     return () => {
       mounted = false;

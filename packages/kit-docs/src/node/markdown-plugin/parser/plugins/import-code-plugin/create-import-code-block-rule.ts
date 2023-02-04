@@ -1,7 +1,7 @@
 import type { RuleBlock } from 'markdown-it/lib/parser_block';
 import path from 'path';
 
-import type { ImportCodeTokenMeta } from './ImportCodeTokenMeta';
+import type { ImportCodeTokenMeta } from './import-code-token-meta';
 
 // Min length of the import code syntax, i.e. '@[code]()'
 const MIN_LENGTH = 9;

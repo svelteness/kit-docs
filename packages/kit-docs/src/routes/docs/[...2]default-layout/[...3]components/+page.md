@@ -88,10 +88,13 @@ import { Button } from '@svelteness/kit-docs';
 ### Raised
 
 ```svelte copy
+<Button primary type="raised">Action</Button>
 <Button type="raised">Action</Button>
 ```
 
 <div style="display: flex; justify-content: center;">
+  <Button primary type="raised">Action</Button>
+  <div style="margin: 0 8px;"></div>
   <Button type="raised">Action</Button>
 </div>
 
@@ -147,22 +150,22 @@ import { Chip } from '@svelteness/kit-docs';
   <Chip>Title</Chip>
 </div>
 
-## Color Scheme Menu
+## Color Scheme Toggle
 
 <script>
-import { ColorSchemeMenu } from '$lib';
+import { ColorSchemeToggle } from '$lib';
 </script>
 
 ```js copy
-import { ColorSchemeMenu } from '@svelteness/kit-docs';
+import { ColorSchemeToggle } from '@svelteness/kit-docs';
 ```
 
 ```svelte copy
-<ColorSchemeMenu />
+<ColorSchemeToggle />
 ```
 
 <div style="display: flex; justify-content: center;">
-  <ColorSchemeMenu />
+  <ColorSchemeToggle />
 </div>
 
 ## Menu

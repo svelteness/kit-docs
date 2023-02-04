@@ -6,17 +6,15 @@
   import clsx from 'clsx';
   import { createEventDispatcher } from 'svelte';
   import Transition from 'svelte-class-transition';
-
   import CloseIcon from '~icons/ri/close-fill';
 
+  import { dialogManager, type CloseDialogCallback } from '$lib/actions/dialog-manager';
+  import { isLargeScreen } from '$lib/stores/screen';
   import { ariaBool } from '$lib/utils/aria';
   import { wasEnterKeyPressed } from '$lib/utils/keyboard';
-  import { dialogManager, type CloseDialogCallback } from '$lib/actions/dialogManager';
-  import { isLargeScreen } from '$lib/stores/isLargeScreen';
   import { hideDocumentScrollbar } from '$lib/utils/scroll';
 
   import Overlay from './Overlay.svelte';
-  import { getI18nContext } from '../layout/contexts';
 
   export let open = false;
   export let overlay = false;
@@ -44,17 +42,16 @@
     closeDialog?.();
     hideDocumentScrollbar(false);
   }
-
-  const i18n = getI18nContext();
 </script>
 
-<div class="relative inline-block text-left not-prose">
+<div class="not-prose relative inline-block text-left">
   <button
     id={popoverButtonId}
     type="button"
     class={clsx(
       'inline-flex w-full justify-center rounded-md p-2 text-lg font-medium',
-      open ? 'text-gray-inverse' : 'text-gray-soft hover:text-gray-inverse',
+      'transform-gpu transition-transform hover:scale-[1.025]',
+      open ? 'text-inverse' : 'text-soft hover:text-inverse',
     )}
     aria-controls={popoverId}
     aria-expanded={ariaBool(open)}
@@ -85,31 +82,31 @@
     <div
       id={popoverId}
       class={clsx(
-        'absolute -top-4 -right-5 min-w-[340px] p-5 pt-4 origin-top-right z-50',
+        'absolute -top-4 -right-0 z-50 min-w-[340px] origin-top-right p-5 pt-4',
         !open && 'invisible',
       )}
       tabindex="-1"
       role="dialog"
     >
       <div
-        class="flex min-h-[60px] flex-col overflow-hidden rounded-md border border-gray-divider bg-gray-elevate shadow-md"
+        class="bg-elevate border-border flex min-h-[60px] flex-col overflow-hidden rounded-md border-[1.5px]"
       >
-        <div class="flex items-center z-20">
+        <div class="z-20 flex items-center">
           <div class="flex-1" />
           <button
             class={clsx(
-              'p-4 text-gray-soft hover:text-gray-inverse mt-[0.125rem] mr-[0.125rem]',
+              'text-soft hover:text-inverse mt-[0.125rem] mr-[0.125rem] p-4',
               !open && 'pointer-events-none',
             )}
-            on:pointerdown={() => closeDialog()}
+            on:pointerup={() => closeDialog()}
             on:keydown={(e) => wasEnterKeyPressed(e) && closeDialog(true)}
           >
-            <CloseIcon width="24" height="24" />
-            <span class="sr-only">{$i18n.dialog.close}</span>
+            <CloseIcon width="28" height="28" />
+            <span class="sr-only">Close</span>
           </button>
         </div>
 
-        <div class="px-4 pt-2.5 pb-6 -mt-[2.5rem]">
+        <div class="-mt-[2.5rem] px-4 pt-8 pb-6">
           <slot />
         </div>
       </div>
