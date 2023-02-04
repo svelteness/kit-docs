@@ -22,7 +22,7 @@ import RocketIcon from '~icons/ri/rocket-fill';
 ```
 
 ```svelte copy
-<CardGroup>
+<CardGroup cols={2}>
   <Card
     title="GitHub"
     description="Check out the kit-docs GitHub repo."
@@ -40,7 +40,7 @@ import RocketIcon from '~icons/ri/rocket-fill';
 </CardGroup>
 ```
 
-<CardGroup>
+<CardGroup cols={2}>
   <Card title="GitHub" description="Check out the kit-docs GitHub repo." href="https://github.com/svelteness/kit-docs">
     <GitHubIcon slot="icon" />
   </Card>
