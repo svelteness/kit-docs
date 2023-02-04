@@ -20,12 +20,7 @@ export const DEFAULT_NAVIGATION_CONFIG: NavigationConfig = {
 };
 
 export function getNavigationContext(): NavigationContext {
-  try {
-    return getContext(NAVIGATION_CONTEXT_KEY);
-  } catch (e) {
-    console.error(e);
-    console.warn('[kit-docs]: attempted to get navigation context before setting it.');
-  }
+  return getContext(NAVIGATION_CONTEXT_KEY);
 }
 
 export function setNavigationContext(context: NavigationContext) {
@@ -47,12 +42,7 @@ export type NavbarConfig = {
 export type NavbarContext = Readable<NavbarConfig>;
 
 export function getNavbarContext(): NavbarContext {
-  try {
-    return getContext(NAVBAR_CONTEXT_KEY);
-  } catch (e) {
-    console.error(e);
-    console.warn('[kit-docs]: attempted to get navbar context before setting it.');
-  }
+  return getContext(NAVBAR_CONTEXT_KEY);
 }
 
 export function createNavbarContext(config: Readable<NavbarConfig>): NavbarContext {
@@ -185,7 +175,7 @@ export function createSidebarContext(
       ),
     );
 
-    return category !== '.' ? category : null;
+    return !category || category === '.' ? null : category;
   });
 
   const context: SidebarContext = {
@@ -206,12 +196,7 @@ export function setSidebarContext(context: SidebarContext) {
 }
 
 export function getSidebarContext(): SidebarContext {
-  try {
-    return getContext(SIDEBAR_CONTEXT_KEY);
-  } catch (e) {
-    console.error(e);
-    console.warn('[kit-docs]: attempted to get sidebar context before setting it.');
-  }
+  return getContext(SIDEBAR_CONTEXT_KEY);
 }
 
 export type I18NTranslations = {
@@ -291,12 +276,7 @@ export type I18NContext = Readable<I18NTranslations>;
 export const I18N_CONTEXT_KEY = Symbol();
 
 export function getI18nContext(): I18NContext {
-  try {
-    return getContext(I18N_CONTEXT_KEY);
-  } catch (e) {
-    console.error(e);
-    console.warn('[kit-docs]: attempted to get i18n context before setting it.');
-  }
+  return getContext(I18N_CONTEXT_KEY);
 }
 
 export function setI18nContext(context: I18NContext) {

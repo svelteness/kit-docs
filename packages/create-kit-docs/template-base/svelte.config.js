@@ -10,6 +10,7 @@ const config = {
     prerender: {
       default: true,
       entries: ['*'],
+      handleMissingId: 'warn',
     },
   },
 
