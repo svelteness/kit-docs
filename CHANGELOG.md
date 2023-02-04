@@ -1,3 +1,12 @@
+# [1.1.0](https://github.com/svelteness/kit-docs/compare/v1.0.0...v1.1.0) (2023-02-04)
+
+
+### Features
+
+* fresh new theme ([04c57a3](https://github.com/svelteness/kit-docs/commit/04c57a381086ddbefff453fa63f8f16a2e3d846f))
+
+
+
 # [1.0.0](https://github.com/svelteness/kit-docs/compare/v0.24.0...v1.0.0) (2023-02-04)
 
 
