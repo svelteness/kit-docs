@@ -1,3 +1,12 @@
+## [1.1.1](https://github.com/svelteness/kit-docs/compare/v1.1.0...v1.1.1) (2023-02-04)
+
+
+### Bug Fixes
+
+* footer should only accept default slot ([6ce082f](https://github.com/svelteness/kit-docs/commit/6ce082f311c85294d4639a6c48144b3923a4778a))
+
+
+
 # [1.1.0](https://github.com/svelteness/kit-docs/compare/v1.0.0...v1.1.0) (2023-02-04)
 
 
