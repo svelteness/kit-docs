@@ -1,3 +1,15 @@
+# [1.0.0](https://github.com/svelteness/kit-docs/compare/v0.24.0...v1.0.0) (2023-02-04)
+
+
+* migrate to latest sveltekit  (#73) ([b6d44d3](https://github.com/svelteness/kit-docs/commit/b6d44d374a166b4e44cbb88629710fbaaf03eb27)), closes [#73](https://github.com/svelteness/kit-docs/issues/73)
+
+
+### BREAKING CHANGES
+
+* sveltekit 1.0 ready
+
+
+
 # [0.24.0](https://github.com/svelteness/kit-docs/compare/v0.23.0...v0.24.0) (2022-07-22)
 
 
