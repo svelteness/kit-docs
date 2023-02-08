@@ -4,6 +4,7 @@
 module.exports = {
   content: ['./src/lib/**/*.svelte'],
   darkMode: 'class',
+  prefix: 'kd-',
   corePlugins: {
     preflight: false,
   },

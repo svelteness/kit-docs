@@ -1,11 +1,11 @@
-<div class="not-prose my-10 flex items-start">
+<div class="kd-not-prose kd-my-10 kd-flex kd-items-start">
   <div
-    class="relative -ml-1 mr-2.5 flex h-6 min-h-[24px] w-6 min-w-[24px] items-center justify-center rounded-full bg-green-400 text-white"
+    class="kd-relative kd--ml-1 kd-mr-2.5 kd-flex kd-h-6 kd-min-h-[24px] kd-w-6 kd-min-w-[24px] kd-items-center kd-justify-center kd-rounded-full kd-bg-green-400 kd-text-white"
   >
     <svg
       width="6"
       height="4.5"
-      class="scale-x-[1.3] scale-y-[1.3] transform overflow-visible"
+      class="kd-scale-x-[1.3] kd-scale-y-[1.3] kd-transform kd-overflow-visible"
       aria-hidden="true"
     >
       <path
@@ -18,7 +18,7 @@
       />
     </svg>
   </div>
-  <div class="mt-px leading-6">
+  <div class="kd-mt-px kd-leading-6">
     <slot />
   </div>
 </div>

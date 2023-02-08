@@ -44,30 +44,32 @@
 
 <div class={clsx('on-this-page scrollbar', __class)} {style}>
   {#if headings.length > 1 || headings[0]?.children.length}
-    <h5 class="text-inverse w-full text-left text-lg font-semibold">{$i18n.toc.title}</h5>
-    <ul class="mt-4 space-y-4 px-2">
+    <h5 class="kd-text-inverse kd-w-full kd-text-left kd-text-lg kd-font-semibold">
+      {$i18n.toc.title}
+    </h5>
+    <ul class="kd-mt-4 kd-space-y-4 kd-px-2">
       {#each headings as heading (heading)}
         {@const i = calcIndex(heading)}
         {@const activeParent =
           i === $index || heading.children.some((_, j) => i + j + 1 === $index)}
 
-        <li class={clsx(activeParent ? 'text-brand' : 'text-soft hover:text-inverse')}>
+        <li class={clsx(activeParent ? 'kd-text-brand' : 'kd-text-soft hover:kd-text-inverse')}>
           <a href={`#${heading.slug}`}>{heading.title}</a>
         </li>
 
         {#if heading.children.length > 0}
-          <ul class="space-y-3">
+          <ul class="kd-space-y-3">
             {#each heading.children as childHeader, j (childHeader)}
               <li
                 class={clsx(
-                  'group group flex',
-                  i + j + 1 === $index ? 'text-brand' : 'text-soft hover:text-inverse',
+                  'group group kd-flex',
+                  i + j + 1 === $index ? 'kd-text-brand' : 'kd-text-soft hover:kd-text-inverse',
                 )}
               >
                 <RightArrowIcon
                   width="20"
                   height="20"
-                  class="group-hover:text-inverse mt-px mr-px text-soft"
+                  class="group-hover:kd-text-inverse kd-mt-px kd-mr-px kd-text-soft"
                 />
                 <a href={`#${childHeader.slug}`}>{childHeader.title}</a>
               </li>

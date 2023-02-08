@@ -12,17 +12,19 @@
   export let links: TabbedLink[] = [];
 </script>
 
-<div class="not-prose mt-10 mb-6 flex overflow-auto p-1">
-  <div class="min-w-full flex-none pr-4">
-    <ul class="flex space-x-6 whitespace-nowrap border-b border-border">
+<div class="kd-not-prose kd-mt-10 kd-mb-6 kd-flex kd-overflow-auto kd-p-1">
+  <div class="kd-min-w-full kd-flex-none kd-pr-4">
+    <ul class="kd-flex kd-space-x-6 kd-whitespace-nowrap kd-border-b kd-border-border">
       {#each links as link (link.title + link.href)}
         {@const isActive = $page.url.pathname === link.href}
         <li>
           <h2>
             <a
               class={clsx(
-                '-mb-px flex border-current pt-3 pb-2.5 leading-6 px-4 hover:border-b-2',
-                isActive ? 'text-brand font-semibold border-b-2' : 'text-soft hover:text-inverse',
+                'kd--mb-px kd-flex kd-border-current kd-pt-3 kd-pb-2.5 kd-leading-6 kd-px-4 hover:kd-border-b-2',
+                isActive
+                  ? 'kd-text-brand kd-font-semibold kd-border-b-2'
+                  : 'kd-text-soft hover:kd-text-inverse',
               )}
               href={link.href}
               data-sveltekit-prefetch

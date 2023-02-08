@@ -31,6 +31,9 @@
   });
 </script>
 
-<ol class="steps relative m-0 list-none space-y-6 p-0 992:space-y-4" style="counter-reset: 0;">
+<ol
+  class="steps kd-relative kd-m-0 kd-list-none kd-space-y-6 kd-p-0 992:kd-space-y-4"
+  style="counter-reset: 0;"
+>
   <slot />
 </ol>

@@ -23,12 +23,12 @@
   }
 </script>
 
-<div class="not-prose relative inline-block text-left">
+<div class="kd-not-prose kd-relative kd-inline-block kd-text-left">
   <button
     id={menuButtonId}
     type="button"
     class={clsx(
-      'inline-flex w-full transform-gpu justify-center rounded-md p-2 text-lg font-medium transition-transform hover:scale-[1.1]',
+      'kd-inline-flex kd-w-full kd-transform-gpu kd-justify-center kd-rounded-md kd-p-2 kd-text-lg kd-font-medium kd-transition-transform hover:scale-[1.1]',
     )}
     aria-controls={menuId}
     aria-expanded={ariaBool(open)}
@@ -46,21 +46,21 @@
 
   <Transition
     toggle={open}
-    transitions="transition transform"
-    inTransition="ease-out duration-100"
-    inState="opacity-0 scale-95"
-    onState="opacity-100 scale-100"
-    outTransition="ease-in duration-75"
+    transitions="kd-transition kd-transform"
+    inTransition="kd-ease-out kd-duration-100"
+    inState="kd-opacity-0 kd-scale-95"
+    onState="kd-opacity-100 kd-scale-100"
+    outTransition="kd-ease-in kd-duration-75"
   >
     <ul
       id={menuId}
-      class="bg-elevate border-border absolute right-0 z-50 mt-2 w-40 origin-top-right rounded-md border-[1.5px]"
+      class="kd-bg-elevate kd-border-border kd-absolute kd-right-0 kd-z-50 kd-mt-2 kd-w-40 kd-origin-top-right kd-rounded-md border-[1.5px]"
       role="menu"
       aria-orientation="vertical"
       aria-labelledby={menuButtonId}
       tabindex="-1"
     >
-      <div class="py-1" role="none">
+      <div class="kd-py-1" role="none">
         <slot />
       </div>
     </ul>

@@ -72,7 +72,7 @@
 </script>
 
 <div
-  class="kit-docs bg-body text-inverse min-h-full min-w-full h-full transition-transform duration-150 ease-out"
+  class="kit-docs kd-bg-body kd-text-inverse kd-min-h-full kd-min-w-full kd-h-full kd-transition-transform kd-duration-150 kd-ease-out"
   style={clsx(
     'font-family: var(--kd-font-family-sans, inherit);',
     !showBottomNav && '--kd-breadcrumbs-height: 0px;',
@@ -82,11 +82,11 @@
   {#if navbar}
     <div
       class={clsx(
-        'fixed top-0 z-30 w-full flex-none transform-gpu transition-transform duration-150 ease-out',
+        'kd-fixed kd-top-0 kd-z-30 kd-w-full kd-flex-none kd-transform-gpu kd-transition-transform kd-duration-150 kd-ease-out',
         isNavPopoverOpen ? '' : 'blur-bg',
         collapseNavbar
-          ? '-translate-y-[calc(calc(var(--kd--navbar-height)-var(--kd-breadcrumbs-height))+1px)]'
-          : 'translate-y-0',
+          ? 'kd--translate-y-[calc(calc(var(--kd--navbar-height)-var(--kd-breadcrumbs-height))+1px)]'
+          : 'kd-translate-y-0',
       )}
       style="border-bottom: var(--kd-navbar-border-bottom);"
     >
@@ -114,12 +114,14 @@
 
         <svelte:fragment slot="bottom">
           {#if showBottomNav}
-            <div class="border-border 992:hidden flex w-full items-center mt-4 pt-4 border-t">
+            <div
+              class="kd-border-border 992:kd-hidden kd-flex kd-w-full kd-items-center kd-mt-4 kd-pt-4 kd-border-t"
+            >
               {#if showSidebar}
                 <button
                   id="main-sidebar-button"
                   type="button"
-                  class="text-soft hover:text-inverse inline-flex justify-center rounded-md p-2 text-sm font-medium"
+                  class="kd-text-soft hover:kd-text-inverse kd-inline-flex kd-justify-center kd-rounded-md kd-p-2 kd-text-sm kd-font-medium"
                   aria-controls="main-sidebar"
                   aria-expanded={ariaBool(isSidebarOpen)}
                   aria-haspopup="true"
@@ -138,7 +140,7 @@
                     },
                   }}
                 >
-                  <span class="sr-only">{$i18nContext.nav.openSidebar}</span>
+                  <span class="kd-sr-only">{$i18nContext.nav.openSidebar}</span>
                   <MenuUnfoldIcon width="28" height="28" />
                 </button>
               {/if}
@@ -146,17 +148,17 @@
               {#if $activeLink || $kitDocs.meta?.title}
                 <ol
                   class={clsx(
-                    'text-md text-soft flex items-center whitespace-nowrap leading-6',
-                    showSidebar ? 'mt-px ml-2.5' : 'mt-2',
+                    'kd-text-md kd-text-soft kd-flex kd-items-center kd-whitespace-nowrap kd-leading-6',
+                    showSidebar ? 'kd-mt-px kd-ml-2.5' : 'kd-mt-2',
                   )}
                 >
                   {#if $activeCategory && $activeCategory !== '.'}
-                    <li class="flex items-center">
+                    <li class="kd-flex kd-items-center">
                       {$activeCategory}
-                      <RightArrowIcon class="mx-1" width="16" height="16" />
+                      <RightArrowIcon class="kd-mx-1" width="16" height="16" />
                     </li>
                   {/if}
-                  <li class="truncate font-semibold text-slate-900 dark:text-slate-200">
+                  <li class="kd-truncate kd-font-semibold kd-text-slate-900 dark:kd-text-slate-200">
                     {$activeLink?.title || $kitDocs.meta?.title}
                   </li>
                 </ol>
@@ -185,8 +187,8 @@
 
   <div
     class={clsx(
-      'mx-auto w-full flex flex-row min-h-full max-w-[var(--kd-content-max-width)]',
-      navbar && 'pt-[var(--kd--navbar-height)] z-20',
+      'kd-mx-auto kd-w-full kd-flex kd-flex-row kd-min-h-full kd-max-w-[var(--kd-content-max-width)]',
+      navbar && 'kd-pt-[var(--kd--navbar-height)] kd-z-20',
     )}
   >
     {#if showSidebar}
@@ -194,14 +196,14 @@
         {search}
         class={({ open }) =>
           clsx(
-            'self-start fixed top-0 left-0 transform bg-body z-50 border-border border-r scrollbar',
-            '-translate-x-full transform transition-transform duration-200 ease-out will-change-transform',
-            'max-h-screen min-h-screen min-w-[var(--kd-sidebar-min-width)] max-w-[var(--kd-sidebar-max-width)]',
-            '992:translate-x-0 922:block 992:sticky 992:z-0 overflow-y-auto p-[var(--kd-sidebar-padding)]',
-            open && 'translate-x-0',
+            'kd-self-start kd-fixed kd-top-0 kd-left-0 kd-transform kd-bg-body kd-z-50 kd-border-border kd-border-r scrollbar',
+            'kd--translate-x-full kd-transform kd-transition-transform kd-duration-200 kd-ease-out kd-will-change-transform',
+            'kd-max-h-screen kd-min-h-screen kd-min-w-[var(--kd-sidebar-min-width)] kd-max-w-[var(--kd-sidebar-max-width)]',
+            '992:kd-translate-x-0 922:kd-block 992:kd-sticky 992:kd-z-0 kd-overflow-y-auto kd-p-[var(--kd-sidebar-padding)]',
+            open && 'kd-translate-x-0',
             navbar
-              ? '992:top-[var(--kd--navbar-height)] 992:min-h-[calc(100vh-var(--kd--navbar-height))] 992:max-h-[calc(100vh-var(--kd--navbar-height))]'
-              : '992:top-0 min-h-screen max-h-screen',
+              ? '992:kd-top-[var(--kd--navbar-height)] 992:kd-min-h-[calc(100vh-var(--kd--navbar-height))] 992:kd-max-h-[calc(100vh-var(--kd--navbar-height))]'
+              : '992:kd-top-0 kd-min-h-screen kd-max-h-screen',
           )}
         open={isSidebarOpen}
         on:close={(e) => closeSidebar(e.detail)}
@@ -220,11 +222,11 @@
 
     <main
       class={clsx(
-        'w-full overflow-x-hidden',
-        navbar ? `992:min-h-[calc(100vh-var(--kd--navbar-height))]` : 'min-h-screen',
-        navbar && 'min-h-[calc(100vh-var(--kd--navbar-height))]',
-        $kitDocs.meta && (showSidebar ? 'px-8 992:px-16' : 'px-6'),
-        $kitDocs.meta && (navbar || showBottomNav ? 'pt-8' : ''),
+        'kd-w-full kd-overflow-x-hidden',
+        navbar ? `992:kd-min-h-[calc(100vh-var(--kd--navbar-height))]` : 'kd-min-h-screen',
+        navbar && 'kd-min-h-[calc(100vh-var(--kd--navbar-height))]',
+        $kitDocs.meta && (showSidebar ? 'kd-px-8 992:kd-px-16' : 'kd-px-6'),
+        $kitDocs.meta && (navbar || showBottomNav ? 'kd-pt-8' : ''),
       )}
       style={clsx(
         `max-width: ${
@@ -237,9 +239,11 @@
       <slot name="main-top" />
 
       {#if $kitDocs.meta}
-        <article class="markdown prose dark:prose-invert z-10 max-w-[var(--kd-article-max-width)]">
+        <article
+          class="markdown kd-prose dark:kd-prose-invert kd-z-10 kd-max-w-[var(--kd-article-max-width)]"
+        >
           {#if $activeCategory && $activeCategory !== '.'}
-            <p class="text-brand mb-3.5 text-[15px] font-semibold leading-6">
+            <p class="kd-text-brand kd-mb-3.5 kd-text-[15px] kd-font-semibold kd-leading-6">
               {$activeCategory}
             </p>
           {/if}
@@ -251,12 +255,16 @@
       {/if}
 
       {#if $previousLink || $nextLink}
-        <hr class="border-border mt-20" />
+        <hr class="kd-border-border kd-mt-20" />
 
-        <div class="992:text-xl flex items-center pt-12 pb-20 text-lg font-semibold text-gray-300">
+        <div
+          class="992:kd-text-xl kd-flex kd-items-center kd-pt-12 kd-pb-20 kd-text-lg kd-font-semibold kd-text-gray-300"
+        >
           {#if $previousLink}
-            <div class="mb-4 flex flex-col items-start">
-              <span class="text-inverse ml-3 mb-4 inline-block">{$i18nContext.nav.previous}</span>
+            <div class="kd-mb-4 kd-flex kd-flex-col kd-items-start">
+              <span class="kd-text-inverse kd-ml-3 kd-mb-4 kd-inline-block"
+                >{$i18nContext.nav.previous}</span
+              >
               <Button
                 arrow="left"
                 href={$previousLink.slug}
@@ -269,8 +277,10 @@
           {/if}
 
           {#if $nextLink}
-            <div class="ml-auto mb-4 flex flex-col items-end">
-              <span class="text-inverse mr-3 mb-4 inline-block">{$i18nContext.nav.next}</span>
+            <div class="kd-ml-auto kd-mb-4 kd-flex kd-flex-col kd-items-end">
+              <span class="kd-text-inverse kd-mr-3 kd-mb-4 kd-inline-block"
+                >{$i18nContext.nav.next}</span
+              >
               <Button
                 arrow="right"
                 href={$nextLink.slug}
@@ -287,14 +297,14 @@
       <slot name="main-bottom" />
     </main>
 
-    <div class="992:flex-1" />
+    <div class="992:kd-flex-1" />
 
     <OnThisPage
       class={clsx(
-        'pt-8 pb-8 hidden overflow-auto min-w-[160px] sticky right-4 pr-4 1440:right-6 1440:pr-2 1280:block pl-0.5',
+        'kd-pt-8 kd-pb-8 kd-hidden kd-overflow-auto kd-min-w-[160px] kd-sticky kd-right-4 kd-pr-4 1440:kd-right-6 1440:kd-pr-2 1280:kd-block kd-pl-0.5',
         navbar
-          ? 'top-[var(--kd--navbar-height)] max-h-[calc(100vh-var(--kd--navbar-height))]'
-          : 'top-0 max-h-screen',
+          ? 'kd-top-[var(--kd--navbar-height)] kd-max-h-[calc(100vh-var(--kd--navbar-height))]'
+          : 'kd-top-0 kd-max-h-screen',
       )}
     />
   </div>

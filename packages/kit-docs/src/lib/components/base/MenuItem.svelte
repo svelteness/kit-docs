@@ -18,8 +18,8 @@
 
 <li
   class={clsx(
-    'duraiton-100 flex items-center px-4 py-2 text-base transition-colors hover:cursor-pointer',
-    selected ? 'text-brand' : 'text-soft hover:text-inverse focus-visible:text-inverse',
+    'kd-duration-100 kd-flex kd-items-center kd-px-4 kd-py-2 kd-text-base kd-transition-colors hover:kd-cursor-pointer',
+    selected ? 'kd-text-brand' : 'kd-text-soft hover:kd-text-inverse focus-visible:kd-text-inverse',
   )}
   role="menuitem"
   tabindex="-1"
@@ -27,7 +27,7 @@
   on:pointerup={() => dispatch('select')}
 >
   {#if $$slots.icon}
-    <div class="mr-3 h-5 w-5">
+    <div class="kd-mr-3 kd-h-5 kd-w-5">
       <slot name="icon" />
     </div>
   {/if}

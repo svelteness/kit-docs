@@ -32,14 +32,14 @@
 </script>
 
 <div
-  class="flex w-full flex-col items-center justify-center mx-auto max-w-[var(--kd-navbar-max-width)] p-[var(--kd-navbar-padding)] h-[var(--kd--navbar-height)]"
+  class="kd-flex kd-w-full kd-flex-col kd-items-center kd-justify-center kd-mx-auto kd-max-w-[var(--kd-navbar-max-width)] kd-p-[var(--kd-navbar-padding)] kd-h-[var(--kd--navbar-height)]"
 >
-  <div class={clsx('flex w-full items-center')}>
+  <div class={clsx('kd-flex kd-w-full kd-items-center')}>
     <slot name="left" />
 
-    <div class="flex-1" />
+    <div class="kd-flex-1" />
 
-    <div class="992:hidden -mr-2 flex items-center">
+    <div class="992:kd-hidden kd--mr-2 kd-flex kd-items-center">
       {#if search}
         <slot name="search" />
       {/if}
@@ -47,13 +47,13 @@
       <Popover overlay on:open={onOpenPopover} on:close={onClosePopover}>
         <svelte:fragment slot="button">
           <MenuIcon width="30" height="30" />
-          <span class="sr-only">{$i18n.nav.mainMenu}</span>
+          <span class="kd-sr-only">{$i18n.nav.mainMenu}</span>
         </svelte:fragment>
 
         <slot name="popover-top" />
 
-        <section class="flex flex-col items-start">
-          <h1 class="mb-6 text-xl font-medium">{$i18n.nav.links}</h1>
+        <section class="kd-flex kd-flex-col kd-items-start">
+          <h1 class="kd-mb-6 kd-text-xl kd-font-medium">{$i18n.nav.links}</h1>
           <nav>
             <ul>
               {#each navLinks as navLink (navLink.title)}
@@ -65,24 +65,24 @@
 
         <slot name="popover-middle" />
 
-        <hr class="my-6 h-2 w-full border-t border-dashed border-border" />
+        <hr class="kd-my-6 kd-h-2 kd-w-full kd-border-t kd-border-dashed kd-border-border" />
 
-        <section class="flex flex-col items-start">
-          <h1 class="mb-6 text-xl font-medium">{$i18n.nav.options}</h1>
-          <div class="flex flex-col space-y-6">
+        <section class="kd-flex kd-flex-col kd-items-start">
+          <h1 class="kd-mb-6 kd-text-xl kd-font-medium">{$i18n.nav.options}</h1>
+          <div class="kd-flex kd-flex-col kd-space-y-6">
             <slot name="popover-options" />
-            <div class="flex items-center">
+            <div class="kd-flex kd-items-center">
               Theme
 
               <label
-                class="relative ml-4 flex items-center border border-border px-4 py-1 rounded-md focus-within:ring-2"
+                class="kd-relative kd-ml-4 kd-flex kd-items-center kd-border kd-border-border kd-px-4 kd-py-1 kd-rounded-md focus-within:kd-ring-2"
                 style="--tw-ring-color: var(--kd-color-focus);"
               >
-                <span class="sr-only">{$i18n.colorScheme.theme}</span>
+                <span class="kd-sr-only">{$i18n.colorScheme.theme}</span>
                 {uppercaseFirstLetter($colorScheme)}
-                <ArrowDropDownIcon width="20" height="20" class="ml-1" />
+                <ArrowDropDownIcon width="20" height="20" class="kd-ml-1" />
                 <select
-                  class="absolute inset-0 appearance-none opacity-0"
+                  class="kd-absolute kd-inset-0 kd-appearance-none kd-opacity-0"
                   bind:value={$colorScheme}
                 >
                   <option value="light">{$i18n.colorScheme.light}</option>
@@ -98,9 +98,9 @@
       </Popover>
     </div>
 
-    <div class="992:flex 992:items-center hidden">
+    <div class="992:kd-flex 992:kd-items-center kd-hidden">
       <nav>
-        <ul class="flex items-center space-x-8">
+        <ul class="kd-flex kd-items-center kd-space-x-8">
           {#each navLinks as navLink (navLink.title)}
             <NavLinkItem {...navLink} />
           {/each}
@@ -109,7 +109,7 @@
 
       <slot name="right" />
 
-      <div class="hidden 992:flex items-center ml-6">
+      <div class="kd-hidden 992:kd-flex kd-items-center kd-ml-6">
         <slot name="right-alt" />
         <ColorSchemeToggle />
       </div>

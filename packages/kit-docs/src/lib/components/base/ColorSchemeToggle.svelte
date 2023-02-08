@@ -13,7 +13,7 @@
 </script>
 
 <button
-  class="min-w-[40px] min-h-[40px] flex items-center justify-center p-2 transform-gpu rounded-md border-0 transition-transform hover:scale-[1.1]"
+  class="kd-min-w-[40px] kd-min-h-[40px] kd-flex kd-items-center kd-justify-center kd-p-2 kd-transform-gpu kd-rounded-md kd-border-0 kd-transition-transform hover:kd-scale-[1.1]"
   on:pointerup={onPointerUp}
 >
   {#if !$isDarkColorScheme}
@@ -22,5 +22,5 @@
     <MoonIcon width="20" height="20" />
   {/if}
 
-  <span class="sr-only">{$i18n.colorScheme.title}</span>
+  <span class="kd-sr-only">{$i18n.colorScheme.title}</span>
 </button>

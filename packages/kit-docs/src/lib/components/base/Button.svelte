@@ -16,27 +16,27 @@
   $: isButton = __as === 'button' && isUndefined($$restProps['href']);
 
   $: buttonClass = clsx(
-    'group transform-gpu text-base font-medium transition-transform hover:scale-105',
-    type === 'raised' && 'flex items-center justify-center',
-    (isButton || type === 'raised') && 'rounded-md px-4 992:px-5 py-2',
+    'group kd-transform-gpu kd-text-base kd-font-medium kd-transition-transform hover:kd-scale-105',
+    type === 'raised' && 'kd-flex kd-items-center kd-justify-center',
+    (isButton || type === 'raised') && 'kd-rounded-md kd-px-4 992:kd-px-5 kd-py-2',
     type === 'raised'
       ? primary
-        ? 'bg-inverse text-body hover:bg-inverse/90'
-        : 'bg-body border-2 border-inverse text-inverse'
-      : 'text-soft hover:text-inverse',
+        ? 'kd-bg-inverse kd-text-body hover:kd-bg-inverse/90'
+        : 'kd-bg-body kd-border-2 kd-border-inverse kd-text-inverse'
+      : 'kd-text-soft hover:kd-text-inverse',
     __class,
   );
 
   $: contentClass = clsx(
-    'inline-block transform transition-transform duration-100 group-hover:translate-x-0',
-    arrow === 'left' && '-translate-x-3 ',
-    arrow === 'right' && 'translate-x-2',
+    'kd-inline-block kd-transform kd-transition-transform kd-duration-100 group-hover:kd-translate-x-0',
+    arrow === 'left' && 'kd--translate-x-3 ',
+    arrow === 'right' && 'kd-translate-x-2',
   );
 
   $: arrowClass = clsx(
     arrow &&
-      'opacity-0 transition-opacity duration-100 group-hover:visible group-hover:opacity-100',
-    !arrow ? 'hidden' : 'inline-block',
+      'kd-opacity-0 kd-transition-opacity kd-duration-100 group-hover:kd-visible group-hover:kd-opacity-100',
+    !arrow ? 'kd-hidden' : 'kd-inline-block',
   );
 </script>
 

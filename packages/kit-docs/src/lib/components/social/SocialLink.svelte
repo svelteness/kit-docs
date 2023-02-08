@@ -26,7 +26,7 @@
 <!-- svelte-ignore security-anchor-rel-noreferrer -->
 <a
   class={clsx(
-    'relative flex transform-gpu items-center rounded-md border-0 p-2 transition-transform hover:scale-[1.1]',
+    'kd-relative kd-flex kd-transform-gpu kd-items-center kd-rounded-md kd-border-0 kd-p-2 kd-transition-transform hover:kd-scale-[1.1]',
     __class,
   )}
   {href}
@@ -34,10 +34,10 @@
 >
   <svelte:component
     this={icons[type]}
-    class={clsx($$slots.default && 'mr-2.5')}
+    class={clsx($$slots.default && 'kd-mr-2.5')}
     width={iconWidth}
     height={iconHeight}
   />
-  <span class="sr-only">{title}</span>
+  <span class="kd-sr-only">{title}</span>
   <slot />
 </a>

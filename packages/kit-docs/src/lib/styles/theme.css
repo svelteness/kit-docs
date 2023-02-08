@@ -3,15 +3,15 @@
 @tailwind utilities;
 
 body {
-  @apply min-h-screen w-screen;
+  @apply kd-min-h-screen kd-w-screen;
 }
 
 .js-focus-visible :focus:not([data-focus-visible-added]) {
-  @apply outline-none;
+  @apply kd-outline-none;
 }
 
 .js-focus-visible [data-focus-visible-added] {
-  @apply outline-none ring-2;
+  @apply kd-outline-none kd-ring-2;
   --tw-ring-color: var(--kd-color-focus);
 }
 
@@ -60,16 +60,16 @@ body {
 }
 
 .scrollbar::-webkit-scrollbar {
-  @apply !h-1.5 !w-[5px] !bg-transparent;
+  @apply !kd-h-1.5 !kd-w-[5px] !kd-bg-transparent;
 }
 
 .scrollbar::-webkit-scrollbar-track {
-  @apply !rounded;
+  @apply !kd-rounded;
   background-color: var(--kd-scrollbar-track-bg) !important;
 }
 
 .scrollbar::-webkit-scrollbar-thumb {
-  @apply !rounded;
+  @apply !kd-rounded;
   background-color: var(--kd-scrollbar-thumb-bg) !important;
 }
 
@@ -80,12 +80,12 @@ body {
  */
 
 .blur-bg {
-  @apply bg-body dark:bg-body backdrop-blur backdrop-filter;
+  @apply kd-bg-body dark:kd-bg-body kd-backdrop-blur kd-backdrop-filter;
 }
 
 @supports (backdrop-filter: blur(0)) or (-webkit-backdrop-filter: blur(0)) {
   .blur-bg {
-    @apply bg-body/20 dark:bg-body/60;
+    @apply kd-bg-body/20 dark:kd-bg-body/60;
   }
 }
 

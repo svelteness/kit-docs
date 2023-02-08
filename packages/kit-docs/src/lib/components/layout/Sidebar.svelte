@@ -50,53 +50,56 @@
   bind:this={sidebar}
   {style}
 >
-  <div class="992:hidden sticky top-0 left-0 flex items-center">
-    <div class="flex-1" />
+  <div class="992:kd-hidden kd-sticky kd-top-0 kd-left-0 kd-flex kd-items-center">
+    <div class="kd-flex-1" />
     <button
-      class={clsx('text-soft hover:text-inverse p-4 -mx-6', !open && 'pointer-events-none')}
+      class={clsx(
+        'kd-text-soft hover:kd-text-inverse kd-p-4 kd--mx-6',
+        !open && 'kd-pointer-events-none',
+      )}
       on:pointerdown={() => dispatch('close')}
       on:keydown={(e) => wasEnterKeyPressed(e) && dispatch('close', true)}
     >
       <CloseIcon width="24" height="24" />
-      <span class="sr-only">Close sidebar</span>
+      <span class="kd-sr-only">Close sidebar</span>
     </button>
   </div>
 
-  <nav class="992:px-1 scrollbar">
+  <nav class="992:kd-px-1 scrollbar">
     {#if search}
-      <div class="pointer-events-none sticky top-0 z-0 -ml-0.5 min-h-[80px]">
-        <div class="992:h-6 bg-body" />
-        <div class="bg-body pointer-events-auto relative">
-          <div class="992:block hidden">
+      <div class="kd-pointer-events-none kd-sticky kd-top-0 kd-z-0 kd--ml-0.5 kd-min-h-[80px]">
+        <div class="992:kd-h-6 bg-body" />
+        <div class="kd-bg-body kd-pointer-events-auto kd-relative">
+          <div class="992:kd-block kd-hidden">
             <slot name="search" />
           </div>
         </div>
-        <div class="from-body h-8 bg-gradient-to-b" />
+        <div class="kd-from-body kd-h-8 kd-bg-gradient-to-b" />
       </div>
     {/if}
 
     <slot name="top" />
 
-    <ul class={clsx(!search && 'mt-8', 'pb-28 992:pb-0')}>
+    <ul class={clsx(!search && 'kd-mt-8', 'kd-pb-28 992:kd-pb-0')}>
       {#each Object.keys($config.links) as category (category)}
         {@const links = $config.links[category]}
-        <li class="992:mt-10 mt-12 first:mt-0">
+        <li class="992:kd-mt-10 kd-mt-12 first:kd-mt-0">
           {#if category !== '.'}
-            <h5 class="text-strong 992:mb-3 mb-8 text-lg font-semibold">
+            <h5 class="text-strong 992:kd-mb-3 kd-mb-8 kd-text-lg kd-font-semibold">
               {category}
             </h5>
           {:else}
-            <div class="mt-10" />
+            <div class="kd-mt-10" />
           {/if}
-          <ul class="border-border space-y-3 border-l">
+          <ul class="kd-border-border kd-space-y-3 kd-border-l">
             {#each links as link (link.title + link.slug)}
-              <li class="first:mt-6">
+              <li class="first:kd-mt-6">
                 <a
                   class={clsx(
-                    '992:py-1 -ml-px flex items-center border-l py-2 pl-4',
+                    '992:kd-py-1 kd--ml-px kd-flex kd-items-center kd-border-l kd-py-2 kd-pl-4',
                     isActiveSidebarLink(link, $page.url.pathname)
-                      ? 'text-brand font-semibold'
-                      : 'hover:border-inverse focus-visible:border-inverse text-soft hover:text-inverse focus-visible:text-inverse border-transparent font-normal',
+                      ? 'kd-text-brand kd-font-semibold'
+                      : 'hover:kd-border-inverse focus-visible:kd-border-inverse kd-text-soft hover:kd-text-inverse focus-visible:kd-text-inverse kd-border-transparent kd-font-normal',
                   )}
                   href={link.slug}
                   use:prefetchLink
@@ -105,11 +108,21 @@
                     : ''}
                 >
                   {#if link.icon?.before}
-                    <svelte:component this={link.icon.before} class="mr-1" width="24" height="24" />
+                    <svelte:component
+                      this={link.icon.before}
+                      class="kd-mr-1"
+                      width="24"
+                      height="24"
+                    />
                   {/if}
                   {link.title}
                   {#if link.icon?.after}
-                    <svelte:component this={link.icon.after} class="ml-1" width="24" height="24" />
+                    <svelte:component
+                      this={link.icon.after}
+                      class="kd-ml-1"
+                      width="24"
+                      height="24"
+                    />
                   {/if}
                 </a>
               </li>
@@ -123,6 +136,6 @@
   </nav>
 </aside>
 
-<div class="992:hidden z-40">
+<div class="992:kd-hidden kd-z-40">
   <Overlay {open} />
 </div>

@@ -8,9 +8,9 @@
   export let match: RegExp | null = null;
 </script>
 
-<li class="mt-4 first:mt-0 992:mt-0">
+<li class="mt-4 first:mt-0 992:kd-mt-0">
   <a
-    class="text-soft text-base hover:font-medium font-base hover:underline hover:text-brand"
+    class="kd-text-soft text-base hover:font-medium font-base hover:underline hover:kd-text-brand"
     href={slug}
     target={isNull(match) ? '_blank' : null}
     use:prefetchLink

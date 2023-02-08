@@ -6,9 +6,9 @@
 
 <div
   class={clsx(
-    'pointer-events-auto fixed top-0 left-0 z-40 backdrop-blur-sm backdrop-filter transition-opacity duration-75',
-    'bg-body/20 dark:bg-body/60',
-    'h-screen w-screen',
-    open ? 'visible opacity-100' : 'invisible opacity-0',
+    'kd-pointer-events-auto kd-fixed kd-top-0 kd-left-0 kd-z-40 kd-backdrop-blur-sm kd-backdrop-filter kd-transition-opacity kd-duration-75',
+    'kd-bg-body/20 dark:kd-bg-body/60',
+    'kd-h-screen kd-w-screen',
+    open ? 'kd-visible kd-opacity-100' : 'kd-invisible kd-opacity-0',
   )}
 />

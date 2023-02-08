@@ -44,14 +44,14 @@
   }
 </script>
 
-<div class="not-prose relative inline-block text-left">
+<div class="kd-not-prose kd-relative kd-inline-block kd-text-left">
   <button
     id={popoverButtonId}
     type="button"
     class={clsx(
-      'inline-flex w-full justify-center rounded-md p-2 text-lg font-medium',
-      'transform-gpu transition-transform hover:scale-[1.025]',
-      open ? 'text-inverse' : 'text-soft hover:text-inverse',
+      'kd-inline-flex kd-w-full kd-justify-center kd-rounded-md kd-p-2 kd-text-lg kd-font-medium',
+      'kd-transform-gpu kd-transition-transform hover:kd-scale-[1.025]',
+      open ? 'kd-text-inverse' : 'kd-text-soft hover:kd-text-inverse',
     )}
     aria-controls={popoverId}
     aria-expanded={ariaBool(open)}
@@ -73,40 +73,40 @@
 
   <Transition
     toggle={open}
-    transitions="transition transform"
-    inTransition="ease-out duration-150"
-    inState="opacity-0 scale-95"
-    onState="opacity-100 scale-100"
-    outTransition="ease-out duration-100"
+    transitions="kd-transition kd-transform"
+    inTransition="kd-ease-out kd-duration-150"
+    inState="kd-opacity-0 kd-scale-95"
+    onState="kd-opacity-100 kd-scale-100"
+    outTransition="kd-ease-out kd-duration-100"
   >
     <div
       id={popoverId}
       class={clsx(
-        'absolute -top-4 -right-0 z-50 min-w-[340px] origin-top-right p-5 pt-4',
-        !open && 'invisible',
+        'kd-absolute kd--top-4 kd--right-0 kd-z-50 kd-min-w-[340px] kd-origin-top-right kd-p-5 kd-pt-4',
+        !open && 'kd-invisible',
       )}
       tabindex="-1"
       role="dialog"
     >
       <div
-        class="bg-elevate border-border flex min-h-[60px] flex-col overflow-hidden rounded-md border-[1.5px]"
+        class="kd-bg-elevate kd-border-border kd-flex kd-min-h-[60px] kd-flex-col kd-overflow-hidden kd-rounded-md kd-border-[1.5px]"
       >
-        <div class="z-20 flex items-center">
-          <div class="flex-1" />
+        <div class="kd-z-20 kd-flex kd-items-center">
+          <div class="kd-flex-1" />
           <button
             class={clsx(
-              'text-soft hover:text-inverse mt-[0.125rem] mr-[0.125rem] p-4',
-              !open && 'pointer-events-none',
+              'kd-text-soft hover:kd-text-inverse kd-mt-[0.125rem] kd-mr-[0.125rem] kd-p-4',
+              !open && 'kd-pointer-events-none',
             )}
             on:pointerup={() => closeDialog()}
             on:keydown={(e) => wasEnterKeyPressed(e) && closeDialog(true)}
           >
             <CloseIcon width="28" height="28" />
-            <span class="sr-only">Close</span>
+            <span class="kd-sr-only">Close</span>
           </button>
         </div>
 
-        <div class="-mt-[2.5rem] px-4 pt-8 pb-6">
+        <div class="kd--mt-[2.5rem] kd-px-4 kd-pt-8 kd-pb-6">
           <slot />
         </div>
       </div>

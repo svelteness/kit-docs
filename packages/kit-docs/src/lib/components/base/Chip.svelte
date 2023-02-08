@@ -7,13 +7,13 @@
 
 <div
   class={clsx(
-    'inline-flex h-6 items-center justify-center px-2.5 py-1 font-mono text-xs font-medium tracking-wide',
-    'border-border border',
+    'kd-inline-flex kd-h-6 kd-items-centerkd-justify-center kd-px-2.5 kd-py-1 kd-font-mono kd-text-xs kd-font-medium kd-tracking-wide',
+    'kd-border-border kd-border',
     __class,
   )}
   style="border-radius: var(--chip-border-radius, 9999px);"
 >
-  <span class="mt-px">
+  <span class="kd-mt-px">
     <slot />
   </span>
 </div>

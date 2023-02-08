@@ -73,33 +73,35 @@
 
 <div
   class={clsx(
-    'code-fence 576:max-h-[32rem] relative my-8 mx-auto max-h-[60vh] overflow-y-auto rounded-md',
-    'prefers-dark-scheme scrollbar scroll-contain shadow-xl border-border border',
+    'code-fence 576:kd-max-h-[32rem] kd-relative kd-my-8 kd-mx-auto max-h-[60vh] kd-overflow-y-auto kd-rounded-md',
+    'prefers-dark-scheme scrollbar scroll-contain kd-shadow-xl kd-border-border kd-border',
     lang && `lang-${lang}`,
   )}
   style="background-color: var(--kd-code-fence-bg);"
 >
   {#if showTopBar}
     <div
-      class="code-fence-top-bar sticky top-0 left-0 z-10 flex items-center py-1 pt-2 backdrop-blur backdrop-filter"
+      class="code-fence-top-bar kd-sticky kd-top-0 kd-left-0 kd-z-10 kd-flex kd-items-center kd-py-1 kd-pt-2 kd-backdrop-blur kd-backdrop-filter"
       style="background-color: var(--kd-code-fence-top-bar-bg);"
     >
       {#if hasTopbarTitle}
-        <span class="code-fence-title ml-3.5 font-mono text-sm text-soft">{topbarTitle}</span>
+        <span class="code-fence-title kd-ml-3.5 kd-font-mono kd-text-sm kd-text-soft"
+          >{topbarTitle}</span
+        >
       {/if}
 
-      <div class="flex-1" />
+      <div class="kd-flex-1" />
 
       {#if showCopyCode}
         <button
           type="button"
-          class="mr-2 px-2 py-1 text-soft hover:text-inverse"
+          class="kd-mr-2 kd-px-2 kd-py-1 kd-text-soft hover:kd-text-inverse"
           on:click={copyCodeToClipboard}
         >
           <div
             class={clsx(
-              'absolute top-2.5 right-4 z-10 rounded-md px-2 py-1 font-mono text-sm transition-opacity duration-300 ease-out',
-              showCopiedCodePrompt ? 'opacity-100' : 'hidden opacity-0',
+              'kd-absolute kd-top-2.5 kd-right-4 kd-z-10 kd-rounded-md kd-px-2 kd-py-1 kd-font-mono kd-text-sm kd-transition-opacity kd-duration-300 kd-ease-out',
+              showCopiedCodePrompt ? 'kd-opacity-100' : 'kd-hidden kd-opacity-0',
             )}
             aria-hidden="true"
             style="background-color: var(--kd-code-copied-bg-color);"
@@ -112,22 +114,22 @@
             height="24"
             class={clsx(
               showCopiedCodePrompt
-                ? 'opacity-0'
-                : 'duration-600 opacity-100 transition-opacity ease-in',
+                ? 'kd-opacity-0'
+                : 'duration-600 kd-opacity-100 kd-transition-opacity kd-ease-in',
             )}
           />
-          <span class="sr-only">Copy</span>
+          <span class="kd-sr-only">Copy</span>
         </button>
       {/if}
     </div>
   {/if}
 
-  <div class="code relative z-0 overflow-hidden">
-    <div class={clsx(showLineNumbers && '992:pl-10')}>
+  <div class="code kd-relative kd-z-0 kd-overflow-hidden">
+    <div class={clsx(showLineNumbers && '992:kd-pl-10')}>
       <pre
         class={clsx(
-          'relative scrollbar overflow-scroll',
-          showLineNumbers && lines.length >= 100 ? 'pl-6' : 'pl-3',
+          'kd-relative scrollbar kd-overflow-scroll',
+          showLineNumbers && lines.length >= 100 ? 'kd-pl-6' : 'kd-pl-3',
         )}>
         {@html code
           ?.replace(/^<pre(.*?)>/, '')
@@ -138,23 +140,23 @@
 
     {#if showLineNumbers}
       <pre
-        class="992:flex absolute top-3.5 left-0 m-0 hidden flex-col text-sm leading-[27px]"
+        class="992:kd-flex kd-absolute kd-top-3.5 kd-left-0 kd-m-0 kd-hidden kd-flex-col kd-text-sm leading-[27px]"
         style="border-radius: 0; padding-top: 0;">
 			  <div
-          class="992:block hidden flex-none select-none text-right text-soft"
+          class="992:kd-block kd-hidden kd-flex-none kd-select-none kd-text-right text-soft"
           aria-hidden="true">{lines.join('\n')}</div>
 		  </pre>
     {/if}
 
     {#if currentHighlightedLines.length > 0}
       <div
-        class="pointer-events-none absolute inset-0 mt-[0.7em] h-full w-full leading-[27px]"
+        class="kd-pointer-events-none kd-absolute kd-inset-0 kd-mt-[0.7em] kd-h-full kd-w-full kd-leading-[27px]"
         aria-hidden="true"
       >
         {#each lines as lineNumber}
           {#if isHighlightLine(lineNumber, currentHighlightedLines)}
             <div
-              class="w-full border-l-[5px] font-mono text-transparent"
+              class="kd-w-full kd-border-l-[5px] kd-font-mono kd-text-transparent"
               style="border-color: var(--kd-code-highlight-border); background-color: var(--kd-code-highlight-color);"
             >
               &nbsp;
