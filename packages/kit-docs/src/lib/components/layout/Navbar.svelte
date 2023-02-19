@@ -39,7 +39,7 @@
 
     <div class="flex-1" />
 
-    <div class="992:hidden -mr-2 flex items-center">
+    <div class="992:hidden -me-2 flex items-center">
       {#if search}
         <slot name="search" />
       {/if}
@@ -72,15 +72,15 @@
           <div class="flex flex-col space-y-6">
             <slot name="popover-options" />
             <div class="flex items-center">
-              Theme
+              {$i18n.colorScheme.theme}
 
               <label
-                class="relative ml-4 flex items-center border border-border px-4 py-1 rounded-md focus-within:ring-2"
+                class="relative ms-4 flex items-center border border-border px-4 py-1 rounded-md focus-within:ring-2"
                 style="--tw-ring-color: var(--kd-color-focus);"
               >
                 <span class="sr-only">{$i18n.colorScheme.theme}</span>
-                {uppercaseFirstLetter($colorScheme)}
-                <ArrowDropDownIcon width="20" height="20" class="ml-1" />
+                <span>{$i18n.colorScheme[$colorScheme]}</span>
+                <ArrowDropDownIcon viewBox="0 0 24 20" width="20" height="20" class="ms-1" />
                 <select
                   class="absolute inset-0 appearance-none opacity-0"
                   bind:value={$colorScheme}
@@ -109,7 +109,7 @@
 
       <slot name="right" />
 
-      <div class="hidden 992:flex items-center ml-6">
+      <div class="hidden 992:flex items-center ms-6">
         <slot name="right-alt" />
         <ColorSchemeToggle />
       </div>

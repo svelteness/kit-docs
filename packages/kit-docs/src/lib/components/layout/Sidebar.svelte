@@ -50,7 +50,7 @@
   bind:this={sidebar}
   {style}
 >
-  <div class="992:hidden sticky top-0 left-0 flex items-center">
+  <div class="992:hidden sticky top-0 start-0 flex items-center">
     <div class="flex-1" />
     <button
       class={clsx('text-soft hover:text-inverse p-4 -mx-6', !open && 'pointer-events-none')}
@@ -64,7 +64,7 @@
 
   <nav class="992:px-1 scrollbar">
     {#if search}
-      <div class="pointer-events-none sticky top-0 z-0 -ml-0.5 min-h-[80px]">
+      <div class="pointer-events-none sticky top-0 z-0 -ms-0.5 min-h-[80px]">
         <div class="992:h-6 bg-body" />
         <div class="bg-body pointer-events-auto relative">
           <div class="992:block hidden">
@@ -88,12 +88,12 @@
           {:else}
             <div class="mt-10" />
           {/if}
-          <ul class="border-border space-y-3 border-l">
+          <ul class="border-border space-y-3 border-s">
             {#each links as link (link.title + link.slug)}
               <li class="first:mt-6">
                 <a
                   class={clsx(
-                    '992:py-1 -ml-px flex items-center border-l py-2 pl-4',
+                    '992:py-1 -ms-px flex items-center border-s py-2 ps-4',
                     isActiveSidebarLink(link, $page.url.pathname)
                       ? 'text-brand font-semibold'
                       : 'hover:border-inverse focus-visible:border-inverse text-soft hover:text-inverse focus-visible:text-inverse border-transparent font-normal',
@@ -105,11 +105,11 @@
                     : ''}
                 >
                   {#if link.icon?.before}
-                    <svelte:component this={link.icon.before} class="mr-1" width="24" height="24" />
+                    <svelte:component this={link.icon.before} class="me-1" width="24" height="24" />
                   {/if}
                   {link.title}
                   {#if link.icon?.after}
-                    <svelte:component this={link.icon.after} class="ml-1" width="24" height="24" />
+                    <svelte:component this={link.icon.after} class="ms-1" width="24" height="24" />
                   {/if}
                 </a>
               </li>

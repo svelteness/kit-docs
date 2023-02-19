@@ -16,7 +16,7 @@
 <div class="inline-block">
   <label
     class={clsx(
-      'relative flex min-w-[85px] items-center border-[1.5px] pl-2.5 pr-1',
+      'relative flex min-w-[85px] items-center border-[1.5px] ps-2.5 pe-1',
       'bg-elevate transform-gpu transition-transform hover:scale-[1.025]',
       rounded && 'rounded-md',
       raised ? 'py-1' : 'py-0.5',
@@ -41,7 +41,7 @@
       <ArrowDropDownIcon
         width={arrowWidth}
         height={arrowHeight}
-        class="ml-[var(--kd-arrow-margin-left,0.1rem)]"
+        class="me-[var(--kd-arrow-margin-left,0.1rem)]"
       />
     </div>
 

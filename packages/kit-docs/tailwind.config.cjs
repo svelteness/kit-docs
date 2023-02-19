@@ -40,7 +40,8 @@ module.exports = {
       typography: kitDocsTypography,
     },
   },
-  plugins: [require('@tailwindcss/typography'), kitDocsVariants],
+  plugins: [require('@tailwindcss/typography'), kitDocsVariants, require('tailwindcss-rtl'),
+  ],
 };
 
 function kitDocsVariants({ addVariant }) {

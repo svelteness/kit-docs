@@ -23,7 +23,7 @@
   }
 </script>
 
-<div class="not-prose relative inline-block text-left">
+<div class="not-prose relative inline-block text-start">
   <button
     id={menuButtonId}
     type="button"
@@ -54,7 +54,7 @@
   >
     <ul
       id={menuId}
-      class="bg-elevate border-border absolute right-0 z-50 mt-2 w-40 origin-top-right rounded-md border-[1.5px]"
+      class="bg-elevate border-border absolute end-0 z-50 mt-2 w-40 origin-top-end rounded-md border-[1.5px]"
       role="menu"
       aria-orientation="vertical"
       aria-labelledby={menuButtonId}

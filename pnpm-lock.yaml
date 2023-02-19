@@ -148,6 +148,7 @@ importers:
       svelte-preprocess: ^4.10.7
       svelte2tsx: ^0.5.20
       tailwindcss: ^3.1.8
+      tailwindcss-rtl: ^0.9.0
       toml: ^3.0.0
       tslib: ^2.4.0
       typescript: ^4.8.4
@@ -194,7 +195,8 @@ importers:
       svelte: 3.55.0
       svelte-preprocess: 4.10.7_uldce6htlskfyklq5y55tk7pdy
       svelte2tsx: 0.5.23_niwyv7xychq2ag6arq5eqxbomm
-      tailwindcss: 3.2.4
+      tailwindcss: 3.2.4_postcss@8.4.20
+      tailwindcss-rtl: 0.9.0
       toml: 3.0.0
       tslib: 2.4.1
       typescript: 4.9.4
@@ -941,7 +943,7 @@ packages:
       lodash.isplainobject: 4.0.6
       lodash.merge: 4.6.2
       postcss-selector-parser: 6.0.10
-      tailwindcss: 3.2.4
+      tailwindcss: 3.2.4_postcss@8.4.20
     dev: true
 
   /@types/argparse/1.0.38:
@@ -1721,8 +1723,8 @@ packages:
     engines: {node: '>=10'}
     hasBin: true
     dependencies:
-      is-text-path: 1.0.1
       JSONStream: 1.3.5
+      is-text-path: 1.0.1
       lodash: 4.17.21
       meow: 8.1.2
       split2: 3.2.2
@@ -4794,10 +4796,16 @@ packages:
       tslib: 2.4.1
     dev: true
 
-  /tailwindcss/3.2.4:
+  /tailwindcss-rtl/0.9.0:
+    resolution: {integrity: sha512-y7yC8QXjluDBEFMSX33tV6xMYrf0B3sa+tOB5JSQb6/G6laBU313a+Z+qxu55M1Qyn8tDMttjomsA8IsJD+k+w==}
+    dev: true
+
+  /tailwindcss/3.2.4_postcss@8.4.20:
     resolution: {integrity: sha512-AhwtHCKMtR71JgeYDaswmZXhPcW9iuI9Sp2LvZPo9upDZ7231ZJ7eA9RaURbhpXGVlrjX4cFNlB4ieTetEb7hQ==}
     engines: {node: '>=12.13.0'}
     hasBin: true
+    peerDependencies:
+      postcss: ^8.0.9
     dependencies:
       arg: 5.0.2
       chokidar: 3.5.3

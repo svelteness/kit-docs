@@ -34,7 +34,7 @@
 >
   <svelte:component
     this={icons[type]}
-    class={clsx($$slots.default && 'mr-2.5')}
+    class={clsx($$slots.default && 'me-2.5')}
     width={iconWidth}
     height={iconHeight}
   />

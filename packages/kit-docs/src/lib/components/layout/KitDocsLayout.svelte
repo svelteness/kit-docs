@@ -119,7 +119,7 @@
                 <button
                   id="main-sidebar-button"
                   type="button"
-                  class="text-soft hover:text-inverse inline-flex justify-center rounded-md p-2 text-sm font-medium"
+                  class="rtl:scale-x-[-1] text-soft hover:text-inverse inline-flex justify-center rounded-md p-2 text-sm font-medium"
                   aria-controls="main-sidebar"
                   aria-expanded={ariaBool(isSidebarOpen)}
                   aria-haspopup="true"
@@ -147,7 +147,7 @@
                 <ol
                   class={clsx(
                     'text-md text-soft flex items-center whitespace-nowrap leading-6',
-                    showSidebar ? 'mt-px ml-2.5' : 'mt-2',
+                    showSidebar ? 'mt-px ms-2.5' : 'mt-2',
                   )}
                 >
                   {#if $activeCategory && $activeCategory !== '.'}
@@ -194,11 +194,11 @@
         {search}
         class={({ open }) =>
           clsx(
-            'self-start fixed top-0 left-0 transform bg-body z-50 border-border border-r scrollbar',
-            '-translate-x-full transform transition-transform duration-200 ease-out will-change-transform',
+            'self-start fixed top-0 start-0 transform bg-body z-50 border-border border-e scrollbar',
+            'rtl:translate-x-full ltr:-translate-x-full transform transition-transform duration-200 ease-out will-change-transform',
             'max-h-screen min-h-screen min-w-[var(--kd-sidebar-min-width)] max-w-[var(--kd-sidebar-max-width)]',
-            '992:translate-x-0 922:block 992:sticky 992:z-0 overflow-y-auto p-[var(--kd-sidebar-padding)]',
-            open && 'translate-x-0',
+            'rtl:992:-translate-x-0 ltr:992:translate-x-0 922:block 992:sticky 992:z-0 overflow-y-auto p-[var(--kd-sidebar-padding)]',
+            open && 'rtl:-translate-x-0 ltr:translate-x-0',
             navbar
               ? '992:top-[var(--kd--navbar-height)] 992:min-h-[calc(100vh-var(--kd--navbar-height))] 992:max-h-[calc(100vh-var(--kd--navbar-height))]'
               : '992:top-0 min-h-screen max-h-screen',
@@ -256,7 +256,7 @@
         <div class="992:text-xl flex items-center pt-12 pb-20 text-lg font-semibold text-gray-300">
           {#if $previousLink}
             <div class="mb-4 flex flex-col items-start">
-              <span class="text-inverse ml-3 mb-4 inline-block">{$i18nContext.nav.previous}</span>
+              <span class="text-inverse ms-3 mb-4 inline-block">{$i18nContext.nav.previous}</span>
               <Button
                 arrow="left"
                 href={$previousLink.slug}
@@ -269,8 +269,8 @@
           {/if}
 
           {#if $nextLink}
-            <div class="ml-auto mb-4 flex flex-col items-end">
-              <span class="text-inverse mr-3 mb-4 inline-block">{$i18nContext.nav.next}</span>
+            <div class="ms-auto mb-4 flex flex-col items-end">
+              <span class="text-inverse me-3 mb-4 inline-block">{$i18nContext.nav.next}</span>
               <Button
                 arrow="right"
                 href={$nextLink.slug}
@@ -291,7 +291,7 @@
 
     <OnThisPage
       class={clsx(
-        'pt-8 pb-8 hidden overflow-auto min-w-[160px] sticky right-4 pr-4 1440:right-6 1440:pr-2 1280:block pl-0.5',
+        'pt-8 pb-8 hidden overflow-auto min-w-[160px] sticky end-4 pe-4 1440:end-6 1440:pe-2 1280:block ps-0.5',
         navbar
           ? 'top-[var(--kd--navbar-height)] max-h-[calc(100vh-var(--kd--navbar-height))]'
           : 'top-0 max-h-screen',

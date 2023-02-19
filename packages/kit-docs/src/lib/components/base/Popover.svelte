@@ -44,7 +44,7 @@
   }
 </script>
 
-<div class="not-prose relative inline-block text-left">
+<div class="not-prose relative inline-block text-start">
   <button
     id={popoverButtonId}
     type="button"
@@ -82,7 +82,7 @@
     <div
       id={popoverId}
       class={clsx(
-        'absolute -top-4 -right-0 z-50 min-w-[340px] origin-top-right p-5 pt-4',
+        'absolute -top-4 -end-0 z-50 min-w-[340px] origin-top-end p-5 pt-4',
         !open && 'invisible',
       )}
       tabindex="-1"
@@ -95,7 +95,7 @@
           <div class="flex-1" />
           <button
             class={clsx(
-              'text-soft hover:text-inverse mt-[0.125rem] mr-[0.125rem] p-4',
+              'text-soft hover:text-inverse mt-[0.125rem] me-[0.125rem] p-4',
               !open && 'pointer-events-none',
             )}
             on:pointerup={() => closeDialog()}
