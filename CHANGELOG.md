@@ -1,3 +1,12 @@
+## [1.1.2](https://github.com/svelteness/kit-docs/compare/v1.1.1...v1.1.2) (2023-03-12)
+
+
+### Bug Fixes
+
+* normalize windows paths to slashes ([#81](https://github.com/svelteness/kit-docs/issues/81)) ([2cd8274](https://github.com/svelteness/kit-docs/commit/2cd8274bb884f98658d43587ed6a33bea2f15f30))
+
+
+
 ## [1.1.1](https://github.com/svelteness/kit-docs/compare/v1.1.0...v1.1.1) (2023-02-04)
 
 
