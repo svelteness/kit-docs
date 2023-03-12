@@ -44,7 +44,7 @@
 
 <div class={clsx('on-this-page scrollbar', __class)} {style}>
   {#if headings.length > 1 || headings[0]?.children.length}
-    <h5 class="text-inverse w-full text-left text-lg font-semibold">{$i18n.toc.title}</h5>
+    <h5 class="text-inverse w-full text-start text-lg font-semibold">{$i18n.toc.title}</h5>
     <ul class="mt-4 space-y-4 px-2">
       {#each headings as heading (heading)}
         {@const i = calcIndex(heading)}
@@ -60,16 +60,17 @@
             {#each heading.children as childHeader, j (childHeader)}
               <li
                 class={clsx(
-                  'group group flex',
+                  'group group flex items-center',
                   i + j + 1 === $index ? 'text-brand' : 'text-soft hover:text-inverse',
                 )}
               >
                 <RightArrowIcon
+                  viewBox="0 0 24 20"
                   width="20"
                   height="20"
-                  class="group-hover:text-inverse mt-px mr-px text-soft"
+                  class="group-hover:text-inverse inline-block mt-px me-px text-soft rtl:scale-x-[-1]"
                 />
-                <a href={`#${childHeader.slug}`}>{childHeader.title}</a>
+                <a class="inline-block" href={`#${childHeader.slug}`}>{childHeader.title}</a>
               </li>
             {/each}
           </ul>

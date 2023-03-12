@@ -28,9 +28,9 @@
   );
 
   $: contentClass = clsx(
-    'inline-block transform transition-transform duration-100 group-hover:translate-x-0',
-    arrow === 'left' && '-translate-x-3 ',
-    arrow === 'right' && 'translate-x-2',
+    'inline-block transform transition-transform duration-100 rtl:group-hover:-translate-x-0 ltr:group-hover:translate-x-0',
+    arrow === 'left' && 'rtl:translate-x-2 ltr:-translate-x-2 ',
+    arrow === 'right' && 'rtl:-translate-x-2 ltr:translate-x-2',
   );
 
   $: arrowClass = clsx(

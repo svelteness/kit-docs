@@ -27,7 +27,7 @@
   on:pointerup={() => dispatch('select')}
 >
   {#if $$slots.icon}
-    <div class="mr-3 h-5 w-5">
+    <div class="me-3 h-5 w-5">
       <slot name="icon" />
     </div>
   {/if}

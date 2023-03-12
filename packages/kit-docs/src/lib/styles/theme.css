@@ -157,12 +157,19 @@ body {
 }
 
 .kit-docs .header-anchor {
-  margin-left: -1.25em;
   padding: 0 0.23em;
   font-size: 0.9em;
   opacity: 0;
   border: 0;
   background-color: none;
+}
+
+[dir=ltr] .kit-docs .header-anchor {
+  margin-left: -1.25em;
+}
+
+[dir=rtl] .kit-docs .header-anchor {
+  margin-right: -1.25em;
 }
 
 .kit-docs h1:focus,
