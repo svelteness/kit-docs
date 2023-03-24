@@ -28,7 +28,7 @@ Documentation integration for [SvelteKit][sveltekit]. You can think of it as a
 
 ## 📖 Documentation
 
-You can find our documentation at [kit-docs.svelteness.dev](https://kit-docs.svelteness.dev).
+You can find our documentation at [kit-docs.vercel.app](https://kitdocs.vercel.app).
 
 [package]: https://www.npmjs.com/package/@svelteness/kit-docs
 [package-badge]: https://img.shields.io/npm/v/@svelteness/kit-docs/latest

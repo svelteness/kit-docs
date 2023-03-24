@@ -48,12 +48,12 @@
     {#if title && description}
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:site" content="@mihar_22" />
-      <meta name="twitter:image" content={`https://kit-docs.svelteness.dev${socialCardLarge}`} />
+      <meta name="twitter:image" content={`https://kitdocs.vercel.app${socialCardLarge}`} />
       <meta name="twitter:creator" content="@mihar_22" />
       <meta property="og:site_name" content="KitDocs" />
-      <meta property="og:url" content={`https://kit-docs.svelteness.dev${$page.url.pathname}`} />
+      <meta property="og:url" content={`https://kitdocs.vercel.app${$page.url.pathname}`} />
       <meta property="og:type" content="article" />
-      <meta name="og:image" content={`https://kit-docs.svelteness.dev${socialCardLarge}`} />
+      <meta name="og:image" content={`https://kitdocs.vercel.app${socialCardLarge}`} />
     {/if}
   {/key}
 </svelte:head>

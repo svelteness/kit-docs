@@ -18,7 +18,7 @@ export async function GET() {
     .map(
       (url) => `
 			<url>
-				<loc>https://kit-docs.svelteness.dev/${url}</loc>
+				<loc>https://kitdocs.vercel.app/${url}</loc>
 				<changefreq>daily</changefreq>
 				<priority>0.7</priority>
 			</url>

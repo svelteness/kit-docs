@@ -188,12 +188,10 @@ async function main() {
         ),
       ),
     );
-    console.log(
-      `\nhttps://kit-docs.svelteness.dev/docs/getting-started/quickstart#manual-installation`,
-    );
+    console.log(`\nhttps://kitdocs.vercel.app/docs/getting-started/quickstart#manual-installation`);
     if (defaultTheme) {
       console.log(
-        `\nhttps://kit-docs.svelteness.dev/docs/default-layout/installation#manual-installation`,
+        `\nhttps://kitdocs.vercel.app/docs/default-layout/installation#manual-installation`,
       );
     }
   }

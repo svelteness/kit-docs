@@ -23,7 +23,7 @@ Links will be mapped to the correct slug and can be set in any of the following 
 [heading](#heading)
 [relative file with .md ext](../foo/bar.md)
 [relative file with .html ext](../foo/bar.html)
-[external](https://kit-docs.svelteness.dev)
+[external](https://kitdocs.vercel.app)
 ```
 
 ## Frontmatter
