@@ -1,3 +1,12 @@
+## [1.1.3](https://github.com/svelteness/kit-docs/compare/v1.1.2...v1.1.3) (2023-03-24)
+
+
+### Bug Fixes
+
+* update site links to `https://kitdocs.vercel.app` ([2b9b69c](https://github.com/svelteness/kit-docs/commit/2b9b69ccfbcf723920d1bfe9176128013d4dfd34))
+
+
+
 ## [1.1.2](https://github.com/svelteness/kit-docs/compare/v1.1.1...v1.1.2) (2023-03-12)
 
 
