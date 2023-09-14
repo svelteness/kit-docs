@@ -3,7 +3,6 @@ import matter from 'gray-matter';
 import { LRUCache } from 'lru-cache';
 import toml from 'toml';
 
-import { isLocalEnv } from '../../utils/env';
 import { getFileNameFromPath } from '../../utils/path';
 import { hashString } from '../../utils/string';
 import type {
@@ -15,8 +14,6 @@ import type {
 } from './types';
 import { commentOutTemplateTags, uncommentTemplateTags } from './utils/html-escape';
 import { preventViteReplace } from './utils/prevent-vite-replace';
-
-const kitDocsImportPath = isLocalEnv() ? '$lib' : '@svelteness/kit-docs';
 
 export type ParseMarkdownToSvelteResult = {
   component: string;
@@ -47,11 +44,9 @@ export function parseMarkdownToSvelte(
 
   const fileName = getFileNameFromPath(filePath);
 
-  if (kitDocsImportPath.length) {
-    hoistedTags.push(
-      ['<script>', `import { frontmatter } from "${kitDocsImportPath}";`, '</script>'].join('\n'),
-    );
-  }
+  hoistedTags.push(
+    ['<script>', `import { frontmatter } from "@svelteness/kit-docs";`, '</script>'].join('\n'),
+  );
 
   hoistedTags.push(...(options.topLevelHtmlTags?.({ fileName, filePath, meta }) ?? []));
 

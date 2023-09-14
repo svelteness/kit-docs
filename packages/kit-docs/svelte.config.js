@@ -14,6 +14,10 @@ const config = {
       entries: ['*'],
       handleMissingId: 'warn',
     },
+
+    alias: {
+      '@svelteness/kit-docs': './src/lib',
+    },
   },
 };
 
