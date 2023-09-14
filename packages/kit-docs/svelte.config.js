@@ -15,11 +15,6 @@ const config = {
       handleMissingId: 'warn',
     },
   },
-
-  package: {
-    dir: 'client',
-    emitTypes: true,
-  },
 };
 
 export default config;

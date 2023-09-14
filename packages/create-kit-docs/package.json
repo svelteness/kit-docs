@@ -30,13 +30,13 @@
     "url": "https://github.com/svelteness/kit-docs/issues"
   },
   "dependencies": {
-    "enquirer": "^2.3.6",
-    "kleur": "^4.1.4",
-    "minimist": "^1.2.5",
+    "enquirer": "^2.4.1",
+    "kleur": "^4.1.5",
+    "minimist": "^1.2.8",
     "upath": "^2.0.1"
   },
   "devDependencies": {
-    "@types/node": "^16.0.1"
+    "@types/node": "^20.6.0"
   },
   "publishConfig": {
     "access": "public"

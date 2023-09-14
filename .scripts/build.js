@@ -1,7 +1,7 @@
 import path from 'path';
 import minimist from 'minimist';
 import globby from 'fast-glob';
-import { build } from 'esbuild';
+import { context } from 'esbuild';
 import kleur from 'kleur';
 import { readFileSync } from 'fs';
 
@@ -25,7 +25,7 @@ async function main() {
 
   const outdir = args.outdir ? path.resolve(process.cwd(), args.outdir) : undefined;
 
-  await build({
+  const ctx = await context({
     entryPoints,
     outfile: args.outfile,
     outdir,
@@ -33,7 +33,6 @@ async function main() {
     platform: args.platform ?? 'browser',
     format: args.format ?? 'esm',
     target: 'es2020',
-    watch: args.watch || args.w,
     splitting: IS_NODE || args.nosplit ? false : true,
     chunkNames: 'chunks/[name].[hash]',
     banner: { js: shims },
@@ -44,12 +43,19 @@ async function main() {
     sourcemap: args.sourcemap,
     treeShaking: true,
     metafile: args.bundle && !args.watch && !args.w,
-    incremental: args.watch || args.w,
     bundle: args.bundle,
     external: args.bundle
       ? [...(args.external?.split(',') ?? []), ...(args.externaldeps ? getDeps() : [])]
       : undefined,
   });
+
+  await ctx.rebuild()
+
+  if (args.watch || args.w) {
+    await ctx.watch();
+  }
+
+  ctx.dispose()
 }
 
 function getDeps() {

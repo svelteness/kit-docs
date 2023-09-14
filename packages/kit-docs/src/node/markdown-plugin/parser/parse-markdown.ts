@@ -1,6 +1,6 @@
 import fs from 'fs';
 import matter from 'gray-matter';
-import LRUCache from 'lru-cache';
+import { LRUCache } from 'lru-cache';
 import toml from 'toml';
 
 import { isLocalEnv } from '../../utils/env';

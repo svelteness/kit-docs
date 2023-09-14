@@ -22,7 +22,7 @@ export const kitDocsHighlightPlugin = (options: HighlightPluginOptions = {}): Pl
     enforce: 'pre' as const,
     async configResolved() {
       highlighter = await getHighlighter({
-        theme: 'material-palenight',
+        theme: 'material-theme-palenight',
         langs: [],
         ...options,
       });
