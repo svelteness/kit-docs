@@ -1,3 +1,12 @@
+## [1.1.4](https://github.com/svelteness/kit-docs/compare/v1.1.3...v1.1.4) (2023-09-15)
+
+
+### Bug Fixes
+
+* support base path (gh-pages) ([#93](https://github.com/svelteness/kit-docs/issues/93)) ([8d3fba5](https://github.com/svelteness/kit-docs/commit/8d3fba5728531badcf7e2ecd63cee00bbeeb8270))
+
+
+
 ## [1.1.3](https://github.com/svelteness/kit-docs/compare/v1.1.2...v1.1.3) (2023-03-24)
 
 
