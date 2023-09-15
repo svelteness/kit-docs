@@ -53,10 +53,10 @@ export async function loadKitDocsSidebar(
 ): Promise<ResolvedSidebarConfig | null> {
   const matchedPath = matchSidebarPath(event.url, path);
 
-  if (!matchedPath) return null;
+  if (matchedPath === null) return null;
 
   try {
-    const res = await event.fetch(`${base}/kit-docs/${slugToRequestParam(matchedPath)}.sidebar`);
+    const res = await event.fetch(`${base}/kit-docs/${matchedPath === '' ? 'index' : slugToRequestParam(matchedPath)}.sidebar`);
     return res.json();
   } catch (e) {
     return null;
