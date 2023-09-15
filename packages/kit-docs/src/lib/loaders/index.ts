@@ -3,6 +3,7 @@ import type { LoadEvent } from '@sveltejs/kit';
 import type { ResolvedSidebarConfig } from '$lib/components/layout/contexts.js';
 import type { MarkdownMeta } from '$lib/stores/kit-docs.js';
 import { isString } from '$lib/utils/unit';
+import { base } from '$app/paths'
 
 export function getRootDirFromUrl(url: URL) {
   return url.pathname.split('/')[1];
@@ -26,7 +27,7 @@ export type LoaderFetchFn = (info: RequestInfo, init?: RequestInit) => Promise<R
 export async function loadKitDocsMeta(event: LoadEvent): Promise<MarkdownMeta | null> {
   const slug = event.url.pathname;
   try {
-    const url = `/kit-docs/${
+    const url = `${base}/kit-docs/${
       slug === '/' ? 'index' : slugToRequestParam(slug.replace(/\.html$/, ''))
     }`;
 
@@ -55,7 +56,7 @@ export async function loadKitDocsSidebar(
   if (!matchedPath) return null;
 
   try {
-    const res = await event.fetch(`/kit-docs/${slugToRequestParam(matchedPath)}.sidebar`);
+    const res = await event.fetch(`${base}/kit-docs/${slugToRequestParam(matchedPath)}.sidebar`);
     return res.json();
   } catch (e) {
     return null;

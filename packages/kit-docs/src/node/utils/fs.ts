@@ -1,7 +1,7 @@
 import { normalizePath } from '@rollup/pluginutils';
 import { createHash } from 'crypto';
 import { createReadStream, readdirSync, statSync } from 'fs';
-import LRUCache from 'lru-cache';
+import { LRUCache } from 'lru-cache';
 import { resolve } from 'path';
 
 export function checksumFile(path: string): Promise<string> {
