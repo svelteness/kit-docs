@@ -183,7 +183,7 @@ export async function handleSidebarRequest(
     exts.length > 1 ? `.{${exts.map((ext) => ext.replace(/^\./, '')).join(',')}}` : exts[0];
 
   const directory = paramToDir(dirParam);
-  const dirPath = path.resolve(ROUTES_DIR, directory);
+  const dirPath = path.resolve(ROUTES_DIR, directory === 'index' ? '' : directory);
 
   const filePaths = sortOrderedFiles(readDirDeepSync(dirPath));
 
