@@ -8,15 +8,9 @@ const config = {
     adapter: adapter(),
 
     prerender: {
-      default: true,
       entries: ['*'],
       handleMissingId: 'warn',
     },
-  },
-
-  package: {
-    dir: 'client',
-    emitTypes: true,
   },
 };
 
