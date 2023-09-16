@@ -1,3 +1,17 @@
+## [1.1.5](https://github.com/svelteness/kit-docs/compare/v1.1.4...v1.1.5) (2023-09-16)
+
+
+### Bug Fixes
+
+* remove outdated config ([#94](https://github.com/svelteness/kit-docs/issues/94)) ([8d4fd42](https://github.com/svelteness/kit-docs/commit/8d4fd427cd6e4db281592694fc6354dd803ad19b))
+
+
+### Features
+
+* allow root docs pages ([#95](https://github.com/svelteness/kit-docs/issues/95)) ([a47f14c](https://github.com/svelteness/kit-docs/commit/a47f14c1287fa47253e577728a9eeeb92164f697))
+
+
+
 ## [1.1.4](https://github.com/svelteness/kit-docs/compare/v1.1.3...v1.1.4) (2023-09-15)
 
 
