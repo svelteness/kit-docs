@@ -4,6 +4,8 @@ export * from './actions/prefetch-link.js';
 
 // Components
 export { default as Button } from './components/base/Button.svelte';
+export { default as Card } from './components/base/Card.svelte';
+export { default as CardGroup } from './components/base/CardGroup.svelte';
 export { default as Chip } from './components/base/Chip.svelte';
 export { default as ColorSchemeToggle } from './components/base/ColorSchemeToggle.svelte';
 export { default as Menu } from './components/base/Menu.svelte';

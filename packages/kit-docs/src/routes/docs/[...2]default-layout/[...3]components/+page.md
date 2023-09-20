@@ -7,6 +7,48 @@ description: Guide to components that come with the default layout.
 In this section, we'll look at the components that you can import and use when working with
 the default layout.
 
+## Card
+
+<script>
+import { Card, CardGroup } from '$lib';
+import GitHubIcon from '~icons/ri/github-fill';
+import RocketIcon from '~icons/ri/rocket-fill';
+</script>
+
+```js copy
+import { Card, CardGroup } from '@svelteness/kit-docs';
+import GitHubIcon from '~icons/ri/github-fill';
+import RocketIcon from '~icons/ri/rocket-fill';
+```
+
+```svelte copy
+<CardGroup cols={2}>
+  <Card
+    title="GitHub"
+    description="Check out the kit-docs GitHub repo."
+    href="https://github.com/svelteness/kit-docs"
+  >
+    <GitHubIcon slot="icon" />
+  </Card>
+  <Card 
+    title="Deploying" 
+    description="Learn how to deploy kit-docs." 
+    href="/docs/production/deploying"
+  >
+    <RocketIcon slot="icon" />
+  </Card>
+</CardGroup>
+```
+
+<CardGroup cols={2}>
+  <Card title="GitHub" description="Check out the kit-docs GitHub repo." href="https://github.com/svelteness/kit-docs">
+    <GitHubIcon slot="icon" />
+  </Card>
+  <Card title="Deploying" description="Learn how to deploy kit-docs." href="/docs/production/deploying">
+    <RocketIcon slot="icon" />
+  </Card>
+</CardGroup>
+
 ## Social Link
 
 <script>
