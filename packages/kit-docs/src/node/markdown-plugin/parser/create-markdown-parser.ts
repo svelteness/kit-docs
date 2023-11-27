@@ -14,6 +14,7 @@ import {
   importCodePlugin,
   katexPlugin,
   linksPlugin,
+  removeAnnotationPlugin,
   tocPlugin,
 } from './plugins';
 import type {
@@ -63,6 +64,7 @@ export async function createMarkdownParser(
   parser.use(importCodePlugin);
   parser.use(await createShikiPlugin(shiki));
   parser.use(hoistTagsPlugin);
+  parser.use(removeAnnotationPlugin);
 
   responsiveTablePlugin(parser);
 
