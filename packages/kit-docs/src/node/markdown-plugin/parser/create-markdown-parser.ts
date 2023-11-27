@@ -12,6 +12,7 @@ import {
   extractTitlePlugin,
   hoistTagsPlugin,
   importCodePlugin,
+  katexPlugin,
   linksPlugin,
   tocPlugin,
 } from './plugins';
@@ -50,6 +51,7 @@ export async function createMarkdownParser(
   const parser = MarkdownIt({ html: true });
 
   parser.use(emojiPlugin);
+  parser.use(katexPlugin);
   parser.use(anchorPlugin);
   parser.use(tocPlugin);
   parser.use(extractHeadersPlugin);
