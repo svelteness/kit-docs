@@ -51,8 +51,22 @@ export async function createMarkdownParser(
 
   const parser = MarkdownIt({ html: true });
 
+  // Optional math expressions plugins
+  try {
+    const markdownItTexmath = await import('markdown-it-texmath');
+    const katex = await import('katex');
+
+    try {
+      parser.use(katexPlugin, { plugin: markdownItTexmath, katex });
+      parser.use(removeAnnotationPlugin);
+    } catch (error) {
+      console.error(error);
+    }
+  } catch {
+    console.log('no KaTeX support, failed to import');
+  }
+
   parser.use(emojiPlugin);
-  parser.use(katexPlugin);
   parser.use(anchorPlugin);
   parser.use(tocPlugin);
   parser.use(extractHeadersPlugin);
@@ -64,7 +78,6 @@ export async function createMarkdownParser(
   parser.use(importCodePlugin);
   parser.use(await createShikiPlugin(shiki));
   parser.use(hoistTagsPlugin);
-  parser.use(removeAnnotationPlugin);
 
   responsiveTablePlugin(parser);
 

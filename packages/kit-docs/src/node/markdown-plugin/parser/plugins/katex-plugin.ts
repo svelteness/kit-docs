@@ -1,10 +1,8 @@
-import katex from 'katex';
-import type { PluginSimple } from 'markdown-it';
-import rawKatexPlugin from 'markdown-it-texmath';
+import type { PluginWithOptions } from 'markdown-it';
 
-export const katexPlugin: PluginSimple = (parser) => {
-  return rawKatexPlugin(parser, {
-    engine: katex,
+export const katexPlugin: PluginWithOptions = (parser, { plugin, katex }) => {
+  return plugin.default(parser, {
+    engine: katex.default,
     delimiters: 'dollars',
   });
 };
