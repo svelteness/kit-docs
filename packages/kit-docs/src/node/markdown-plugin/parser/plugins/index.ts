@@ -7,6 +7,8 @@ export * from './extract-headers-plugin';
 export * from './extract-title-plugin';
 export * from './hoist-tags-plugin';
 export * from './import-code-plugin';
+export * from './katex-plugin';
 export * from './links-plugin';
+export * from './remove-annotation-plugin';
 export * from './shiki-plugin';
 export * from './toc-plugin';

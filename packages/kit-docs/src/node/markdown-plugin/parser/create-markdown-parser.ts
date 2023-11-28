@@ -12,7 +12,9 @@ import {
   extractTitlePlugin,
   hoistTagsPlugin,
   importCodePlugin,
+  katexPlugin,
   linksPlugin,
+  removeAnnotationPlugin,
   tocPlugin,
 } from './plugins';
 import type {
@@ -48,6 +50,21 @@ export async function createMarkdownParser(
   ) as MarkdownCustomComponent[];
 
   const parser = MarkdownIt({ html: true });
+
+  // Optional math expressions plugins
+  try {
+    const markdownItTexmath = await import('markdown-it-texmath');
+    const katex = await import('katex');
+
+    try {
+      parser.use(katexPlugin, { plugin: markdownItTexmath, katex });
+      parser.use(removeAnnotationPlugin);
+    } catch (error) {
+      console.error(error);
+    }
+  } catch {
+    console.log('no KaTeX support, failed to import');
+  }
 
   parser.use(emojiPlugin);
   parser.use(anchorPlugin);

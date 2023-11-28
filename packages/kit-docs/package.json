@@ -105,6 +105,18 @@
     "unplugin-icons": "^0.17.0",
     "vite": "^4.4.9"
   },
+  "peerDependencies": {
+    "markdown-it-texmath": "^1.0.0",
+    "katex": "^0.16.9"
+  },
+  "peerDependenciesMeta": {
+    "markdown-it-texmath": {
+      "optional": true
+    },
+    "katex": {
+      "optional": true
+    }
+  },
   "publishConfig": {
     "access": "public"
   },
